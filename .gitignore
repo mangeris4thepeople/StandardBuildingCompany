@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vercel/
+
+# local-only files, not part of the website
+SEO6.23/
+StandardBuildingCompany/
+Articles_of_Amendment*.pdf
+Recording*.mp4
