@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 const NAV_LINKS = [
@@ -296,6 +297,7 @@ export default function App() {
       <Contact />
       <SEOContent />
       <Footer />
+      <Analytics />
     </>
   );
 }
