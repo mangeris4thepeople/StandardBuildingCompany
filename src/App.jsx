@@ -126,7 +126,7 @@ function About() {
               More than management.<br />We're in it with you.
             </h2>
             <p className="about__body">
-              Standard Building Company is a Women and Minority Owned general contractor founded in 2020 and based in Loveland, Colorado. We serve commercial, industrial, and government clients across Northern Colorado including Fort Collins, Greeley, Longmont, and the surrounding Front Range.
+              Standard Building Company is a general contractor founded in 2020 and based in Loveland, Colorado. We serve commercial, industrial, and government clients across Northern Colorado including Fort Collins, Greeley, Longmont, and the surrounding Front Range.
             </p>
             <p className="about__body">
               What sets us apart is the depth of what we offer. We don't just manage projects — we consult. From early-stage pre-construction planning, budgeting, and feasibility through full construction delivery across all CSI divisions, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
@@ -138,8 +138,8 @@ function About() {
               </div>
               <div className="about__stat-divider" />
               <div className="about__stat">
-                <span className="about__stat-number">W/MBE</span>
-                <span className="about__stat-label">Certified</span>
+                <span className="about__stat-number">33</span>
+                <span className="about__stat-label">CSI Divisions</span>
               </div>
               <div className="about__stat-divider" />
               <div className="about__stat">
@@ -252,7 +252,7 @@ function SEOContent() {
     <section className="seo-content" aria-label="Service areas and specialties">
       <div className="container">
         <h2>Commercial General Contractor — Northern Colorado</h2>
-        <p>Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. As a Women and Minority Owned (WMBE) contractor based in Loveland, CO, we self-perform and manage work spanning all 32 CSI construction divisions.</p>
+        <p>Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, CO, we self-perform and manage work spanning all 33 CSI construction divisions.</p>
         <h3>Construction Services Across All CSI Divisions</h3>
         <p>Our team manages and delivers work across Division 01 through Division 33 including: concrete foundations and flatwork, masonry and CMU construction, structural steel erection and miscellaneous metals, wood framing and rough carpentry, roofing and waterproofing, doors and storefronts, tenant finish and interior improvements, specialties and equipment, fire suppression and sprinkler systems, plumbing and mechanical, HVAC and building automation, electrical and low voltage, communications and data cabling, electronic safety and security systems, earthwork and site grading, exterior improvements and landscaping, and underground utilities.</p>
         <h3>Tenant Finish and Tenant Improvement Contractor — Northern Colorado</h3>
