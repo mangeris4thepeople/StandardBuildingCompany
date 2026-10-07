@@ -3,6 +3,7 @@ import { SITE, GROUPS, OTHER_AREAS } from '../content/site.js';
 import { SERVICES, AREAS, findService } from '../content/pages.js';
 import { trailFor } from '../content/head.js';
 import { PageHero, ServiceCards, ProcessSteps, SideCta, SideLinks, Contact } from './Layout.jsx';
+import { HeroDrawing, AreaMap } from './Drawings.jsx';
 
 const areaLinks = AREAS.map((a) => ({ href: a.path, label: `${a.name}, CO` }));
 
@@ -17,6 +18,7 @@ function Hero() {
         ))}
       </div>
       <div className="hero__content">
+        <div className="hero__copy">
         <p className="hero__eyebrow">Loveland, Colorado · Est. {SITE.founded}</p>
         <p className="hero__headline" aria-hidden="true">
           <span className="hero__headline-top">STANDARD</span>
@@ -30,6 +32,10 @@ function Hero() {
         <div className="hero__actions">
           <a href="#contact" className="btn btn--primary">Start a Conversation</a>
           <a href={SITE.phoneHref} className="btn btn--ghost">Call {SITE.phoneDisplay}</a>
+        </div>
+        </div>
+        <div className="hero__drawing">
+          <HeroDrawing />
         </div>
       </div>
       <div className="hero__ticker" aria-hidden="true">
@@ -95,18 +101,23 @@ function AreaLinks({ heading = 'Where we work', headingLevel = 2 }) {
   const H = `h${headingLevel}`;
   return (
     <section className="areas">
-      <div className="container">
-        <span className="section-label">Service Areas</span>
-        <H className="areas__headline">{heading}</H>
-        <p className="areas__body">
-          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range.
-        </p>
-        <ul className="areas__list">
-          {AREAS.map((a) => (
-            <li key={a.path}><a href={a.path}>{a.name}</a></li>
-          ))}
-        </ul>
-        <p className="areas__also">Also serving {OTHER_AREAS.join(', ')}, and surrounding communities.</p>
+      <div className="container areas__inner">
+        <div className="areas__text">
+          <span className="section-label">Service Areas</span>
+          <H className="areas__headline">{heading}</H>
+          <p className="areas__body">
+            Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range.
+          </p>
+          <ul className="areas__list">
+            {AREAS.map((a) => (
+              <li key={a.path}><a href={a.path}>{a.name}</a></li>
+            ))}
+          </ul>
+          <p className="areas__also">Also serving {OTHER_AREAS.join(', ')}, and surrounding communities.</p>
+        </div>
+        <div className="areas__map">
+          <AreaMap />
+        </div>
       </div>
     </section>
   );

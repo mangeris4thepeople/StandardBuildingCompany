@@ -1,6 +1,6 @@
 import React from 'react';
 import { findPage } from './content/pages.js';
-import { Nav, Footer } from './components/Layout.jsx';
+import { Nav, Footer, MobileBar } from './components/Layout.jsx';
 import {
   HomePage,
   HubPage,
@@ -33,6 +33,7 @@ export default function App({ path = '/' }) {
         <View page={page} />
       </main>
       <Footer />
+      <MobileBar />
     </>
   );
 }
