@@ -62,6 +62,24 @@ export function Nav({ solid = false, current = '' }) {
   );
 }
 
+// Phone-width action bar. It appears once the visitor scrolls past the first screen, so the
+// two things most people come to do are always one tap away.
+export function MobileBar() {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const handler = () => setShown(window.scrollY > 480);
+    handler();
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+  return (
+    <div className={`mobile-bar${shown ? ' mobile-bar--shown' : ''}`}>
+      <a href={SITE.phoneHref} className="mobile-bar__call" tabIndex={shown ? 0 : -1}>Call {SITE.phoneDisplay}</a>
+      <a href="#contact" className="mobile-bar__quote" tabIndex={shown ? 0 : -1}>Request a quote</a>
+    </div>
+  );
+}
+
 export function Breadcrumbs({ trail }) {
   if (!trail || trail.length < 2) return null;
   return (
@@ -100,9 +118,8 @@ export function ServiceCards({ services, variant = 'dark', headingLevel = 3 }) {
   const H = `h${headingLevel}`;
   return (
     <div className={`services__grid${variant === 'light' ? ' services__grid--light' : ''}`}>
-      {services.map((s, i) => (
+      {services.map((s) => (
         <a className="service-card" key={s.path} href={s.path}>
-          <span className="service-card__num">{String(i + 1).padStart(2, '0')}</span>
           <H className="service-card__title">{s.short}</H>
           <p className="service-card__desc">{s.card}</p>
           <span className="service-card__more">Learn more</span>

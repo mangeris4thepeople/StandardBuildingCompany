@@ -1160,3 +1160,129 @@ textarea:focus-visible {
 @media (min-width: 641px) and (max-width: 900px) {
   .services__grid .service-card:last-child:nth-child(odd) { grid-column: span 2; }
 }
+
+/* ============================================================
+   HOME HERO: COPY BESIDE A FRAMING ELEVATION
+   ============================================================ */
+.hero__drawing { min-width: 0; }
+@media (min-width: 901px) {
+  .hero__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: 3.5rem;
+    align-items: center;
+  }
+  .hero__headline-top,
+  .hero__headline-bottom { font-size: clamp(64px, 9.2vw, 116px); }
+}
+@media (max-width: 900px) {
+  .hero__drawing { margin-top: 3rem; max-width: 520px; }
+}
+
+.draw { display: block; width: 100%; height: auto; overflow: visible; }
+.draw__line {
+  fill: none;
+  stroke: var(--blue-light);
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-in 0.9s cubic-bezier(0.6, 0, 0.2, 1) var(--d, 0s) forwards;
+}
+.draw__line--heavy { stroke: rgba(255, 255, 255, 0.9); stroke-width: 2.5; }
+.draw__dash { fill: none; stroke: rgba(133, 183, 235, 0.3); stroke-width: 1; stroke-dasharray: 12 4 2 4; }
+.draw__tick { fill: none; stroke: rgba(133, 183, 235, 0.35); stroke-width: 1; }
+.draw__dim { fill: none; stroke: rgba(133, 183, 235, 0.6); stroke-width: 1; }
+.draw__bubble { font-family: var(--font-display); font-size: 17px; font-weight: 700; fill: var(--blue-light); }
+.draw__note text { font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 0.5px; fill: rgba(133, 183, 235, 0.85); }
+.draw__faint { opacity: 0; animation: fade-in 0.7s ease 0.1s forwards; }
+.draw__note { opacity: 0; animation: fade-in 0.8s ease 1.9s forwards; }
+@keyframes draw-in { to { stroke-dashoffset: 0; } }
+@keyframes fade-in { to { opacity: 1; } }
+
+/* ============================================================
+   INNER PAGE HERO: DRAFTING GRID
+   ============================================================ */
+.page-hero {
+  background-image:
+    linear-gradient(rgba(55, 138, 221, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 138, 221, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+}
+
+/* ============================================================
+   SERVICE AREA MAP
+   ============================================================ */
+@media (min-width: 901px) {
+  .areas__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: 4rem;
+    align-items: center;
+  }
+  .areas__inner .areas__list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .areas__map { margin-top: 2.5rem; max-width: 520px; }
+}
+.map { display: block; width: 100%; height: auto; }
+.map__frame { fill: #F6F8FB; stroke: var(--gray-light); stroke-width: 1; }
+.map__hills { fill: none; stroke: var(--gray-mid); stroke-width: 1.25; stroke-dasharray: 2 5; stroke-linecap: round; }
+.map__road { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linejoin: round; }
+.map__dot { fill: var(--navy); }
+.map__home { fill: var(--blue); }
+.map__ring { fill: none; stroke: var(--blue); stroke-width: 1.5; }
+.map__label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--navy);
+  paint-order: stroke;
+  stroke: #F6F8FB;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.map__label--home { font-family: var(--font-display); font-size: 19px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.map__label--quiet { font-size: 10.5px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; fill: var(--gray-mid); }
+.map__north path { fill: none; stroke: var(--navy); stroke-width: 1.5; }
+.map__north text { font-family: var(--font-display); font-size: 14px; font-weight: 700; fill: var(--navy); }
+
+/* ============================================================
+   PHONE ACTION BAR
+   ============================================================ */
+.mobile-bar { display: none; }
+@media (max-width: 640px) {
+  .mobile-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    box-shadow: 0 -6px 20px rgba(13, 27, 42, 0.25);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    background: var(--navy);
+  }
+  .mobile-bar--shown { transform: translateY(0); }
+  .mobile-bar a {
+    display: block;
+    padding: 16px 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--white);
+  }
+  .mobile-bar__call { background: var(--navy); }
+  .mobile-bar__quote { background: #1F6FC0; }
+  .footer { padding-bottom: 6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw__line { animation: none; stroke-dashoffset: 0; }
+  .draw__faint, .draw__note { animation: none; opacity: 1; }
+  .mobile-bar { transition: none; }
+}

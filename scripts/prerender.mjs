@@ -2,7 +2,7 @@
 // and AI crawlers get real content without running JavaScript. Also writes sitemap.xml and 404.html.
 //
 // Runs as the last step of `npm run build`, after the client and server bundles exist.
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -17,8 +17,18 @@ for (const marker of ['<!--app-head-->', '<!--app-html-->']) {
   if (!template.includes(marker)) throw new Error(`index.html is missing the ${marker} placeholder`);
 }
 
+// Preload the two fonts every page paints with first, so text does not wait on the stylesheet.
+const assets = await readdir(join(dist, 'assets'));
+const preloads = ['barlow-latin-400-normal', 'barlow-condensed-latin-700-normal']
+  .map((name) => assets.find((f) => f.startsWith(name) && f.endsWith('.woff2')))
+  .filter(Boolean)
+  .map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`)
+  .join('\n    ');
+
 function fill(path) {
-  const { html, head } = render(path);
+  const rendered = render(path);
+  const html = rendered.html;
+  const head = `${rendered.head}\n    ${preloads}`;
   if (!html || html.length < 500) throw new Error(`Prerender produced almost no HTML for ${path}`);
   return template.replace('<!--app-head-->', head).replace('<!--app-html-->', html);
 }
