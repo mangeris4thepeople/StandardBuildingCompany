@@ -1,8 +1,14 @@
 {
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "standardbuildingcompany.net" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "standardbuildingcompany.net"
+        }
+      ],
       "destination": "https://www.standardbuildingcompany.net/:path*",
       "permanent": true
     }

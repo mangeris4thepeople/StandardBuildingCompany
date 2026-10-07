@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "browserslist": {
@@ -25,7 +25,10 @@
     ]
   },
   "devDependencies": {
+    "@fontsource/barlow": "^5.3.0",
+    "@fontsource/barlow-condensed": "^5.3.0",
     "@vitejs/plugin-react": "^6.0.3",
     "vite": "^8.1.0"
-  }
+  },
+  "type": "module"
 }
