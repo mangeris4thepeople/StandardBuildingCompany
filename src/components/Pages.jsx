@@ -1,6 +1,6 @@
 import React from 'react';
 import { SITE, GROUPS, OTHER_AREAS } from '../content/site.js';
-import { SERVICES, AREAS, findService } from '../content/pages.js';
+import { SERVICES, AREAS, AREA_REGIONS, findService } from '../content/pages.js';
 import { trailFor } from '../content/head.js';
 import { PageHero, ServiceCards, ProcessSteps, SideCta, SideLinks, Contact, Tabs, Faq } from './Layout.jsx';
 import { HeroDrawing, AreaMap } from './Drawings.jsx';
@@ -62,7 +62,7 @@ function AboutBody() {
         More than management.<br />We're in it with you.
       </h2>
       <p className="about__body">
-        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We serve commercial, industrial, and government clients, and homeowners, across Northern Colorado including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range.
+        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We serve commercial, industrial, and government clients, and homeowners, across Northern Colorado including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range. We also build in the mountain towns, including <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, and <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>.
       </p>
       <p className="about__body">
         What sets us apart is the depth of what we offer. We don't just manage projects. We consult. From early-stage <a href="/commercial/construction-management/">pre-construction planning</a>, budgeting, and feasibility through full construction delivery across all CSI divisions, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
@@ -93,13 +93,18 @@ function AreasBody({ heading = 'Where we work' }) {
       <div className="areas__text">
         <h2 className="areas__headline">{heading}</h2>
         <p className="areas__body">
-          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range.
+          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range, and in the mountain towns of Eagle, Pitkin, Grand, and Summit counties.
         </p>
-        <ul className="areas__list">
-          {AREAS.map((a) => (
-            <li key={a.path}><a href={a.path}>{a.name}</a></li>
-          ))}
-        </ul>
+        {AREA_REGIONS.map((r) => (
+          <React.Fragment key={r.key}>
+            <h3 className="areas__region">{r.label}</h3>
+            <ul className="areas__list">
+              {r.areas.map((a) => (
+                <li key={a.path}><a href={a.path}>{a.name}</a></li>
+              ))}
+            </ul>
+          </React.Fragment>
+        ))}
         <p className="areas__also">Also serving {OTHER_AREAS.join(', ')}, and surrounding communities.</p>
       </div>
       <div className="areas__map">
@@ -220,7 +225,7 @@ export function HubPage({ page }) {
               {
                 key: 'areas',
                 label: 'Where we work',
-                content: <AreasBody heading={`${group.label} work across Northern Colorado`} />,
+                content: <AreasBody heading={`${group.label} work across Northern Colorado and the mountains`} />,
               },
             ]}
           />
@@ -327,22 +332,27 @@ export function AreasPage({ page }) {
         <div className="container">
           <div className="prose prose--wide">
             <p>
-              Standard Building Company is based in Loveland and works throughout Northern Colorado. Building departments, soils, wind, and snow loads change from one town to the next, so each page below covers what is specific to building there.
+              Standard Building Company is based in Loveland and works throughout Northern Colorado and in the mountain towns along I-70, US 40, and the Roaring Fork Valley. Building departments, soils, wind, and snow loads change from one town to the next, so each page below covers what is specific to building there.
             </p>
           </div>
-          <div className="area-grid">
-            {AREAS.map((a) => (
-              <a className="area-card" href={a.path} key={a.path}>
-                <span className="area-card__county">{a.county}</span>
-                <h2 className="area-card__name">{a.name}, CO</h2>
-                <p>{a.lede}</p>
-              </a>
-            ))}
-          </div>
+          {AREA_REGIONS.map((r) => (
+            <React.Fragment key={r.key}>
+              <h2 className="area-grid__heading">{r.label}</h2>
+              <div className="area-grid">
+                {r.areas.map((a) => (
+                  <a className="area-card" href={a.path} key={a.path}>
+                    <span className="area-card__county">{a.county}</span>
+                    <h3 className="area-card__name">{a.name}, CO</h3>
+                    <p>{a.lede}</p>
+                  </a>
+                ))}
+              </div>
+            </React.Fragment>
+          ))}
           <div className="prose prose--wide">
             <h2>Also serving</h2>
             <p>
-              {OTHER_AREAS.join(', ')}, and the unincorporated areas of Larimer and Weld counties. If your project is on the northern Front Range, <a href="/contact/">get in touch</a> and we will tell you whether it is one we can take.
+              {OTHER_AREAS.join(', ')}, and the unincorporated areas of Larimer and Weld counties. If your project is on the northern Front Range or in a mountain community near the ones above, <a href="/contact/">get in touch</a> and we will tell you whether it is one we can take.
             </p>
           </div>
         </div>

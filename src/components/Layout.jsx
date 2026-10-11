@@ -306,7 +306,7 @@ export function Contact({
             <p className="contact__body">{body}</p>
             <a href={SITE.phoneHref} className="contact__phone">{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`} className="contact__email">{SITE.email}</a>
-            <p className="contact__location">Loveland, CO · Serving Northern Colorado</p>
+            <p className="contact__location">Loveland, CO · Serving Northern Colorado and the mountain towns</p>
           </div>
           <div className="contact__form-wrap">
             {status === 'sent' ? (

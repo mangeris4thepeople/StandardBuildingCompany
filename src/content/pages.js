@@ -12,7 +12,13 @@ export const SERVICES = {
 
 export const ALL_SERVICES = [...SERVICES.commercial, ...SERVICES.residential];
 
-export const AREAS = CITIES.map((c) => ({ ...c, path: `/service-areas/${c.slug}/` }));
+export const AREAS = CITIES.map((c) => ({ region: 'northern', ...c, path: `/service-areas/${c.slug}/` }));
+
+// Service areas grouped for listings. Order here is the order the groups appear on the page.
+export const AREA_REGIONS = [
+  { key: 'northern', label: 'Northern Colorado' },
+  { key: 'mountain', label: 'Mountain Towns' },
+].map((r) => ({ ...r, areas: AREAS.filter((a) => a.region === r.key) }));
 
 export function findService(group, slug) {
   return SERVICES[group].find((s) => s.slug === slug);
@@ -23,7 +29,7 @@ const home = {
   path: '/',
   title: 'General Contractor in Loveland, CO | Standard Building Company',
   description:
-    'General contractor in Loveland, Colorado. Commercial, industrial, and government construction plus residential remodeling across Northern Colorado.',
+    'General contractor in Loveland, Colorado. Commercial, industrial, and government construction plus residential remodeling across Northern Colorado and the mountain towns.',
   priority: '1.0',
 };
 
@@ -63,11 +69,11 @@ const hubs = [
 const areasHub = {
   type: 'areas',
   path: '/service-areas/',
-  title: 'Service Areas in Northern Colorado | Standard Building Company',
+  title: 'Service Areas: Northern Colorado & Mountain Towns | Standard Building Company',
   description:
-    'Standard Building Company serves Loveland, Fort Collins, Greeley, Longmont, Windsor, Berthoud, Johnstown, Timnath, Wellington, Estes Park, and the northern Front Range.',
-  h1: 'Northern Colorado Service Areas',
-  lede: 'Based in Loveland and working across Larimer County, Weld County, and the northern Front Range.',
+    'Standard Building Company serves Loveland, Fort Collins, Greeley, Longmont, Windsor, and Estes Park, plus the mountain towns of Vail, Avon, Aspen, Winter Park, and Copper Mountain.',
+  h1: 'Northern Colorado and Mountain Town Service Areas',
+  lede: 'Based in Loveland and working across the northern Front Range and into the mountain towns of Eagle, Pitkin, Grand, and Summit counties.',
   priority: '0.7',
 };
 
@@ -76,7 +82,7 @@ const contact = {
   path: '/contact/',
   title: 'Contact Standard Building Company | Loveland, CO General Contractor',
   description:
-    'Call (970) 430-5884 or send a message to talk through your commercial or residential construction project in Loveland and Northern Colorado.',
+    'Call (970) 430-5884 or send a message to talk through your commercial or residential construction project in Loveland, Northern Colorado, or the mountain towns.',
   h1: 'Contact Standard Building Company',
   lede: "Tell us about the project. Whether you're in early planning or ready to build, someone from our team will be in touch.",
   priority: '0.6',

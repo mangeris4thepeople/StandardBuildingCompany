@@ -33,6 +33,10 @@ function business() {
       ...OTHER_AREAS.map((name) => ({ '@type': 'City', name: `${name}, CO` })),
       { '@type': 'AdministrativeArea', name: 'Larimer County, CO' },
       { '@type': 'AdministrativeArea', name: 'Weld County, CO' },
+      { '@type': 'AdministrativeArea', name: 'Eagle County, CO' },
+      { '@type': 'AdministrativeArea', name: 'Pitkin County, CO' },
+      { '@type': 'AdministrativeArea', name: 'Grand County, CO' },
+      { '@type': 'AdministrativeArea', name: 'Summit County, CO' },
     ],
   };
 }
