@@ -805,6 +805,30 @@ textarea:focus-visible {
   transition: background 0.2s, color 0.2s;
 }
 .areas__list a:hover { background: var(--ink); color: var(--white); }
+/* Grid lines are drawn by each cell, so an uneven count leaves a blank cell instead of a gray one. */
+.areas__list,
+.area-grid { background: var(--white); }
+.areas__list a,
+.area-grid .area-card { box-shadow: 0 0 0 1px var(--gray-light); }
+.areas__region {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-dark);
+  margin: 1.75rem 0 0.6rem;
+}
+.areas__body + .areas__region { margin-top: 0; }
+.area-grid__heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 2.25rem 0 0;
+}
 .areas__also {
   margin-top: 1.25rem;
   font-size: 14px;

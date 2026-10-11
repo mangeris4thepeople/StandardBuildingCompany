@@ -1,5 +1,6 @@
 // Service-area pages. Each entry becomes /service-areas/<slug>/.
 // Local notes are limited to facts that are stable and verifiable: county, geography, building stock.
+// `region` groups the cities on the service-area listings. Entries without one are Northern Colorado.
 export const CITIES = [
   {
     slug: 'loveland-co',
@@ -189,6 +190,106 @@ export const CITIES = [
     focus: {
       commercial: ['general-contracting', 'tenant-finish', 'construction-management'],
       residential: ['decks-outdoor-living', 'exteriors', 'home-additions', 'kitchen-remodeling'],
+    },
+  },
+  {
+    slug: 'vail-co',
+    name: 'Vail',
+    region: 'mountain',
+    county: 'Eagle County',
+    title: 'General Contractor in Vail, CO | Standard Building Company',
+    description:
+      'General contractor serving Vail, Colorado. Condo and home remodeling, kitchens and baths, decks, exteriors, tenant finish, and commercial construction built for mountain conditions.',
+    lede: 'Remodeling, exteriors, tenant finish, and commercial construction in Vail, along I-70 in the Gore Creek valley.',
+    local: [
+      'Vail sits at about 8,150 feet in the Gore Creek valley of Eagle County, strung along I-70 below Vail Pass. The town grew up around the ski resort that opened in the 1960s, so much of its building stock is condominiums, lodges, and homes from the first few decades of the resort, along with the shops and restaurants of Vail Village and Lionshead.',
+      'That makes renovation the core of the work here: updating older condos and homes, replacing worn exteriors, and building out commercial space. Snow loads are heavy, the exterior season is short, sites are tight, and staging and deliveries have to be planned around a busy resort.',
+    ],
+    permits:
+      'Building permits are issued by the Town of Vail, and exterior changes typically go through the town design review process before a permit is issued. Condominium projects usually need association approval as well. We line those up before the schedule is set.',
+    focus: {
+      commercial: ['tenant-finish', 'general-contracting', 'construction-management'],
+      residential: ['kitchen-remodeling', 'bathroom-remodeling', 'exteriors', 'decks-outdoor-living'],
+    },
+  },
+  {
+    slug: 'avon-co',
+    name: 'Avon',
+    region: 'mountain',
+    county: 'Eagle County',
+    title: 'General Contractor in Avon, CO | Standard Building Company',
+    description:
+      'General contractor serving Avon, Colorado. Home and condo remodeling, additions, decks, exteriors, tenant finish, and commercial construction in the Eagle River valley.',
+    lede: 'Remodeling, additions, tenant finish, and commercial construction in Avon, on I-70 at the base of Beaver Creek.',
+    local: [
+      'Avon sits at about 7,400 feet on the Eagle River in Eagle County, a few miles west of Vail on I-70 and at the foot of Beaver Creek Resort. The valley floor holds the town core, with condominiums, lodging, retail, and offices, and neighborhoods climb the hillsides above it.',
+      'Work here covers both sides of what we do: tenant finish and commercial construction in the town core, and remodels, additions, decks, and exterior replacements on homes and condos. Hillside lots bring steep access, engineered foundations, and wildfire exposure that shapes roofing, siding, and decking choices.',
+    ],
+    permits:
+      'The Town of Avon issues building permits inside town limits and has its own design review for exterior work. Beaver Creek, Edwards, and the other unincorporated parts of the valley are permitted through Eagle County. We confirm which applies to your address before pricing.',
+    focus: {
+      commercial: ['tenant-finish', 'general-contracting', 'design-build'],
+      residential: ['kitchen-remodeling', 'home-additions', 'decks-outdoor-living', 'exteriors'],
+    },
+  },
+  {
+    slug: 'aspen-co',
+    name: 'Aspen',
+    region: 'mountain',
+    county: 'Pitkin County',
+    title: 'General Contractor in Aspen, CO | Standard Building Company',
+    description:
+      'General contractor serving Aspen, Colorado. Design-build, home remodeling and additions, kitchens and baths, exteriors, tenant finish, and commercial construction.',
+    lede: 'Design-build, remodeling, additions, and commercial construction in Aspen, at the head of the Roaring Fork Valley.',
+    local: [
+      'Aspen is the Pitkin County seat, at about 7,900 feet at the upper end of the Roaring Fork Valley on Highway 82. It began as a silver mining town in the 1880s, and its core still holds Victorian-era homes and commercial buildings alongside lodges, condominiums, and newer homes.',
+      'Projects here tend to be detailed and closely reviewed. Older buildings need structural and systems work behind the finishes, lots are tight, and the building season for exterior work is short. Planning, drawings, and procurement carry more weight than they do on the plains.',
+    ],
+    permits:
+      'Permits inside city limits go through the City of Aspen, and properties in historic districts or with landmark status get historic preservation review. Surrounding properties fall under Pitkin County. Both have energy requirements that go beyond the base building code, so we account for them during design.',
+    focus: {
+      commercial: ['design-build', 'tenant-finish', 'construction-management'],
+      residential: ['home-additions', 'kitchen-remodeling', 'bathroom-remodeling', 'exteriors'],
+    },
+  },
+  {
+    slug: 'winter-park-co',
+    name: 'Winter Park',
+    region: 'mountain',
+    county: 'Grand County',
+    title: 'General Contractor in Winter Park, CO | Standard Building Company',
+    description:
+      'General contractor serving Winter Park and the Fraser Valley, Colorado. Cabin and condo remodeling, additions, decks, garages, exteriors, and commercial construction.',
+    lede: 'Remodeling, additions, decks, and commercial construction in Winter Park and the Fraser Valley, over Berthoud Pass on US 40.',
+    local: [
+      'Winter Park sits at about 9,000 feet in the Fraser Valley of Grand County, on US 40 on the west side of Berthoud Pass. Its buildings are a mix of cabins, vacation homes, condominiums, and lodging, with shops and restaurants along the highway through town.',
+      'The valley is known for deep snow and long, cold winters. Roofs, decks, and entries have to be designed for heavy snow loads and for where that snow slides and piles up, and exterior work has to fit into a short summer season.',
+    ],
+    permits:
+      'Projects inside town limits are permitted through the Town of Winter Park. Fraser and unincorporated Grand County have their own requirements. Structural design has to reflect local snow loads, and we coordinate the engineering that goes with it.',
+    focus: {
+      commercial: ['general-contracting', 'tenant-finish', 'design-build'],
+      residential: ['decks-outdoor-living', 'home-additions', 'exteriors', 'garages-adus'],
+    },
+  },
+  {
+    slug: 'copper-mountain-co',
+    name: 'Copper Mountain',
+    region: 'mountain',
+    county: 'Summit County',
+    title: 'General Contractor in Copper Mountain, CO | Standard Building Company',
+    description:
+      'General contractor serving Copper Mountain, Colorado. Condo remodeling, kitchens and baths, flooring, exteriors, tenant finish, and commercial construction in Summit County.',
+    lede: 'Condo remodeling, tenant finish, and commercial construction at Copper Mountain, on I-70 in Summit County.',
+    local: [
+      'Copper Mountain is a resort community in Summit County, at about 9,700 feet where Highway 91 meets I-70 between Frisco and Vail Pass. Most of its buildings are condominiums, lodging, and the commercial space that serves the resort villages.',
+      'Much of the work is interior: condo remodels, kitchens, bathrooms, flooring, and commercial tenant finish. Working inside occupied buildings means coordinating with property managers, protecting common areas, and scheduling noisy work and deliveries around guests.',
+    ],
+    permits:
+      'Copper Mountain is unincorporated, so building permits go through Summit County. Most projects also need approval from the building owners association before work starts. We handle the submittals for both.',
+    focus: {
+      commercial: ['tenant-finish', 'general-contracting', 'construction-management'],
+      residential: ['kitchen-remodeling', 'bathroom-remodeling', 'flooring', 'exteriors'],
     },
   },
 ];
