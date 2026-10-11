@@ -292,4 +292,24 @@ export const CITIES = [
       residential: ['kitchen-remodeling', 'bathroom-remodeling', 'flooring', 'exteriors'],
     },
   },
+  {
+    slug: 'steamboat-springs-co',
+    name: 'Steamboat Springs',
+    region: 'mountain',
+    county: 'Routt County',
+    title: 'General Contractor in Steamboat Springs, CO | Standard Building Company',
+    description:
+      'General contractor serving Steamboat Springs, Colorado. Home and condo remodeling, additions, decks, garages and shops, exteriors, tenant finish, and commercial construction.',
+    lede: 'Remodeling, additions, shops, and commercial construction in Steamboat Springs, in the Yampa Valley on US 40.',
+    local: [
+      'Steamboat Springs is the Routt County seat, at about 6,700 feet in the Yampa Valley on US 40, west of Rabbit Ears Pass. It is a working town as much as a resort: a historic downtown along Lincoln Avenue, condominiums and lodging at the base of the ski area, neighborhoods in between, and ranch land running out in every direction.',
+      'That range shows up in the work. Downtown storefronts and offices need tenant finish, base-area condos need remodeling, in-town homes get additions and exterior replacements, and rural properties need shops, barns, and garages. Snowfall is heavy, so roofs, decks, and entries have to be designed for the load and for where the snow sheds.',
+    ],
+    permits:
+      'Building permits for Steamboat Springs and the rest of Routt County are issued by the Routt County Regional Building Department, with planning review handled by the city inside city limits and by the county outside them. We confirm what your address needs and handle the submittal.',
+    focus: {
+      commercial: ['tenant-finish', 'general-contracting', 'design-build'],
+      residential: ['home-additions', 'kitchen-remodeling', 'decks-outdoor-living', 'garages-adus'],
+    },
+  },
 ];

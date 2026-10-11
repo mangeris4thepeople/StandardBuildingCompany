@@ -62,7 +62,7 @@ function AboutBody() {
         More than management.<br />We're in it with you.
       </h2>
       <p className="about__body">
-        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We serve commercial, industrial, and government clients, and homeowners, across Northern Colorado including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range. We also build in the mountain towns, including <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, and <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>.
+        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We serve commercial, industrial, and government clients, and homeowners, across Northern Colorado including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range. We also build in the mountain towns, including <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
       </p>
       <p className="about__body">
         What sets us apart is the depth of what we offer. We don't just manage projects. We consult. From early-stage <a href="/commercial/construction-management/">pre-construction planning</a>, budgeting, and feasibility through full construction delivery across all CSI divisions, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
@@ -93,7 +93,7 @@ function AreasBody({ heading = 'Where we work' }) {
       <div className="areas__text">
         <h2 className="areas__headline">{heading}</h2>
         <p className="areas__body">
-          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range, and in the mountain towns of Eagle, Pitkin, Grand, and Summit counties.
+          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range, and in the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.
         </p>
         {AREA_REGIONS.map((r) => (
           <React.Fragment key={r.key}>
