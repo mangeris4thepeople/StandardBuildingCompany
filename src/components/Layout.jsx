@@ -168,7 +168,10 @@ export function Faq({ items }) {
           onToggle={(e) => { if (e.currentTarget.open) track('faq_open', { question: f.q }); }}
         >
           <summary><h3>{f.q}</h3></summary>
-          <p>{f.a}</p>
+          <p>
+            {f.a}
+            {f.href && <> <a className="faq__more" href={f.href}>{f.linkLabel}</a></>}
+          </p>
         </details>
       ))}
     </div>

@@ -1509,6 +1509,10 @@ textarea:focus-visible {
   .footer__col li a { display: block; padding: 0.3rem 0; font-size: 15px; }
 }
 
+/* Questions on the home page and hubs link through to the service they came from. */
+.faq__more { white-space: nowrap; }
+.faq__more::after { content: " \2192"; }
+
 /* ============================================================
    BRASS ON LIGHT AND DARK SURFACES
    ============================================================ */

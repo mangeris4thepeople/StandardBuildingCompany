@@ -7,6 +7,30 @@ import { HeroDrawing, AreaMap } from './Drawings.jsx';
 
 const areaLinks = AREAS.map((a) => ({ href: a.path, label: `${a.name}, CO` }));
 
+// Questions for the home page and hubs are the lead question from each service page,
+// so the wording has one source and each answer links to the page it came from.
+function leadQuestions(services) {
+  return services.map((s) => ({ ...s.faqs[0], href: `${s.path}#faq`, linkLabel: `More on ${s.short.toLowerCase()}` }));
+}
+
+const HOME_FAQ_SLUGS = {
+  commercial: ['general-contracting', 'tenant-finish', 'design-build'],
+  residential: ['kitchen-remodeling', 'basement-finishing', 'garages-adus'],
+};
+const HOME_FAQS = leadQuestions(
+  ['commercial', 'residential'].flatMap((g) => HOME_FAQ_SLUGS[g].map((slug) => findService(g, slug)))
+);
+
+function FaqPanel({ items, more }) {
+  return (
+    <div className="prose prose--wide">
+      <h2>Common questions</h2>
+      <Faq items={items} />
+      {more}
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------------ HOME */
 
 function Hero() {
@@ -168,6 +192,20 @@ export function HomePage() {
             tabs={[
               { key: 'about', label: 'About us', content: <AboutBody /> },
               { key: 'areas', label: 'Where we work', content: <AreasBody /> },
+              {
+                key: 'faq',
+                label: 'FAQ',
+                content: (
+                  <FaqPanel
+                    items={HOME_FAQS}
+                    more={
+                      <p className="prose__note">
+                        Every service page has its own questions. Start with <a href={GROUPS.commercial.path + '#faq'}>commercial</a> or <a href={GROUPS.residential.path + '#faq'}>residential</a>.
+                      </p>
+                    }
+                  />
+                ),
+              },
             ]}
           />
         </div>
@@ -206,7 +244,7 @@ export function HubPage({ page }) {
               },
               {
                 key: 'process',
-                label: 'How it runs',
+                label: 'Process',
                 content: (
                   <div className="prose prose--wide">
                     <h2>How a project runs</h2>
@@ -219,9 +257,10 @@ export function HubPage({ page }) {
               },
               {
                 key: 'areas',
-                label: 'Where we work',
+                label: 'Areas',
                 content: <AreasBody heading={`${group.label} work across Northern Colorado`} />,
               },
+              { key: 'faq', label: 'FAQ', content: <FaqPanel items={leadQuestions(SERVICES[page.group])} /> },
             ]}
           />
         </div>
