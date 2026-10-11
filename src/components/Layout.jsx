@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SITE, GROUPS, PROCESS } from '../content/site.js';
 import { SERVICES, AREAS } from '../content/pages.js';
 import { track } from '../track.js';
@@ -80,6 +80,101 @@ export function MobileBar() {
   );
 }
 
+// Tabbed compartments. Every panel is in the prerendered HTML, so search engines and AI crawlers
+// read all of it; visitors see one panel at a time instead of scrolling past everything.
+// A tab can be linked directly: /#residential or /commercial/tenant-finish/#faq opens that tab.
+export function Tabs({ id, label, tabs, tone = 'light' }) {
+  const [active, setActive] = useState(tabs[0].key);
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    const fromHash = () => {
+      const key = window.location.hash.slice(1);
+      if (!tabs.some((t) => t.key === key)) return;
+      setActive(key);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ block: 'start' });
+    };
+    fromHash();
+    window.addEventListener('hashchange', fromHash);
+    return () => window.removeEventListener('hashchange', fromHash);
+  }, []);
+
+  const select = (key) => {
+    if (key === active) return;
+    setActive(key);
+    track('tab_select', { tab_group: id, tab_name: key });
+    if (window.history && window.history.replaceState) window.history.replaceState(null, '', `#${key}`);
+  };
+
+  const onKeyDown = (e) => {
+    const i = tabs.findIndex((t) => t.key === active);
+    let next = -1;
+    if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = tabs.length - 1;
+    if (next < 0) return;
+    e.preventDefault();
+    select(tabs[next].key);
+    const btn = listRef.current && listRef.current.children[next];
+    if (btn) btn.focus();
+  };
+
+  return (
+    <div className={`tabs tabs--${tone}`} id={id}>
+      <div className="tabs__list" role="tablist" aria-label={label} ref={listRef} onKeyDown={onKeyDown}>
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            role="tab"
+            id={`${id}-tab-${t.key}`}
+            className="tabs__tab"
+            aria-selected={active === t.key}
+            aria-controls={`${id}-panel-${t.key}`}
+            tabIndex={active === t.key ? 0 : -1}
+            onClick={() => select(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      {tabs.map((t) => (
+        <div
+          key={t.key}
+          role="tabpanel"
+          id={`${id}-panel-${t.key}`}
+          className="tabs__panel"
+          aria-labelledby={`${id}-tab-${t.key}`}
+          hidden={active !== t.key}
+          data-tabpanel
+        >
+          {t.content}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Questions collapse to one line each and open on tap. The answers stay in the HTML.
+export function Faq({ items }) {
+  return (
+    <div className="faq">
+      {items.map((f) => (
+        <details
+          className="faq__item"
+          key={f.q}
+          onToggle={(e) => { if (e.currentTarget.open) track('faq_open', { question: f.q }); }}
+        >
+          <summary><h3>{f.q}</h3></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  );
+}
+
 export function Breadcrumbs({ trail }) {
   if (!trail || trail.length < 2) return null;
   return (
@@ -122,7 +217,6 @@ export function ServiceCards({ services, variant = 'dark', headingLevel = 3 }) {
         <a className="service-card" key={s.path} href={s.path}>
           <H className="service-card__title">{s.short}</H>
           <p className="service-card__desc">{s.card}</p>
-          <span className="service-card__more">Learn more</span>
         </a>
       ))}
     </div>
@@ -227,6 +321,7 @@ export function Contact({
               </div>
             ) : (
               <form className="contact__form" onSubmit={handleSubmit}>
+                <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
                   <input id="name" name="name" type="text" autoComplete="name" required value={form.name} onChange={handleChange} placeholder="Your name" />
@@ -235,6 +330,8 @@ export function Contact({
                   <label htmlFor="phone">Phone</label>
                   <input id="phone" name="phone" type="tel" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(970) 000-0000" />
                 </div>
+                </div>
+                <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <input id="email" name="email" type="email" autoComplete="email" required value={form.email} onChange={handleChange} placeholder="your@email.com" />
@@ -248,9 +345,10 @@ export function Contact({
                     <option value="other">Not sure yet</option>
                   </select>
                 </div>
+                </div>
                 <div className="form-group">
                   <label htmlFor="message">Message</label>
-                  <textarea id="message" name="message" rows="5" required value={form.message} onChange={handleChange} placeholder="Tell us about your project..." />
+                  <textarea id="message" name="message" rows="4" required value={form.message} onChange={handleChange} placeholder="Tell us about your project..." />
                 </div>
                 <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" className="form-honeypot" aria-hidden="true" />
                 <button type="submit" className="btn btn--primary btn--full" disabled={status === 'sending'}>
@@ -262,6 +360,33 @@ export function Contact({
         </div>
       </div>
     </section>
+  );
+}
+
+// A footer column. On phones the list is collapsed behind its heading; on wider screens it is
+// always open. The links are in the HTML either way.
+function FooterCol({ title, href, links }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`footer__col${open ? ' footer__col--open' : ''}`}>
+      <div className="footer__col-head">
+        <a href={href} className="footer__heading">{title}</a>
+        <button
+          type="button"
+          className="footer__toggle"
+          aria-expanded={open}
+          aria-label={`${open ? 'Hide' : 'Show'} ${title} links`}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span aria-hidden="true" />
+        </button>
+      </div>
+      <ul>
+        {links.map((l) => (
+          <li key={l.href}><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -278,30 +403,21 @@ export function Footer() {
             <a href={SITE.phoneHref} className="footer__phone">{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`} className="footer__email">{SITE.email}</a>
           </div>
-          <div className="footer__col">
-            <a href={GROUPS.commercial.path} className="footer__heading">Commercial</a>
-            <ul>
-              {SERVICES.commercial.map((s) => (
-                <li key={s.path}><a href={s.path}>{s.short}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div className="footer__col">
-            <a href={GROUPS.residential.path} className="footer__heading">Residential</a>
-            <ul>
-              {SERVICES.residential.map((s) => (
-                <li key={s.path}><a href={s.path}>{s.short}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div className="footer__col">
-            <a href="/service-areas/" className="footer__heading">Service Areas</a>
-            <ul>
-              {AREAS.map((a) => (
-                <li key={a.path}><a href={a.path}>{a.name}</a></li>
-              ))}
-            </ul>
-          </div>
+          <FooterCol
+            title="Commercial"
+            href={GROUPS.commercial.path}
+            links={SERVICES.commercial.map((s) => ({ href: s.path, label: s.short }))}
+          />
+          <FooterCol
+            title="Residential"
+            href={GROUPS.residential.path}
+            links={SERVICES.residential.map((s) => ({ href: s.path, label: s.short }))}
+          />
+          <FooterCol
+            title="Service Areas"
+            href="/service-areas/"
+            links={AREAS.map((a) => ({ href: a.path, label: a.name }))}
+          />
         </div>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>
       </div>
