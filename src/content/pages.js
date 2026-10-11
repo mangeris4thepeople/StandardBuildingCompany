@@ -71,9 +71,9 @@ const areasHub = {
   path: '/service-areas/',
   title: 'Service Areas: Northern Colorado & Mountain Towns | Standard Building Company',
   description:
-    'Standard Building Company serves Loveland, Fort Collins, Greeley, Longmont, Windsor, and Estes Park, plus the mountain towns of Vail, Avon, Aspen, Winter Park, and Copper Mountain.',
+    'Standard Building Company serves Loveland, Fort Collins, Greeley, Longmont, Windsor, and Estes Park, plus the mountain towns of Vail, Avon, Aspen, Winter Park, Copper Mountain, and Steamboat Springs.',
   h1: 'Northern Colorado and Mountain Town Service Areas',
-  lede: 'Based in Loveland and working across the northern Front Range and into the mountain towns of Eagle, Pitkin, Grand, and Summit counties.',
+  lede: 'Based in Loveland and working across the northern Front Range and into the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.',
   priority: '0.7',
 };
 

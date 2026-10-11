@@ -37,6 +37,7 @@ function business() {
       { '@type': 'AdministrativeArea', name: 'Pitkin County, CO' },
       { '@type': 'AdministrativeArea', name: 'Grand County, CO' },
       { '@type': 'AdministrativeArea', name: 'Summit County, CO' },
+      { '@type': 'AdministrativeArea', name: 'Routt County, CO' },
     ],
   };
 }
