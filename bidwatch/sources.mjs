@@ -23,9 +23,13 @@ const ROW_HELPER = `
     return out;
   };`;
 
+const NOT_IN_AREA = /aspen trails|avondale|eagle county regional|boulder/i;
 const areaFor = (name) => {
   const n = name.toLowerCase();
-  for (const [region, words] of Object.entries(AREA_WORDS)) if (words.some((w) => n.includes(w))) return region;
+  if (NOT_IN_AREA.test(n)) return null;
+  for (const [region, words] of Object.entries(AREA_WORDS)) {
+    if (words.some((w) => new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(n))) return region;
+  }
   return null;
 };
 
@@ -45,8 +49,10 @@ export async function collectBidNet(ctx) {
         for (const a of d.querySelectorAll('a[href]')) {
           const h = a.getAttribute('href') || '';
           const m = /^(?:https?:\/\/www\.bidnetdirect\.com)?\/colorado\/([a-z0-9-]+)\/?$/.exec(h);
-          const name = (a.textContent || '').replace(/Organization logo of/i, '').replace(/var g_.*/, '').replace(/\s+/g, ' ').trim();
-          if (m && name && m[1] !== 'participating-buyers' && m[1] !== 'solicitations') found[m[1]] = name.slice(0, Math.ceil(name.length / 2)).trim() || name;
+          const raw = (a.textContent || '').replace(/\s+/g, ' ');
+          const tip = /text:\s*"([^"]+)"/.exec(raw);
+          const name = (tip ? tip[1] : raw.replace(/Organization logo of/i, '').split(/ var | componentId/)[0]).trim();
+          if (m && name && m[1] !== 'participating-buyers' && m[1] !== 'solicitations') found[m[1]] = name.slice(0, 80);
           if (/participating-buyers/.test(h) && !/changePage/.test(h)) queue.push(h.replace(/^https?:\/\/www\.bidnetdirect\.com/, ''));
         }
       } catch (e) { /* keep going */ }

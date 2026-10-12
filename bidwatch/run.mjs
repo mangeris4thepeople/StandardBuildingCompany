@@ -74,10 +74,9 @@ function buildDigest({ rows, statewide, coverage, pages, directoryCount }, sent)
   const isNew = (b) => !sent.has(b.url);
   const sections = [
     ...REGIONS.map((r) => [`New this week: ${r}`, areaCon.filter((b) => b.region === r && isNew(b))]),
-    ['New this week: other Colorado agencies on BidNet', otherCon.filter(isNew)],
     ['Everything still open in the service area', areaCon],
   ];
-  const newCount = sections.slice(0, 4).reduce((n, [, l]) => n + l.length, 0);
+  const newCount = sections.slice(0, 3).reduce((n, [, l]) => n + l.length, 0);
   const failed = coverage.filter((c) => !c.ok);
 
   const item = (b) => `<tr><td style="padding:10px 0;border-bottom:1px solid #e6e2d6">
@@ -94,6 +93,7 @@ function buildDigest({ rows, statewide, coverage, pages, directoryCount }, sent)
     <h1 style="font-size:22px;margin:4px 0 2px;color:#0F231C">BidWatch: ${newCount} new construction bid${newCount === 1 ? '' : 's'}</h1>
     <div style="font-size:13px;color:#6b6b6b">State, county, city, and municipal bids for the service area &middot; ${esc(todayLong)}</div>
     ${sections.map(section).join('\n')}
+    <p style="font-size:13px;color:#444;margin:18px 0 0">BidNet also lists ${otherCon.length} construction bids from Colorado agencies outside the service area. <a href="https://www.bidnetdirect.com/colorado/solicitations/open-bids" style="color:#0F231C;font-weight:bold">Browse them on BidNet</a>.</p>
     ${h2('Coverage')}
     <p style="font-size:13px;color:#444;margin:8px 0">Checked ${coverage.length} agency sources (${coverage.filter((c) => c.ok).length} reachable), the State of Colorado VSS portal, and ${pages} pages of the BidNet Colorado feed.</p>
     ${failed.length ? `<p style="font-size:13px;color:#444;margin:8px 0"><b>Could not read this week:</b> ${esc(failed.map(covLine).join(', '))}.</p>` : ''}
@@ -106,7 +106,7 @@ function buildDigest({ rows, statewide, coverage, pages, directoryCount }, sent)
     `Could not read: ${failed.map(covLine).join(', ') || 'none'}`, `Not covered: ${NOT_COVERED.join('; ')}`].join('\n');
 
   const subject = newCount ? `SBC BidWatch: ${newCount} new construction bid${newCount === 1 ? '' : 's'}, ${todayLong}` : `SBC BidWatch: no new bids, ${todayLong}`;
-  const reportedUrls = [...areaCon, ...otherCon].map((b) => b.url);
+  const reportedUrls = areaCon.map((b) => b.url);
   return { subject, html, text, newCount, reportedUrls, areaCon, otherCon, directoryCount };
 }
 
