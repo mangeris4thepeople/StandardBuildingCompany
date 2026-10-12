@@ -7,12 +7,12 @@ export const COMMERCIAL = [
     card: 'Full-service project delivery from groundbreaking to closeout. We self-perform and subcontract with the same standard of accountability on every job.',
     title: 'Commercial General Contractor in Loveland, CO | Standard Building Company',
     description:
-      'Commercial general contractor based in Loveland, CO. Ground-up construction, renovations, and build-outs across Northern Colorado, delivered across all 33 CSI divisions.',
+      'Commercial general contractor based in Loveland, CO. Ground-up construction, renovations, and build-outs across Northern Colorado and the mountain towns.',
     h1: 'Commercial General Contractor in Northern Colorado',
     lede: 'Ground-up buildings, renovations, and build-outs for owners who want one accountable contractor from the first budget to the certificate of occupancy.',
     intro: [
       'Standard Building Company is a commercial general contractor based in Loveland, Colorado. We build for private owners, developers, and public agencies across Larimer and Weld counties and the northern Front Range.',
-      'We manage and deliver work across all 33 CSI divisions. Some of it we self-perform, the rest goes to subcontractors we hold to the same standard. Either way, you deal with one contractor who owns the schedule, the budget, and the result.',
+      'We manage and deliver every trade on the job, from sitework and concrete through finishes and building systems. Some of it we self-perform, the rest goes to subcontractors we hold to the same standard. Either way, you deal with one contractor who owns the schedule, the budget, and the result.',
     ],
     scopeTitle: 'What we build',
     scope: [
