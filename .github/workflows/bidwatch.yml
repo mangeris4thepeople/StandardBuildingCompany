@@ -58,6 +58,17 @@ jobs:
           MAIL_FROM: ${{ secrets.MAIL_FROM }}
           GITHUB_TOKEN: ${{ github.token }}
         run: node run.mjs
+      - name: Discovery probe (test branch only)
+        if: github.event_name == 'push'
+        working-directory: bidwatch
+        run: node probe.mjs
+      - name: Publish preview (test branch only)
+        if: always() && github.event_name == 'push'
+        run: |
+          mkdir -p /tmp/preview && cp -r bidwatch/out/. /tmp/preview/ 2>/dev/null || true
+          cd /tmp/preview && git init -q -b bidwatch-preview
+          git config user.name "sbc-bidwatch" && git config user.email "actions@users.noreply.github.com"
+          git add -A && git commit -q -m "Preview" && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" bidwatch-preview
       - name: Keep the digest
         if: always()
         uses: actions/upload-artifact@v4
