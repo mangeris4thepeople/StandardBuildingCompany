@@ -73,10 +73,13 @@ function AboutBody() {
         More than management.<br />We're in it with you.
       </h2>
       <p className="about__body">
-        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We serve commercial, industrial, and government clients, and homeowners, across Northern Colorado including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range. We also build in the mountain towns, including <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
+        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We build for commercial, industrial, and government clients, and for homeowners. Our work spans mid-rise, multifamily, retail, healthcare, senior living, industrial, municipal facilities, <a href="/commercial/tenant-finish/">tenant finish</a>, and <a href="/residential/">residential remodeling</a>. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
       </p>
       <p className="about__body">
-        What sets us apart is the depth of what we offer. We don't just manage projects. We consult. From early-stage <a href="/commercial/construction-management/">pre-construction planning</a>, budgeting, and feasibility through full construction delivery across all CSI divisions, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
+        Our leadership comes from the field. Behind SBC is a commercial construction superintendent who has been responsible for the schedule, the subcontractors, safety, inspections, and turnover to the owner on projects across those markets. That background is held to ICC National Standard General Building Contractor (A) certification and OSHA and MSHA 40-hour safety training, and every SBC project is run with the same discipline, commercial or residential.
+      </p>
+      <p className="about__body">
+        What sets us apart is the depth of what we offer. We don't just manage projects. We consult. From early-stage <a href="/commercial/construction-management/">pre-construction planning</a>, budgeting, and feasibility through full construction delivery, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
       </p>
       <div className="about__stats">
         <div className="about__stat">
@@ -85,8 +88,8 @@ function AboutBody() {
         </div>
         <div className="about__stat-divider" />
         <div className="about__stat">
-          <span className="about__stat-number">33</span>
-          <span className="about__stat-label">CSI Divisions</span>
+          <span className="about__stat-number">ICC (A)</span>
+          <span className="about__stat-label">Certified</span>
         </div>
         <div className="about__stat-divider" />
         <div className="about__stat">
