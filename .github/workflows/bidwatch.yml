@@ -58,10 +58,6 @@ jobs:
           MAIL_FROM: ${{ secrets.MAIL_FROM }}
           GITHUB_TOKEN: ${{ github.token }}
         run: node run.mjs
-      - name: Discovery probe (test branch only)
-        if: github.event_name == 'push'
-        working-directory: bidwatch
-        run: node probe.mjs
       - name: Publish preview (test branch only)
         if: always() && github.event_name == 'push'
         run: |

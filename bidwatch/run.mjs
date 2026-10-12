@@ -2,13 +2,13 @@
 // Runs in GitHub Actions. See .github/workflows/bidwatch.yml for the schedule.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
-import { AGENCIES, INCLUDE, EXCLUDE } from './agencies.mjs';
+import { INCLUDE, EXCLUDE, NOT_COVERED } from './agencies.mjs';
+import { newContext, collectBidNet, collectTownSites, collectStateVSS } from './sources.mjs';
 
 const DRY_RUN = process.env.DRY_RUN === '1';
 const FORCE = process.env.FORCE === '1';
 const MAIL_TO = process.env.MAIL_TO || 'info@standardbuildingcompany.net';
 const STATE_DIR = process.env.STATE_DIR || 'state';
-const START = 'https://www.bidnetdirect.com/colorado/solicitations/open-bids';
 
 const denver = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', ...opts }).format(new Date());
 const today = denver({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -31,79 +31,18 @@ async function shouldRun() {
 
 async function scrape() {
   const browser = await chromium.launch();
-  const page = await browser.newPage({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    locale: 'en-US',
-    viewport: { width: 1366, height: 900 },
-  });
+  const ctx = await newContext(browser);
+  const coverage = []; let rows = []; let statewide = []; let pages = 0; let directoryCount = 0;
   try {
-    await page.goto(START, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    // BidNet serves a JavaScript bot check first. Wait for real listings to appear.
-    await page.waitForSelector('a[href*="/solicitations/open-bids/"]', { timeout: 90000 });
+    const bn = await collectBidNet(ctx);
+    rows.push(...bn.rows); coverage.push(...bn.coverage); statewide = bn.statewide; pages = bn.pages; directoryCount = bn.directoryCount;
   } catch (e) {
-    const title = await page.title().catch(() => '');
-    const snippet = (await page.evaluate(() => document.body.innerText.slice(0, 300)).catch(() => '')).replace(/\s+/g, ' ');
-    await browser.close();
-    throw new Error(`BidNet listings did not load (bot check not cleared or site down). Page title: "${title}". Page text: "${snippet}"`);
+    coverage.push({ agency: 'BidNet Direct (all BidNet agencies)', region: 'All', source: 'BidNet', ok: false, count: 0, error: String(e).slice(0, 200) });
   }
-
-  const result = await page.evaluate(async (agencies) => {
-    const D = /(\d{1,2}\/\d{1,2}\/\d{2,4})/;
-    const closing = (t) => {
-      const c = /(clos(?:ing|es|ed|e)?|due|deadline)/i.exec(t || '');
-      if (c) { const m = D.exec(t.slice(c.index + c[0].length)); if (m) return m[0]; }
-      const m2 = D.exec(t || ''); return m2 ? m2[0] : '';
-    };
-    const rows = (doc, agency, region) => {
-      const out = []; const seen = new Set();
-      for (const a of doc.querySelectorAll('a[href*="/solicitations/open-bids/"]')) {
-        const title = (a.textContent || '').replace(/\s+/g, ' ').trim();
-        if (title.length < 12) continue;
-        let n = a; let ctx = title;
-        for (let i = 0; i < 4; i++) {
-          n = n.parentElement; if (!n) break;
-          if (n.querySelectorAll('a[href*="/solicitations/"]').length > 1) break;
-          const t = (n.textContent || '').replace(/\s+/g, ' ').trim();
-          if (t.length > 400) break; ctx = t;
-        }
-        const url = new URL(a.getAttribute('href'), location.origin).href.split('?')[0];
-        if (seen.has(url)) continue; seen.add(url);
-        out.push({ agency, region, title, closes: closing(ctx), url });
-      }
-      return out;
-    };
-    const parse = async (path) => {
-      const r = await fetch(path);
-      return { status: r.status, doc: new DOMParser().parseFromString(await r.text(), 'text/html') };
-    };
-
-    const local = []; const coverage = [];
-    for (const [agency, slug, region] of agencies) {
-      try {
-        const { status, doc } = await parse('/colorado/' + slug);
-        const got = rows(doc, agency, region);
-        coverage.push({ agency, slug, region, status, count: got.length });
-        local.push(...got);
-      } catch (e) { coverage.push({ agency, slug, region, status: 0, count: 0, error: String(e) }); }
-    }
-
-    const statewide = []; const seen = new Set(); let pages = 0;
-    for (let p = 1; p <= 30; p++) {
-      let got = 0;
-      try {
-        const { doc } = await parse('/colorado/solicitations/open-bids?pageNumberSelect=' + p);
-        for (const row of rows(doc, 'Statewide (agency shown on listing)', 'Statewide')) {
-          if (seen.has(row.url)) continue; seen.add(row.url); got++; statewide.push(row);
-        }
-      } catch (e) { /* keep going */ }
-      if (got === 0 && p > 2) break;
-      pages = p;
-    }
-    return { local, statewide, coverage, pages };
-  }, AGENCIES);
-
+  const towns = await collectTownSites(ctx); rows.push(...towns.rows); coverage.push(...towns.coverage);
+  const state = await collectStateVSS(ctx); rows.push(...state.rows); coverage.push(...state.coverage);
   await browser.close();
-  return result;
+  return { rows, statewide, coverage, pages, directoryCount };
 }
 
 const lower = (s) => s.toLowerCase();
@@ -120,45 +59,55 @@ const sortKey = (b) => {
 const byClosing = (a, b) => sortKey(a).localeCompare(sortKey(b));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function buildDigest({ local, statewide, coverage, pages }, sent) {
-  const localUrls = new Set(local.map((b) => b.url));
-  const localCon = local.filter((b) => isConstruction(b.title)).sort(byClosing);
-  const stateCon = statewide.filter((b) => !localUrls.has(b.url) && isConstruction(b.title)).sort(byClosing);
+const REGIONS = ['Northern Colorado', 'Mountain Towns', 'State of Colorado'];
+
+function buildDigest({ rows, statewide, coverage, pages, directoryCount }, sent) {
+  // Same bid can appear on BidNet and on a town site. Keep one per title+agency.
+  const seenKey = new Set(); const area = [];
+  for (const b of rows) {
+    const key = (b.agency.replace(/^State: /, '') + '|' + b.title).toLowerCase().replace(/[^a-z0-9|]/g, '');
+    if (seenKey.has(key)) continue; seenKey.add(key); area.push(b);
+  }
+  const areaUrls = new Set(area.map((b) => b.url));
+  const areaCon = area.filter((b) => isConstruction(b.title)).sort(byClosing);
+  const otherCon = statewide.filter((b) => !areaUrls.has(b.url) && isConstruction(b.title)).sort(byClosing);
   const isNew = (b) => !sent.has(b.url);
   const sections = [
-    ['New this week: Northern Colorado', localCon.filter((b) => isNew(b) && b.region === 'Northern Colorado')],
-    ['New this week: Mountain Towns', localCon.filter((b) => isNew(b) && b.region === 'Mountain Towns')],
-    ['New this week: Rest of Colorado', stateCon.filter(isNew)],
-    ['All open: Northern Colorado and Mountain Towns', localCon],
+    ...REGIONS.map((r) => [`New this week: ${r}`, areaCon.filter((b) => b.region === r && isNew(b))]),
+    ['New this week: other Colorado agencies on BidNet', otherCon.filter(isNew)],
+    ['Everything still open in the service area', areaCon],
   ];
-  const newCount = sections[0][1].length + sections[1][1].length + sections[2][1].length;
-  const missing = coverage.filter((c) => c.count === 0);
+  const newCount = sections.slice(0, 4).reduce((n, [, l]) => n + l.length, 0);
+  const failed = coverage.filter((c) => !c.ok);
 
   const item = (b) => `<tr><td style="padding:10px 0;border-bottom:1px solid #e6e2d6">
       <a href="${esc(b.url)}" style="color:#0F231C;font-weight:bold;text-decoration:none">${esc(b.title)}</a>
-      <div style="color:#6b6b6b;font-size:12px;margin-top:3px">${esc(b.agency)}${b.closes ? ' &middot; closes ' + esc(b.closes) : ''}</div></td></tr>`;
-  const section = ([name, list]) => `<h2 style="font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#0F231C;border-bottom:2px solid #C8963E;padding-bottom:5px;margin:26px 0 4px">${esc(name)} (${list.length})</h2>
-    ${list.length ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0">${list.map(item).join('')}</table>` : '<p style="color:#6b6b6b;font-size:13px;margin:8px 0">Nothing this week.</p>'}`;
+      <div style="color:#6b6b6b;font-size:12px;margin-top:3px">${esc(b.agency)}${b.closes ? ' &middot; closes ' + esc(b.closes) : ''}${b.number ? ' &middot; ' + esc(b.number) : ''}</div></td></tr>`;
+  const h2 = (t) => `<h2 style="font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#0F231C;border-bottom:2px solid #C8963E;padding-bottom:5px;margin:26px 0 4px">${t}</h2>`;
+  const section = ([name, list]) => `${h2(`${esc(name)} (${list.length})`)}
+    ${list.length ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0">${list.map(item).join('')}</table>` : '<p style="color:#6b6b6b;font-size:13px;margin:8px 0">Nothing new.</p>'}`;
+  const covLine = (c) => `${c.agency} (${c.source})`;
 
   const html = `<div style="background:#f4f1ea;padding:24px 12px;font-family:Helvetica,Arial,sans-serif;color:#1a1a1a">
   <div style="max-width:680px;margin:0 auto;background:#ffffff;padding:26px 28px;border-top:4px solid #C8963E">
     <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6b6b6b">Standard Building Company</div>
     <h1 style="font-size:22px;margin:4px 0 2px;color:#0F231C">BidWatch: ${newCount} new construction bid${newCount === 1 ? '' : 's'}</h1>
-    <div style="font-size:13px;color:#6b6b6b">Week of ${esc(todayLong)}</div>
+    <div style="font-size:13px;color:#6b6b6b">State, county, city, and municipal bids for the service area &middot; ${esc(todayLong)}</div>
     ${sections.map(section).join('\n')}
-    <h2 style="font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#0F231C;border-bottom:2px solid #C8963E;padding-bottom:5px;margin:26px 0 4px">Coverage</h2>
-    <p style="font-size:13px;color:#444;margin:8px 0">Checked ${coverage.length} named agencies and ${pages} pages of the Colorado statewide feed (${statewide.length} open listings).</p>
-    ${missing.length ? `<p style="font-size:13px;color:#444;margin:8px 0">No open listings found under these names, which can mean nothing is posted or that the agency posts elsewhere: ${esc(missing.map((c) => c.agency).join(', '))}.</p>` : ''}
-    <p style="font-size:11px;color:#8a8a8a;margin-top:22px;border-top:1px solid #e6e2d6;padding-top:12px">Automated pull of public BidNet Direct (Rocky Mountain E-Purchasing System) pages. Titles are matched by keyword, so some listings will not be a fit and some may be missed. Confirm every opportunity on the issuing agency's official posting before acting. BidNet registration is required to submit.</p>
+    ${h2('Coverage')}
+    <p style="font-size:13px;color:#444;margin:8px 0">Checked ${coverage.length} agency sources (${coverage.filter((c) => c.ok).length} reachable), the State of Colorado VSS portal, and ${pages} pages of the BidNet Colorado feed.</p>
+    ${failed.length ? `<p style="font-size:13px;color:#444;margin:8px 0"><b>Could not read this week:</b> ${esc(failed.map(covLine).join(', '))}.</p>` : ''}
+    <p style="font-size:13px;color:#444;margin:8px 0"><b>Not covered (sites block automated access):</b> ${esc(NOT_COVERED.join('; '))}. Check these by hand.</p>
+    <p style="font-size:11px;color:#8a8a8a;margin-top:22px;border-top:1px solid #e6e2d6;padding-top:12px">Automated weekly pull of public bid postings. Only titles that look like construction work are listed, so some listings will not be a fit and some may be missed. State solicitations link to the Colorado VSS portal; search the solicitation number shown. Confirm every opportunity on the issuing agency's official posting before acting.</p>
   </div></div>`;
 
-  const text = [`Standard Building Company BidWatch, week of ${todayLong}`, `${newCount} new construction bids`, '',
-    ...sections.flatMap(([name, list]) => [`${name.toUpperCase()} (${list.length})`, ...(list.length ? list.map((b) => `- ${b.title} | ${b.agency}${b.closes ? ' | closes ' + b.closes : ''}\n  ${b.url}`) : ['  Nothing this week.']), '']),
-    `Coverage: ${coverage.length} named agencies, ${pages} statewide pages.`].join('\n');
+  const text = [`Standard Building Company BidWatch, ${todayLong}`, `${newCount} new construction bids`, '',
+    ...sections.flatMap(([name, list]) => [`${name.toUpperCase()} (${list.length})`, ...(list.length ? list.map((b) => `- ${b.title} | ${b.agency}${b.closes ? ' | closes ' + b.closes : ''}\n  ${b.url}`) : ['  Nothing new.']), '']),
+    `Could not read: ${failed.map(covLine).join(', ') || 'none'}`, `Not covered: ${NOT_COVERED.join('; ')}`].join('\n');
 
   const subject = newCount ? `SBC BidWatch: ${newCount} new construction bid${newCount === 1 ? '' : 's'}, ${todayLong}` : `SBC BidWatch: no new bids, ${todayLong}`;
-  const reportedUrls = [...localCon, ...stateCon].map((b) => b.url);
-  return { subject, html, text, newCount, reportedUrls, localCon, stateCon };
+  const reportedUrls = [...areaCon, ...otherCon].map((b) => b.url);
+  return { subject, html, text, newCount, reportedUrls, areaCon, otherCon, directoryCount };
 }
 
 async function sendEmail(subject, html, text) {
@@ -197,7 +146,7 @@ if (await shouldRun()) {
   let data;
   try {
     data = await scrape();
-    if (!data.local.length && !data.statewide.length) throw new Error('BidNet returned zero listings.');
+    if (!data.rows.length && !data.statewide.length) throw new Error('Every source returned zero listings.');
   } catch (e) {
     console.error('RUN FAILED:', e.message);
     await deliver(`SBC BidWatch: run failed, ${todayLong}`, `<p>The weekly bid collection did not complete.</p><p>${esc(e.message)}</p>`, `The weekly bid collection did not complete.\n\n${e.message}`);
@@ -206,13 +155,13 @@ if (await shouldRun()) {
   const sent = new Set((await readState('sent.txt')).split('\n').filter(Boolean));
   const digest = buildDigest(data, sent);
 
-  console.log(`Local rows: ${data.local.length}. Statewide rows: ${data.statewide.length} over ${data.pages} pages.`);
-  console.log(`Construction matches: ${digest.localCon.length} local, ${digest.stateCon.length} statewide. New: ${digest.newCount}.`);
-  console.log('Per-agency coverage:'); for (const c of data.coverage) console.log(`  ${String(c.count).padStart(3)}  http ${c.status}  ${c.agency} (${c.slug})`);
+  const summary = { rows: data.rows.length, statewide: data.statewide.length, pages: data.pages, directory: data.directoryCount, areaConstruction: digest.areaCon.length, otherConstruction: digest.otherCon.length, newCount: digest.newCount, coverage: data.coverage };
+  console.log(JSON.stringify(summary, null, 1));
 
   await mkdir('out', { recursive: true });
   await writeFile('out/digest.html', digest.html);
   await writeFile('out/digest.txt', digest.text);
+  await writeFile('out/summary.json', JSON.stringify(summary, null, 1));
 
   const how = await deliver(digest.subject, digest.html, digest.text);
   if (how === 'email' || how === 'issue') {
