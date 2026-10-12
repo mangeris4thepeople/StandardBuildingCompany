@@ -52,7 +52,7 @@ const hubs = [
     h1: 'Commercial Construction in Northern Colorado',
     lede: 'General contracting, tenant finish, design-build, and construction management for commercial, industrial, and government clients.',
     intro: [
-      'Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, we self-perform and manage work spanning all 33 CSI construction divisions.',
+      'Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, we self-perform and manage work across every trade, from sitework and structure through finishes and building systems.',
       'That covers concrete foundations and flatwork, masonry, structural steel and miscellaneous metals, framing, roofing and waterproofing, doors and storefronts, interior finishes, fire suppression, plumbing, HVAC, electrical and low voltage, earthwork, exterior improvements, and underground utilities.',
     ],
     priority: '0.9',
