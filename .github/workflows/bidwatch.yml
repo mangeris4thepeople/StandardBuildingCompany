@@ -1,0 +1,59 @@
+name: SBC BidWatch
+
+# Weekly digest of state, county, city, and municipal construction bids for the
+# Standard Building Company service area, emailed Wednesday at 5 PM Denver time.
+# GitHub schedules in UTC, so two times are listed (one for daylight time, one for standard time);
+# bidwatch/run.mjs sends only on the run that lands at or after 5 PM Wednesday in Denver.
+on:
+  schedule:
+    - cron: '0 23 * * 3'
+    - cron: '0 0 * * 4'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Collect and build the digest without sending it'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: bidwatch
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        working-directory: bidwatch
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Collect and send
+        working-directory: bidwatch
+        env:
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+          MAIL_TO: info@standardbuildingcompany.net
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node run.mjs
+      - name: Keep the digest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest
+          path: bidwatch/out/
+          if-no-files-found: ignore

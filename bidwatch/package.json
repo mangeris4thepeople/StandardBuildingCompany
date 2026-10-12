@@ -1,0 +1,9 @@
+{
+  "name": "sbc-bidwatch",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "nodemailer": "^6.9.14",
+    "playwright": "^1.47.0"
+  }
+}
