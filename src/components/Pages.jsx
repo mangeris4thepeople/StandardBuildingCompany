@@ -3,6 +3,17 @@ import { SITE, GROUPS, OTHER_AREAS } from '../content/site.js';
 import { SERVICES, AREAS, AREA_REGIONS, findService } from '../content/pages.js';
 import { trailFor } from '../content/head.js';
 import { PageHero, ServiceCards, ProcessSteps, SideCta, SideLinks, Contact, Tabs, Faq } from './Layout.jsx';
+
+// Lowercase a service name for use mid-sentence, keeping acronyms like ADUs.
+const lc = (t) => t.split(' ').map((w) => (/[A-Z]{2,}/.test(w) ? w : w.toLowerCase())).join(' ');
+
+// "A, B, and C" as links.
+const linkList = (items) => items.map((c, i) => (
+  <React.Fragment key={c.path}>
+    {i > 0 && (i === items.length - 1 ? ', and ' : ', ')}
+    <a href={c.path}>{c.name}</a>
+  </React.Fragment>
+));
 import { HeroDrawing, AreaMap } from './Drawings.jsx';
 
 const areaLinks = AREAS.map((a) => ({ href: a.path, label: `${a.name}, CO` }));
@@ -299,6 +310,13 @@ export function ServicePage({ page }) {
                 },
               ]}
             />
+            <h2>Where we provide {lc(s.short)}</h2>
+            <p>
+              Standard Building Company is based in Loveland and provides {lc(s.short)} across Northern Colorado, including {linkList(AREA_REGIONS[0].areas)}.
+            </p>
+            <p>
+              We also take {lc(s.short)} projects in the mountain towns of {linkList(AREA_REGIONS[1].areas)}.
+            </p>
           </article>
           <aside className="side">
             <SideCta />
@@ -314,7 +332,7 @@ export function ServicePage({ page }) {
         </div>
       </section>
       <Contact
-        heading={`Talk to us about ${s.short.toLowerCase()}.`}
+        heading={`Talk to us about ${lc(s.short)}.`}
         body="Send the details or give us a call. We will ask a few questions, look at the site or the drawings, and tell you what it will take."
         projectType={page.group}
       />
@@ -365,7 +383,8 @@ export function AreasPage({ page }) {
 export function AreaPage({ page }) {
   const a = AREAS.find((c) => c.slug === page.slug);
   const pick = (group) => a.focus[group].map((slug) => findService(group, slug)).filter(Boolean);
-  const others = AREAS.filter((c) => c.slug !== a.slug).map((c) => ({ href: c.path, label: `${c.name}, CO` }));
+  const nearby = (a.nearby || []).map((slug) => AREAS.find((c) => c.slug === slug)).filter(Boolean);
+  const others = AREA_REGIONS.flatMap((r) => r.areas).filter((c) => c.slug !== a.slug).map((c) => ({ href: c.path, label: `${c.name}, CO` }));
   return (
     <>
       <PageHero
@@ -377,42 +396,66 @@ export function AreaPage({ page }) {
       <section className="page-body">
         <div className="container page-body__inner">
           <article className="prose">
+            <h2>Building in {a.name}</h2>
+            {a.local.map((p) => <p key={p}>{p}</p>)}
+
+            {a.projects && (
+              <>
+                <h2>Projects we take on in {a.name}</h2>
+                <ul className="link-list">
+                  {a.projects.map((p) => (
+                    <li key={p.title}><strong>{p.title}</strong><span>{p.body}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {a.conditions && (
+              <>
+                <h2>What building in {a.name} takes</h2>
+                <ul className="check-list check-list--single">
+                  {a.conditions.map((c) => <li key={c}>{c}</li>)}
+                </ul>
+              </>
+            )}
+
+            <h2>Permits and jurisdiction in {a.name}</h2>
+            <p>{a.permits}</p>
+
+            <h2>Services in {a.name}</h2>
             <Tabs
-              id="details"
-              label={`Building in ${a.name}`}
-              tabs={[
-                {
-                  key: 'local',
-                  label: 'Local notes',
-                  content: (
-                    <>
-                      <h2>Building in {a.name}</h2>
-                      {a.local.map((p) => <p key={p}>{p}</p>)}
-                      <h2>Permits and jurisdiction</h2>
-                      <p>{a.permits}</p>
-                    </>
-                  ),
-                },
-                ...['commercial', 'residential'].map((g) => ({
-                  key: g,
-                  label: GROUPS[g].label,
-                  content: (
-                    <>
-                      <h2>{GROUPS[g].name} in {a.name}</h2>
-                      <ul className="link-list">
-                        {pick(g).map((s) => (
-                          <li key={s.path}>
-                            <a href={s.path}>{s.short}</a>
-                            <span>{s.card}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <p><a href={GROUPS[g].path}>All {GROUPS[g].label.toLowerCase()} services</a></p>
-                    </>
-                  ),
-                })),
-              ]}
+              id="services"
+              label={`Services in ${a.name}`}
+              tabs={['commercial', 'residential'].map((g) => ({
+                key: g,
+                label: GROUPS[g].label,
+                content: (
+                  <>
+                    <h3>{GROUPS[g].name} in {a.name}</h3>
+                    <ul className="link-list">
+                      {pick(g).map((s) => (
+                        <li key={s.path}>
+                          <a href={s.path}>{s.short}</a>
+                          <span>{s.card}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p><a href={GROUPS[g].path}>All {GROUPS[g].label.toLowerCase()} services</a></p>
+                  </>
+                ),
+              }))}
             />
+
+            {a.faqs && (
+              <>
+                <h2>{a.name} construction questions</h2>
+                <Faq items={a.faqs} />
+              </>
+            )}
+
+            {nearby.length > 0 && (
+              <p className="prose__note">Also nearby: {linkList(nearby)}.</p>
+            )}
           </article>
           <aside className="side">
             <SideCta />

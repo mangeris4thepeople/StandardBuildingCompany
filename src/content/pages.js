@@ -12,7 +12,15 @@ export const SERVICES = {
 
 export const ALL_SERVICES = [...SERVICES.commercial, ...SERVICES.residential];
 
-export const AREAS = CITIES.map((c) => ({ region: 'northern', ...c, path: `/service-areas/${c.slug}/` }));
+// Page titles are kept to 60 characters so search results show them in full.
+const BRANDS = [' | Standard Building Co.', ' | Standard Building'];
+function areaTitle(name) {
+  for (const b of BRANDS) { const t = `General Contractor in ${name}, CO${b}`; if (t.length <= 60) return t; }
+  const t = `${name}, CO General Contractor | Standard Building`;
+  return t.length <= 60 ? t : `General Contractor in ${name}, Colorado`;
+}
+
+export const AREAS = CITIES.map((c) => ({ region: 'northern', title: areaTitle(c.name), ...c, path: `/service-areas/${c.slug}/` }));
 
 // Service areas grouped for listings. Order here is the order the groups appear on the page.
 export const AREA_REGIONS = [
@@ -69,9 +77,9 @@ const hubs = [
 const areasHub = {
   type: 'areas',
   path: '/service-areas/',
-  title: 'Service Areas: Northern Colorado & Mountain Towns | Standard Building Company',
+  title: 'Contractor Service Areas: Northern Colorado & Mountain Towns',
   description:
-    'Standard Building Company serves Loveland, Fort Collins, Greeley, Longmont, Windsor, and Estes Park, plus the mountain towns of Vail, Avon, Aspen, Winter Park, Copper Mountain, and Steamboat Springs.',
+    'Contractor serving Loveland, Fort Collins, Greeley, Longmont, Windsor, Estes Park, Vail, Avon, Aspen, Winter Park, Copper Mountain, and Steamboat Springs.',
   h1: 'Northern Colorado and Mountain Town Service Areas',
   lede: 'Based in Loveland and working across the northern Front Range and into the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.',
   priority: '0.7',
@@ -80,7 +88,7 @@ const areasHub = {
 const contact = {
   type: 'contact',
   path: '/contact/',
-  title: 'Contact Standard Building Company | Loveland, CO General Contractor',
+  title: 'Contact Standard Building Company | Loveland Contractor',
   description:
     'Call (970) 430-5884 or send a message to talk through your commercial or residential construction project in Loveland, Northern Colorado, or the mountain towns.',
   h1: 'Contact Standard Building Company',
