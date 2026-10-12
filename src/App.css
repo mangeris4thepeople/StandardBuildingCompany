@@ -1006,6 +1006,8 @@ textarea:focus-visible {
   border-bottom: 1px solid var(--gray-light);
 }
 .link-list a { font-weight: 600; }
+.link-list strong { font-weight: 700; color: var(--ink); }
+.check-list--single { grid-template-columns: 1fr; }
 .link-list span { font-size: 15px; color: var(--gray-dark); }
 
 .side {

@@ -124,9 +124,26 @@ function graphFor(page) {
       name: `General contracting in ${a.name}, CO`,
       serviceType: 'General Contractor',
       url: absoluteUrl(page.path),
+      description: a.description,
       provider: { '@id': BUSINESS_ID },
-      areaServed: { '@type': 'City', name: `${a.name}, CO` },
+      areaServed: {
+        '@type': 'City',
+        name: `${a.name}, CO`,
+        containedInPlace: { '@type': 'AdministrativeArea', name: `${a.county}, CO` },
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: `Construction services in ${a.name}`,
+        itemListElement: ['commercial', 'residential'].flatMap((g) => a.focus[g].map((slug) => findService(g, slug))).filter(Boolean)
+          .map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: absoluteUrl(s.path) } })),
+      },
     });
+    if (a.faqs && a.faqs.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        mainEntity: a.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+      });
+    }
   }
 
   if (page.type === 'contact') {
@@ -136,7 +153,18 @@ function graphFor(page) {
   return { '@context': 'https://schema.org', '@graph': graph };
 }
 
+// Search results cut titles off around 60 characters. Shorten the brand suffix until the title fits.
+function fitTitle(title) {
+  if (title.length <= 60) return title;
+  for (const [from, to] of [[' | Standard Building Company', ' | Standard Building Co.'], [' | Standard Building Company', ' | Standard Building']]) {
+    const t = title.replace(from, to);
+    if (t.length <= 60) return t;
+  }
+  return title.replace(/ \| Standard Building Company$/, '');
+}
+
 export function buildHead(page) {
+  page = { ...page, title: fitTitle(page.title) };
   const url = absoluteUrl(page.path);
   const image = SITE.url + SITE.ogImage;
   const robots = page.noindex
