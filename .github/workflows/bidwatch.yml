@@ -1,8 +1,9 @@
 name: SBC BidWatch
 
-# Weekly public-bid digest, emailed Wednesday at 5 PM Denver time.
-# GitHub schedules in UTC, so two times are listed (one for daylight time, one for standard time)
-# and bidwatch/run.mjs only sends on the run that lands at or after 5 PM Wednesday in Denver.
+# Weekly digest of state, county, city, and municipal construction bids for the
+# Standard Building Company service area, emailed Wednesday at 5 PM Denver time.
+# GitHub schedules in UTC, so two times are listed (one for daylight time, one for standard time);
+# bidwatch/run.mjs sends only on the run that lands at or after 5 PM Wednesday in Denver.
 on:
   schedule:
     - cron: '0 23 * * 3'
@@ -13,11 +14,9 @@ on:
         description: 'Collect and build the digest without sending it'
         type: boolean
         default: false
-  push:
-    branches: [bidwatch-test]
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 concurrency:
@@ -27,7 +26,7 @@ concurrency:
 jobs:
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,17 +37,10 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           npx playwright install --with-deps chromium
-      - name: Restore sent-bid log
-        run: |
-          mkdir -p bidwatch/state
-          if git fetch origin bidwatch-state --depth 1 2>/dev/null; then
-            git show FETCH_HEAD:sent.txt > bidwatch/state/sent.txt 2>/dev/null || true
-            git show FETCH_HEAD:last_sent.txt > bidwatch/state/last_sent.txt 2>/dev/null || true
-          fi
       - name: Collect and send
         working-directory: bidwatch
         env:
-          DRY_RUN: ${{ (github.event_name == 'push' || inputs.dry_run) && '1' || '0' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
           MAIL_TO: info@standardbuildingcompany.net
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -58,13 +50,6 @@ jobs:
           MAIL_FROM: ${{ secrets.MAIL_FROM }}
           GITHUB_TOKEN: ${{ github.token }}
         run: node run.mjs
-      - name: Publish preview (test branch only)
-        if: always() && github.event_name == 'push'
-        run: |
-          mkdir -p /tmp/preview && cp -r bidwatch/out/. /tmp/preview/ 2>/dev/null || true
-          cd /tmp/preview && git init -q -b bidwatch-preview
-          git config user.name "sbc-bidwatch" && git config user.email "actions@users.noreply.github.com"
-          git add -A && git commit -q -m "Preview" && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" bidwatch-preview
       - name: Keep the digest
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,14 +57,3 @@ jobs:
           name: digest
           path: bidwatch/out/
           if-no-files-found: ignore
-      - name: Save sent-bid log
-        if: success()
-        run: |
-          cd bidwatch/state
-          [ -f last_sent.txt ] || exit 0
-          git init -q -b bidwatch-state
-          git config user.name "sbc-bidwatch"
-          git config user.email "actions@users.noreply.github.com"
-          git add sent.txt last_sent.txt
-          git commit -q -m "Update sent-bid log" || exit 0
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" bidwatch-state

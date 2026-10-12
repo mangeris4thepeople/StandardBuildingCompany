@@ -1,6 +1,6 @@
 // SBC BidWatch: collects open public construction bids from BidNet Direct and emails a weekly digest.
 // Runs in GitHub Actions. See .github/workflows/bidwatch.yml for the schedule.
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { INCLUDE, EXCLUDE, NOT_COVERED } from './agencies.mjs';
 import { newContext, collectBidNet, collectTownSites, collectStateVSS } from './sources.mjs';
@@ -8,15 +8,34 @@ import { newContext, collectBidNet, collectTownSites, collectStateVSS } from './
 const DRY_RUN = process.env.DRY_RUN === '1';
 const FORCE = process.env.FORCE === '1';
 const MAIL_TO = process.env.MAIL_TO || 'info@standardbuildingcompany.net';
-const STATE_DIR = process.env.STATE_DIR || 'state';
 
 const denver = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', ...opts }).format(new Date());
 const today = denver({ year: 'numeric', month: '2-digit', day: '2-digit' });
 const todayLong = denver({ month: 'long', day: 'numeric', year: 'numeric' });
 
-async function readState(name) {
-  try { return (await readFile(`${STATE_DIR}/${name}`, 'utf8')).trim(); } catch { return ''; }
+// The sent-bid log lives in one closed GitHub issue labeled "bidwatch-state", so nothing is
+// committed to the website repository and no extra branch is needed.
+const GH = 'https://api.github.com/repos/' + (process.env.GITHUB_REPOSITORY || '');
+const ghHeaders = () => ({ authorization: `Bearer ${process.env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'content-type': 'application/json' });
+let stateIssue = null;
+async function loadState() {
+  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPOSITORY) return { last_sent: '', sent: [] };
+  const r = await fetch(`${GH}/issues?labels=bidwatch-state&state=all&per_page=1`, { headers: ghHeaders() });
+  const list = r.ok ? await r.json() : [];
+  stateIssue = list[0] || null;
+  try { return JSON.parse(/```json\n([\s\S]*?)\n```/.exec(stateIssue.body)[1]); } catch { return { last_sent: '', sent: [] }; }
 }
+async function saveState(state) {
+  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPOSITORY) return;
+  const body = 'Sent-bid log for the weekly BidWatch digest. Updated automatically; leave this issue closed.\n\n```json\n' + JSON.stringify(state) + '\n```';
+  if (stateIssue) {
+    await fetch(`${GH}/issues/${stateIssue.number}`, { method: 'PATCH', headers: ghHeaders(), body: JSON.stringify({ body }) });
+  } else {
+    const r = await fetch(`${GH}/issues`, { method: 'POST', headers: ghHeaders(), body: JSON.stringify({ title: 'BidWatch sent-bid log', body, labels: ['bidwatch-state'] }) });
+    if (r.ok) { const issue = await r.json(); await fetch(`${GH}/issues/${issue.number}`, { method: 'PATCH', headers: ghHeaders(), body: JSON.stringify({ state: 'closed' }) }); }
+  }
+}
+const state = await loadState();
 
 // The schedule fires at two UTC times so one of them is 5 PM in Denver in both summer and winter.
 // Only the run that lands on Wednesday at or after 5 PM Denver time sends, and only once per day.
@@ -25,7 +44,7 @@ async function shouldRun() {
   const weekday = denver({ weekday: 'short' });
   const hour = Number(denver({ hour: 'numeric', hour12: false }));
   if (weekday !== 'Wed' || hour < 17) { console.log(`Not Wednesday 5 PM in Denver yet (${weekday} ${hour}:00). Skipping.`); return false; }
-  if ((await readState('last_sent.txt')) === today) { console.log('Already sent today. Skipping.'); return false; }
+  if (state.last_sent === today) { console.log('Already sent today. Skipping.'); return false; }
   return true;
 }
 
@@ -152,7 +171,7 @@ if (await shouldRun()) {
     await deliver(`SBC BidWatch: run failed, ${todayLong}`, `<p>The weekly bid collection did not complete.</p><p>${esc(e.message)}</p>`, `The weekly bid collection did not complete.\n\n${e.message}`);
     process.exit(1);
   }
-  const sent = new Set((await readState('sent.txt')).split('\n').filter(Boolean));
+  const sent = new Set(state.sent || []);
   const digest = buildDigest(data, sent);
 
   const summary = { rows: data.rows.length, statewide: data.statewide.length, pages: data.pages, directory: data.directoryCount, areaConstruction: digest.areaCon.length, otherConstruction: digest.otherCon.length, newCount: digest.newCount, coverage: data.coverage };
@@ -165,10 +184,8 @@ if (await shouldRun()) {
 
   const how = await deliver(digest.subject, digest.html, digest.text);
   if (how === 'email' || how === 'issue') {
-    await mkdir(STATE_DIR, { recursive: true });
-    const merged = [...new Set([...sent, ...digest.reportedUrls])].slice(-3000);
-    await writeFile(`${STATE_DIR}/sent.txt`, merged.join('\n') + '\n');
-    await writeFile(`${STATE_DIR}/last_sent.txt`, today + '\n');
+    const merged = [...new Set([...sent, ...digest.reportedUrls])].slice(-600);
+    await saveState({ last_sent: today, sent: merged });
   }
   if (how === 'none') process.exit(1);
 }
