@@ -17,6 +17,14 @@ export const SITE = {
   ogImage: '/og-image.png',
 };
 
+// Company social profiles. Shown as icon links in the nav and footer on every page,
+// and listed as sameAs in the business schema.
+export const SOCIAL = [
+  { name: 'LinkedIn', key: 'linkedin', url: 'https://www.linkedin.com/company/standardbuildingcompany/' },
+  { name: 'Instagram', key: 'instagram', url: 'https://www.instagram.com/standardbuildingco/' },
+  { name: 'Facebook', key: 'facebook', url: 'https://www.facebook.com/standardbuildingco/' },
+];
+
 export const GROUPS = {
   commercial: {
     slug: 'commercial',

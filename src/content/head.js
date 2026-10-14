@@ -1,5 +1,5 @@
 // Builds the per-page <head> block: title, description, canonical, social tags, and JSON-LD.
-import { SITE, GROUPS, OTHER_AREAS } from './site.js';
+import { SITE, GROUPS, OTHER_AREAS, SOCIAL } from './site.js';
 import { ALL_SERVICES, AREAS, findService, absoluteUrl } from './pages.js';
 
 const esc = (s) =>
@@ -19,6 +19,7 @@ function business() {
     email: SITE.email,
     foundingDate: SITE.founded,
     priceRange: '$$',
+    sameAs: SOCIAL.map((s) => s.url),
     address: {
       '@type': 'PostalAddress',
       streetAddress: SITE.streetAddress,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SITE, GROUPS, PROCESS } from '../content/site.js';
+import { SITE, GROUPS, PROCESS, SOCIAL } from '../content/site.js';
 import { SERVICES, AREAS } from '../content/pages.js';
 import { track } from '../track.js';
 
@@ -9,6 +9,45 @@ const NAV_LINKS = [
   { label: 'Service Areas', href: '/service-areas/' },
   { label: 'Contact', href: '/contact/' },
 ];
+
+const SOCIAL_ICONS = {
+  linkedin: (
+    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.25H3zM9.5 9.75h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13v5.64h-4v-5c0-1.19-.02-2.73-1.66-2.73-1.67 0-1.92 1.3-1.92 2.64V21H9.5z" />
+  ),
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="2" />
+      <circle cx="17.4" cy="6.6" r="1.3" />
+    </>
+  ),
+  facebook: (
+    <path d="M13.5 21v-7.6h2.56l.38-2.97H13.5V8.53c0-.86.24-1.45 1.47-1.45h1.57V4.43c-.27-.04-1.2-.12-2.29-.12-2.27 0-3.82 1.38-3.82 3.93v2.19H7.87v2.97h2.56V21z" />
+  ),
+};
+
+export function SocialLinks({ className = '' }) {
+  return (
+    <ul className={`social ${className}`.trim()} aria-label="Standard Building Company on social media">
+      {SOCIAL.map((s) => (
+        <li key={s.key}>
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Standard Building Company on ${s.name}`}
+            title={s.name}
+            onClick={() => track('social_click', { network: s.key, link_url: s.url })}
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false">
+              {SOCIAL_ICONS[s.key]}
+            </svg>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 function useScrolled() {
   const [scrolled, setScrolled] = useState(false);
@@ -52,6 +91,9 @@ export function Nav({ solid = false, current = '' }) {
             </a>
           </li>
         ))}
+        <li className="nav__social-item">
+          <SocialLinks className="social--nav" />
+        </li>
         <li>
           <a href={SITE.phoneHref} className="nav__cta">
             {SITE.phoneDisplay}
@@ -402,6 +444,7 @@ export function Footer() {
             </div>
             <a href={SITE.phoneHref} className="footer__phone">{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`} className="footer__email">{SITE.email}</a>
+            <SocialLinks className="social--footer" />
           </div>
           <FooterCol
             title="Commercial"
