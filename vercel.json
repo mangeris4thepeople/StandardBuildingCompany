@@ -12,5 +12,6 @@
       "destination": "https://www.standardbuildingcompany.net/:path*",
       "permanent": true
     }
-  ]
+  ],
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)instagram' ':(exclude).github'"
 }
