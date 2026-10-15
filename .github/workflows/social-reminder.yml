@@ -1,0 +1,59 @@
+name: Social reminders
+
+# Every morning: if any platform's last scheduled post is 2 days away (or less), an Instagram
+# post in the next week has no photos, or the LinkedIn token is about to expire, open (or update)
+# one GitHub issue that tags the owner, so GitHub emails the reminder. Also runs the plan check.
+on:
+  schedule:
+    - cron: '45 14 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check plans
+        id: check
+        env:
+          LINKEDIN_TOKEN_DATE: ${{ vars.LINKEDIN_TOKEN_DATE }}
+        run: |
+          python3 social/tools/check_plan.py | tail -25 || true
+          python3 social/tools/remind.py
+      - name: Open or update reminder issue
+        if: steps.check.outputs.reminders != ''
+        uses: actions/github-script@v7
+        env:
+          REMINDERS: ${{ steps.check.outputs.reminders }}
+        with:
+          script: |
+            const title = 'Social posts: action needed';
+            const body = `@${context.repo.owner} heads up so no platform goes a day without a post:\n\n`
+              + process.env.REMINDERS
+              + `\n\nHow to load the next round: see social/README.md, "Every 90 days".`
+              + `\n\n_Checked ${new Date().toISOString().slice(0, 10)}. This issue closes itself once everything is queued._`;
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, state: 'open', labels: 'social-reminder' });
+            if (open.length) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: open[0].number, body });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ['social-reminder'] });
+            }
+      - name: Close reminder when all clear
+        if: steps.check.outputs.reminders == ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, state: 'open', labels: 'social-reminder' });
+            for (const i of open) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: i.number, state: 'closed' });
+            }

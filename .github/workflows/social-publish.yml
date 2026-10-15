@@ -1,0 +1,45 @@
+name: Social publisher
+
+# Publishes Standard Building Company posts from social/<platform>/posts.json to Instagram,
+# the Facebook Page, and the LinkedIn company page. Runs hourly; each platform posts anything
+# that came due in the last 20 hours and is not already live, so a late run catches up.
+# A platform whose secrets are not set only lists its queue. See social/README.md.
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only list what would be published'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        platform: [instagram, facebook, linkedin]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish due ${{ matrix.platform }} posts
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          GRAPH_VERSION: ${{ vars.GRAPH_VERSION }}
+          LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: python3 social/tools/publish.py ${{ matrix.platform }}

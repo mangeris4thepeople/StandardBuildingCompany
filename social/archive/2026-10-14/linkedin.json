@@ -1,0 +1,19 @@
+{
+ "posts": [
+  {
+   "n": 1,
+   "date": "2026-10-14",
+   "topic": "Dry-in is the most important date on a fall schedule",
+   "caption": "The most important date on a fall schedule isn't substantial completion. It's dry-in.",
+   "note": "daily email"
+  },
+  {
+   "n": "plan-1",
+   "date": "2026-10-15",
+   "time": "08:00",
+   "topic": "This or that: wood framing vs steel framing",
+   "caption": "Wood or steel? The framing decision gets made early and lives with the building for decades.\n\nWood framing: fast, familiar to every crew on the Front Range, easy to adjust in the field. Often the lower first cost on residential and small commercial work.\n\nLight-gauge steel: noncombustible, dimensionally straight, no rot or shrinkage. Under some code construction types it's allowed where wood isn't.\n\nNeither one is right every time. Building use, code construction type, height and area, and what your lender and insurer want all push the decision.\n\nOn a design-build job we make that call with the structural engineer and the budget on the same table, before the drawings get too far along to change cheaply.\n\nOwners and developers: what drove the structural system on your last project, cost, code, or schedule?",
+   "note": "Oct 15 LinkedIn post, also sent in the daily email"
+  }
+ ]
+}

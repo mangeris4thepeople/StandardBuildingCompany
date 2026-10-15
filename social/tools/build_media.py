@@ -1,23 +1,27 @@
 """Turn raw job photos into Instagram-ready media for posts that don't have any yet.
 
-Drop 1 to 3 photos per post into instagram/photos/ named by post number, for example
+Drop 1 to 3 photos per post into social/<platform>/photos/ named by post number, for example
 post31_1.jpg, post31_2.jpg, post31_3.jpg (in the order they should appear), then push.
-The "Instagram media" workflow runs this script and commits the results.
+The "Social media builder" workflow runs this script and commits the results.
 
 Carousel: 1080x1350 JPEGs, hook text on slide 1.
 Photo:    one 1080x1350 JPEG with the hook text.
 Reel:     1080x1920 H.264 MP4 with a slow push-in on each photo, the hook on screen for the
           first shot, and an SBC end card. Needs ffmpeg on the PATH.
 
-Usage: python3 instagram/tools/build_media.py            (build every post that has photos but no media)
-       python3 instagram/tools/build_media.py --force 31 (rebuild one post)
+Usage: python3 social/tools/build_media.py instagram             (build every post with photos but no media)
+       python3 social/tools/build_media.py instagram --force 31  (rebuild one post)
+Platforms: instagram, facebook, linkedin. A post's "hook" goes on the first image; leave it
+empty for clean photos. Facebook and LinkedIn Reels/videos are built the same way.
 """
 import json, os, subprocess, sys, tempfile, textwrap
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
-FONTS = os.path.join(ROOT, "fonts")
+SOCIAL = os.path.dirname(HERE)
+FONTS = os.path.join(SOCIAL, "fonts")
+PLATFORM = next((a for a in sys.argv[1:] if a in ("instagram", "facebook", "linkedin")), "instagram")
+ROOT = os.path.join(SOCIAL, PLATFORM)
 MANIFEST = os.path.join(ROOT, "posts.json")
 PHOTOS = os.path.join(ROOT, "photos")
 MEDIA = os.path.join(ROOT, "media")
@@ -206,16 +210,18 @@ def build_post(p, photo_paths, outdir):
     tag = f"{p['n']:02d}"
     if p["type"] == "REELS":
         out = os.path.join(outdir, f"post{tag}_reel.mp4")
-        make_reel(photos, p["hook"], out)
+        make_reel(photos, p.get("hook") or "", out)
         return [out]
+    hook = (p.get("hook") or "").strip()
+    first = (lambda ph: hook_slide(ph, hook)) if hook else plain_slide
     if p["type"] == "IMAGE":
         out = os.path.join(outdir, f"post{tag}_1.jpg")
-        hook_slide(photos[0], p["hook"]).save(out, quality=92)
+        first(photos[0]).save(out, quality=92)
         return [out]
     outs = []
     for i, ph in enumerate(photos):
         out = os.path.join(outdir, f"post{tag}_{i + 1}.jpg")
-        (hook_slide(ph, p["hook"]) if i == 0 else plain_slide(ph)).save(out, quality=92)
+        (first(ph) if i == 0 else plain_slide(ph)).save(out, quality=92)
         outs.append(out)
     return outs
 
@@ -229,7 +235,7 @@ def photos_for(n):
 
 
 def main(argv):
-    force = {int(a) for a in argv[argv.index("--force") + 1:]} if "--force" in argv else set()
+    force = {int(a) for a in argv[argv.index("--force") + 1:] if a.isdigit()} if "--force" in argv else set()
     manifest = json.load(open(MANIFEST))
     os.makedirs(MEDIA, exist_ok=True)
     changed = 0
@@ -242,7 +248,7 @@ def main(argv):
         outs = build_post(p, src, MEDIA)
         p["media"] = [os.path.basename(o) for o in outs]
         changed += 1
-        print(f"post {p['n']}: built {p['media']} from {len(src)} photo(s)")
+        print(f"{PLATFORM} post {p['n']}: built {p['media']} from {len(src)} photo(s)")
     if changed:
         with open(MANIFEST, "w") as fh:
             json.dump(manifest, fh, indent=1, ensure_ascii=False)

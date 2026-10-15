@@ -13,5 +13,5 @@
       "permanent": true
     }
   ],
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)instagram' ':(exclude).github'"
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)social' ':(exclude).github'"
 }

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""One-time helper: turn a short-lived Graph API Explorer token into the two GitHub secrets.
+"""One-time helper: turn a short-lived Graph API Explorer token into the Meta GitHub secrets.
 
-Prints IG_USER_ID and a Page access token that does not expire. Standard library only.
+Prints FB_PAGE_ID, IG_USER_ID and a Page access token (META_PAGE_TOKEN) that does not expire.
+Standard library only.
 
-  python instagram/tools/get_token.py
+  python social/tools/get_meta_token.py
 
 It asks for your Meta app ID, app secret, and the short-lived user token you generated in
 Graph API Explorer (permissions: instagram_basic, instagram_content_publish,
-pages_show_list, pages_read_engagement, business_management). Nothing is saved to disk.
+pages_show_list, pages_read_engagement, pages_manage_posts, business_management). Nothing is saved to disk.
 """
 import getpass
 import json
@@ -33,16 +34,18 @@ def main():
     pages = get("me/accounts", access_token=long_user, fields="id,name,access_token,instagram_business_account")
     found = False
     for page in pages.get("data", []):
-        ig = page.get("instagram_business_account")
-        if not ig:
-            continue
         found = True
-        username = get(ig["id"], access_token=page["access_token"], fields="username").get("username")
-        print("\nPage:", page["name"], "| Instagram:", username)
-        print("IG_USER_ID      =", ig["id"])
-        print("IG_ACCESS_TOKEN =", page["access_token"])
+        ig = page.get("instagram_business_account")
+        print("\nPage:", page["name"])
+        print("FB_PAGE_ID      =", page["id"])
+        if ig:
+            username = get(ig["id"], access_token=page["access_token"], fields="username").get("username")
+            print("IG_USER_ID      =", ig["id"], f"(@{username})")
+        else:
+            print("IG_USER_ID      = (no Instagram business account linked to this Page)")
+        print("META_PAGE_TOKEN =", page["access_token"])
     if not found:
-        print("No Page with a linked Instagram business account was returned. Check the token's permissions.")
+        print("No Pages were returned. Check the token's permissions.")
 
 
 if __name__ == "__main__":
