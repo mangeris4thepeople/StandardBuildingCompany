@@ -3,8 +3,8 @@
 
 Writes reminder text to stdout and, for the workflow, to $GITHUB_OUTPUT as `reminders`
 (empty when all is well). A reminder is raised when:
-  - a platform's last scheduled post is 2 days away or less (so the next 90 days get loaded
-    before a day is missed),
+  - a platform has 2 or fewer posts left in its plan (so the next 90 days, photos included,
+    get loaded before a day is missed),
   - an Instagram post in the next 7 days still has no photos,
   - the LinkedIn token is 55+ days old (LinkedIn tokens expire at 60 days), based on the
     LINKEDIN_TOKEN_DATE repository variable (YYYY-MM-DD) set when the token was created.
@@ -17,7 +17,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 SOCIAL = Path(__file__).resolve().parents[1]
-WARN_DAYS = int(os.environ.get("REMIND_DAYS_BEFORE") or 2)
+POSTS_LEFT = int(os.environ.get("REMIND_POSTS_LEFT") or 2)
 
 
 def main():
@@ -31,13 +31,12 @@ def main():
             continue
         when = lambda p: datetime.fromisoformat(f"{p['date']}T{p['time']}").replace(tzinfo=tz)
         last = max(when(p) for p in posts)
-        left = (last.date() - now.date()).days
-        if left <= WARN_DAYS:
-            if left >= 0:
-                notes.append(f"- **{plat.title()}**: last scheduled post is {last:%a %b %d} "
-                             f"({left} day{'s' if left != 1 else ''} away). Load the next 90 days now.")
-            else:
-                notes.append(f"- **{plat.title()}**: the plan ran out on {last:%a %b %d}. Nothing is posting.")
+        left = sum(1 for p in posts if when(p) > now)
+        if left == 0:
+            notes.append(f"- **{plat.title()}**: the plan ran out on {last:%a %b %d}. Nothing is posting.")
+        elif left <= POSTS_LEFT:
+            notes.append(f"- **{plat.title()}**: only {left} post{'s' if left != 1 else ''} left "
+                         f"(last one {last:%a %b %d}). Time to make the next 90 days, photos included.")
         if plat == "instagram":
             soon = [p for p in posts if now <= when(p) <= now + timedelta(days=7) and not p.get("media")]
             if soon:

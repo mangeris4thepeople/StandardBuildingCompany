@@ -6,7 +6,7 @@
 
 For each platform, posts dated before today move from social/<platform>/posts.json into
 social/archive/<YYYY-MM-DD>/<platform>.json (captions and topics only), and their media files
-are deleted so the repo stays small. Archived captions are still checked by check_plan.py,
+and raw photos are deleted so the repo stays small. Archived captions are still checked by check_plan.py,
 so the next cycle can't repeat them. Then add the new posts to each posts.json, run
 check_plan.py, and commit.
 """
@@ -33,6 +33,7 @@ def main(argv):
         done = [p for p in plan["posts"] if datetime.fromisoformat(p["date"]).date() < today]
         keep = [p for p in plan["posts"] if p not in done]
         files = [SOCIAL / plat / "media" / m for p in done for m in p.get("media", [])]
+        files += [f for p in done for f in (SOCIAL / plat / "photos").glob(f"post{p['n']:02d}_*")]
         print(f"{plat}: archiving {len(done)} posts, deleting {len(files)} media files, {len(keep)} remain")
         if dry or not done:
             continue

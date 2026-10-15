@@ -29,7 +29,7 @@ from zoneinfo import ZoneInfo
 
 SOCIAL = Path(__file__).resolve().parents[1]
 REPO = os.environ.get("GITHUB_REPOSITORY", "mangeris4thepeople/StandardBuildingCompany")
-BRANCH = os.environ.get("MEDIA_BRANCH", "main")
+BRANCH = os.environ.get("MEDIA_BRANCH") or "main"  # the workflow passes the exact commit
 GRAPH_VERSION = os.environ.get("GRAPH_VERSION") or "v25.0"
 GRAPH = f"https://graph.facebook.com/{GRAPH_VERSION}"
 GRAPH_VIDEO = f"https://graph-video.facebook.com/{GRAPH_VERSION}"

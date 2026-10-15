@@ -1,8 +1,10 @@
 name: Social publisher
 
-# Publishes Standard Building Company posts from social/<platform>/posts.json to Instagram,
-# the Facebook Page, and the LinkedIn company page. Runs hourly; each platform posts anything
-# that came due in the last 20 hours and is not already live, so a late run catches up.
+# Every hour:
+#   1. prepare: make sure the next 5 posts on every platform have photos (fill_photos.py),
+#      build any missing media (build_media.py), and commit it;
+#   2. publish: post anything that came due in the last 20 hours and is not already live on
+#      Instagram, the Facebook Page, or the LinkedIn company page.
 # A platform whose secrets are not set only lists its queue. See social/README.md.
 on:
   schedule:
@@ -14,17 +16,48 @@ on:
         type: boolean
         default: false
 
-permissions:
-  contents: read
-
 concurrency:
   group: social-publisher
   cancel-in-progress: false
 
 jobs:
-  publish:
+  prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Make sure the next 5 posts have photos
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: python3 social/tools/fill_photos.py --next 5
+      - name: Build missing media
+        run: |
+          if ls social/*/photos/post* >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+            python3 -m pip install --quiet pillow
+            for p in instagram facebook linkedin; do python3 social/tools/build_media.py "$p"; done
+          fi
+      - name: Commit
+        run: |
+          if [ -n "$(git status --porcelain social)" ]; then
+            git config user.name "sbc-social-bot"
+            git config user.email "sbc-social-bot@users.noreply.github.com"
+            git add social
+            git commit -m "Add photos and media for upcoming posts"
+            git push
+          fi
+
+  publish:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -32,6 +65,8 @@ jobs:
         platform: [instagram, facebook, linkedin]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Publish due ${{ matrix.platform }} posts
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
@@ -42,4 +77,6 @@ jobs:
           GRAPH_VERSION: ${{ vars.GRAPH_VERSION }}
           LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-        run: python3 social/tools/publish.py ${{ matrix.platform }}
+        run: |
+          export MEDIA_BRANCH=$(git rev-parse HEAD)
+          python3 social/tools/publish.py ${{ matrix.platform }}

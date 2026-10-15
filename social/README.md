@@ -18,14 +18,17 @@ through each platform's official API. No paid scheduler, no browser automation, 
 | `tools/build_media.py` | Photos to branded carousels, single images, or Reels |
 | `tools/check_plan.py` | Blocks repeats across all platforms and past cycles, dashes, hashtag limits |
 | `tools/remind.py` | Reminder logic used by the daily reminder workflow |
+| `tools/fill_photos.py` | Makes sure the next 5 posts per platform have photos |
 | `tools/new_cycle.py` | Archives a finished cycle and clears its media |
 
 Workflows in `.github/workflows/`:
 
-- **Social publisher** (`social-publish.yml`): hourly, posts what's due on each platform.
+- **Social publisher** (`social-publish.yml`): hourly. First it makes sure the **next 5 posts on
+  every platform have photos** (`fill_photos.py` pulls the post's chosen photos or free stock
+  photos if any are missing) and builds their media; then it posts what's due.
 - **Social media builder** (`social-media.yml`): runs when photos are pushed to any `photos/` folder.
 - **Social reminders** (`social-reminder.yml`): every morning. Opens a GitHub issue that tags you
-  (so GitHub emails you) when any platform's **last post is 2 days away**, when an Instagram
+  (so GitHub emails you) when any platform has **only 2 posts left**, when an Instagram
   post in the next week has no photos, or when the LinkedIn token is about to expire. The issue
   closes itself once everything is queued again.
 
@@ -99,5 +102,5 @@ The reminder issue tells you when. Then (or ask Claude to do it):
 - Rules the checker enforces: no em or en dashes, Instagram max 5 hashtags and 2,200 characters,
   LinkedIn 3,000 characters, no repeated topic or opening line anywhere, ever.
 
-LinkedIn posts in this plan go out as text until photos are added for them; each one lists a
-suggested free Unsplash photo under `photo_links`.
+Optional secrets `UNSPLASH_ACCESS_KEY` or `PEXELS_API_KEY` (both free) give the photo safety
+net better stock to choose from; without them it uses public-domain images from Openverse.
