@@ -1,0 +1,15 @@
+{
+  "name": "sbc-namecheap-lead-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node worker.js"
+  },
+  "dependencies": {
+    "imapflow": "^1.0.195",
+    "nodemailer": "^6.10.1",
+    "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.5.0"
+  }
+}
