@@ -177,7 +177,7 @@ export const RESIDENTIAL = [
     h1: 'Home Additions and Whole-Home Remodeling',
     lede: 'Room additions, primary suites, and full-house renovations for owners who like where they live and need the house to catch up.',
     intro: [
-      'When the lot is right and the neighborhood is right, adding on or renovating often makes more sense than moving. These are the residential projects where a general contractor with commercial experience earns its keep: foundations, structure, roof tie-ins, and every trade in sequence.',
+      'When the lot is right and the neighborhood is right, adding on or renovating often makes more sense than moving. These are the projects where a full general contractor earns its keep: foundations, structure, roof tie-ins, and every trade in sequence.',
       'We build additions and take on whole-home remodels across Loveland, Fort Collins, Berthoud, and the rest of Northern Colorado.',
     ],
     scopeTitle: 'Addition and remodel scope',
@@ -501,7 +501,7 @@ export const RESIDENTIAL = [
     h1: 'Garages, ADUs, and Outbuildings',
     lede: 'Detached garages, accessory dwelling units, shops, and pole barns, from zoning check and permit to finished building.',
     intro: [
-      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, utilities, and finishes. It is the kind of work a commercial general contractor is set up for.',
+      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, utilities, and finishes. It is the kind of work a full general contractor is set up for.',
       'We build garages, accessory dwelling units, shops, and agricultural buildings across Larimer and Weld counties, in town and on rural acreage.',
     ],
     scopeTitle: 'What we build',
@@ -558,7 +558,7 @@ export const RESIDENTIAL = [
     lede: 'Small repairs, new-home punch lists, and the list of things that never got finished, handled by a general contractor instead of a rotating cast of trades.',
     intro: [
       'Not every job is a remodel. Sometimes it is a door that sticks, a patch of damaged drywall, a window well that needs a cover, or a list of twenty small things that have been waiting for a year.',
-      'We take small jobs across Northern Colorado and bring the same standards to them that we bring to commercial work.',
+      'We take small jobs across Northern Colorado and bring the same standards to them that we bring to a full remodel.',
     ],
     scopeTitle: 'Small-job scope',
     scope: [

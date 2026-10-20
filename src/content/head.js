@@ -89,7 +89,7 @@ function graphFor(page) {
     });
     graph[0].hasOfferCatalog = {
       '@type': 'OfferCatalog',
-      name: 'Construction Services',
+      name: 'Home Remodeling Services',
       itemListElement: ALL_SERVICES.map((s) => ({
         '@type': 'Offer',
         itemOffered: { '@type': 'Service', name: s.name, url: absoluteUrl(s.path) },
@@ -127,8 +127,8 @@ function graphFor(page) {
     graph.push({
       '@type': 'Service',
       '@id': `${absoluteUrl(page.path)}#service`,
-      name: `General contracting in ${a.name}, CO`,
-      serviceType: 'General Contractor',
+      name: `Home remodeling in ${a.name}, CO`,
+      serviceType: 'Home Remodeling',
       url: absoluteUrl(page.path),
       description: a.description,
       provider: { '@id': BUSINESS_ID },
@@ -139,8 +139,8 @@ function graphFor(page) {
       },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: `Construction services in ${a.name}`,
-        itemListElement: ['commercial', 'residential'].flatMap((g) => a.focus[g].map((slug) => findService(g, slug))).filter(Boolean)
+        name: `Home remodeling services in ${a.name}`,
+        itemListElement: a.focus.residential.map((slug) => findService('residential', slug)).filter(Boolean)
           .map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: absoluteUrl(s.path) } })),
       },
     });

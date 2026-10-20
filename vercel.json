@@ -11,6 +11,26 @@
       ],
       "destination": "https://www.standardbuildingcompany.net/:path*",
       "permanent": true
+    },
+    {
+      "source": "/commercial",
+      "destination": "https://standarddevelopmentcompany.com/commercial/",
+      "permanent": true
+    },
+    {
+      "source": "/commercial/",
+      "destination": "https://standarddevelopmentcompany.com/commercial/",
+      "permanent": true
+    },
+    {
+      "source": "/commercial/:slug/",
+      "destination": "https://standarddevelopmentcompany.com/commercial/:slug/",
+      "permanent": true
+    },
+    {
+      "source": "/commercial/:slug",
+      "destination": "https://standarddevelopmentcompany.com/commercial/:slug/",
+      "permanent": true
     }
   ],
   "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)social' ':(exclude).github'"

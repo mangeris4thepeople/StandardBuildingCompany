@@ -19,18 +19,15 @@ export const SITE = {
 
 // Company social profiles. Shown as icon links in the nav and footer on every page,
 // and listed as sameAs in the business schema.
+// Commercial work is handled by Standard Development Company, a separate firm.
+export const COMMERCIAL_REFERRAL = { name: 'Standard Development Company', url: 'https://standarddevelopmentcompany.com/' };
+
 export const SOCIAL = [
   { name: 'LinkedIn', key: 'linkedin', url: 'https://www.linkedin.com/company/standardbuildingcompany/' },
   { name: 'Facebook', key: 'facebook', url: 'https://www.facebook.com/profile.php?id=61595003715696' },
 ];
 
 export const GROUPS = {
-  commercial: {
-    slug: 'commercial',
-    path: '/commercial/',
-    label: 'Commercial',
-    name: 'Commercial Construction',
-  },
   residential: {
     slug: 'residential',
     path: '/residential/',
@@ -43,24 +40,6 @@ export const GROUPS = {
 export const OTHER_AREAS = ['Milliken', 'Evans', 'Severance', 'Laporte', 'Masonville', 'Mead'];
 
 export const PROCESS = {
-  commercial: [
-    {
-      title: 'Scope and budget',
-      body: 'We walk the site or review the drawings with you, define the scope, and build a budget and schedule you can make decisions from.',
-    },
-    {
-      title: 'Pre-construction',
-      body: 'Constructability review, subcontractor pricing, long-lead procurement, and permit submittals happen before anyone mobilizes.',
-    },
-    {
-      title: 'Construction',
-      body: 'One superintendent runs the job. You get a schedule, regular updates, and a clear paper trail on every change.',
-    },
-    {
-      title: 'Closeout',
-      body: 'Punch list, final inspections, certificate of occupancy, and a complete turnover package with warranties and as-builts.',
-    },
-  ],
   residential: [
     {
       title: 'Walkthrough',
