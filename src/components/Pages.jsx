@@ -313,7 +313,9 @@ export function ServicePage({ page }) {
                 },
               ]}
             />
-            {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a> · Browse local basement finishing pages below.</p>}\n            <h2>Where we provide {lc(s.short)}</h2>\n            {page.slug === 'basement-finishing' && <ul className="link-list">{AREAS.map(a => <li key={a.slug}><a href={`/basement-finishing/${a.slug}/`}>Basement Finishing in {a.name}, CO</a></li>)}</ul>}
+            {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a> · Browse local basement finishing pages below.</p>}
+            <h2>Where we provide {lc(s.short)}</h2>
+            {page.slug === 'basement-finishing' && <ul className="link-list">{AREAS.map(a => <li key={a.slug}><a href={`/basement-finishing/${a.slug}/`}>Basement Finishing in {a.name}, CO</a></li>)}</ul>}
             <p>
               Standard Building Company is based in Loveland and provides {lc(s.short)} across Northern Colorado, including {linkList(AREA_REGIONS[0].areas)}.
             </p>
@@ -425,7 +427,9 @@ export function AreaPage({ page }) {
             <h2>Permits and jurisdiction in {a.name}</h2>
             <p>{a.permits}</p>
 
-            <h2>Basement finishing in {a.name}</h2>\n            <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>\n            <h2>Services in {a.name}</h2>
+            <h2>Basement finishing in {a.name}</h2>
+            <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>
+            <h2>Services in {a.name}</h2>
             <Tabs
               id="services"
               label={`Services in ${a.name}`}
@@ -499,7 +503,10 @@ export function PricingPage({ page }) {
               ))}
             </ul>
             <p><strong>How to use the ranges:</strong> Multiply the floor area being remodeled by the low and high figures for an early planning allowance. This does not account for all minimum project costs, design and permit fees, major structural work, or unexpected existing conditions. We will confirm what is included in a written estimate.</p>
-            <h2>What low-end and high-end mean</h2>\n            <p><strong>Low-end</strong> means practical, durable finishes such as laminate (Formica-style) countertops, linoleum or sheet-vinyl flooring, stock cabinets, and standard fixtures. <strong>High-end</strong> means premium finishes such as Italian tile, granite countertops, custom cabinetry, and upgraded plumbing and lighting fixtures. The specific finish materials depend on the room and project scope.</p>\n            <p>Finish quality is only one variable. Structural changes, moving plumbing, electrical upgrades, permits, site conditions, and labor can change the total even when economical materials are selected.</p>\n            <h2>What affects the price</h2>
+            <h2>What low-end and high-end mean</h2>
+            <p><strong>Low-end</strong> means practical, durable finishes such as laminate (Formica-style) countertops, linoleum or sheet-vinyl flooring, stock cabinets, and standard fixtures. <strong>High-end</strong> means premium finishes such as Italian tile, granite countertops, custom cabinetry, and upgraded plumbing and lighting fixtures. The specific finish materials depend on the room and project scope.</p>
+            <p>Finish quality is only one variable. Structural changes, moving plumbing, electrical upgrades, permits, site conditions, and labor can change the total even when economical materials are selected.</p>
+            <h2>What affects the price</h2>
             <ul className="link-list">{factors.map(([name, detail]) => <li key={name}><strong>{name}</strong><span>{detail}</span></li>)}</ul>
             <h2>What you receive</h2>
             <ul className="check-list">
