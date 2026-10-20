@@ -25,7 +25,7 @@ export const CITIES = [
     ],
     conditions: [
       'Expansive clay soils are common, so basement walls are framed to float and slabs need proper base, jointing, and drainage.',
-      'Hail is a regular event on the Front Range, which makes impact-rated roofing and durable siding worth considering.',
+      'Hail is a regular event on the Front Range, which makes durable, impact-resistant siding worth considering.',
       'Loveland Water and Power is the city-owned utility, so service upgrades and new meters are coordinated with the city.',
     ],
     permits:
@@ -98,7 +98,7 @@ export const CITIES = [
       { title: 'Residential remodels and garages', body: 'Kitchens, baths, concrete, and detached garages, in town and on acreage.' },
     ],
     conditions: [
-      'Wide-open plains mean higher wind exposure, which affects roofing, siding, doors, and fences.',
+      'Wide-open plains mean higher wind exposure, which affects siding, doors, and fences.',
       'Rural Weld County properties often have agricultural or accessory building rules that differ from in-town lots.',
       'Public projects in Greeley and Weld County are bid through public procurement with prevailing wage requirements on many jobs.',
     ],
@@ -173,7 +173,7 @@ export const CITIES = [
     ],
     conditions: [
       'Most neighborhoods have HOA design review for exterior work like decks, fences, and patio covers.',
-      'Wind and hail exposure on the open plains east of the foothills affect deck, fence, and roofing choices.',
+      'Wind and hail exposure on the open plains east of the foothills affect deck, fence, and siding choices.',
       'The town spans two counties, but the Town of Windsor handles permits inside town limits either way.',
     ],
     permits:
@@ -310,19 +310,19 @@ export const CITIES = [
     lede: 'Remodeling, basements, shops, and commercial work in Wellington, north of Fort Collins on I-25.',
     local: [
       'Wellington is the northernmost town in the Fort Collins area, with a small historic downtown, a large share of homes built since 2000, and open country beyond the town limits.',
-      'It is also windy. Fences, decks, roofing, and siding all take more punishment here than they do farther south, and they need to be built with that in mind.',
+      'It is also windy. Fences, decks, and siding all take more punishment here than they do farther south, and they need to be built with that in mind.',
       'Rural properties around Wellington bring shop, barn, and garage projects, while in-town neighborhoods bring basement finishes and outdoor living work.',
     ],
     projects: [
       { title: 'Wind-ready fences and decks', body: 'Fence posts, footings, and deck framing sized and fastened for Wellington\'s wind.' },
       { title: 'Basement finishes', body: 'Finished basements in the town\'s newer neighborhoods.' },
       { title: 'Shops and garages on acreage', body: 'Detached garages, shops, and pole barns on rural parcels outside town.' },
-      { title: 'Roofing and siding', body: 'Roof replacement and siding with wind and hail ratings suited to the area.' },
+      { title: 'Siding and windows', body: 'Siding and window replacement with wind and hail ratings suited to the area.' },
     ],
     conditions: [
       'Strong, frequent wind is a design factor for fences, decks, roofs, siding, and doors.',
       'Rural parcels outside town are in unincorporated Larimer County with their own setback and accessory building rules.',
-      'Hail exposure makes impact-rated roofing worth considering.',
+      'Hail exposure makes impact-resistant siding worth considering.',
     ],
     permits:
       'The Town of Wellington issues permits inside town limits, and surrounding rural properties are in unincorporated Larimer County. We confirm jurisdiction and handle the paperwork.',
@@ -343,30 +343,30 @@ export const CITIES = [
     name: 'Estes Park',
     county: 'Larimer County',
     description:
-      'General contractor in Estes Park, CO: remodeling, additions, decks, roofing and exteriors, and commercial construction built for mountain conditions.',
+      'General contractor in Estes Park, CO: remodeling, additions, decks, exteriors, and commercial construction built for mountain conditions.',
     lede: 'Remodeling, decks, exteriors, and commercial construction in Estes Park, west of Loveland up US 34.',
     local: [
       'Estes Park sits at about 7,500 feet at the eastern entrance to Rocky Mountain National Park, reached from Loveland through the Big Thompson Canyon. Its buildings include older cabins, vacation homes, lodging properties, and the shops and restaurants that serve visitors.',
-      'Mountain construction is its own discipline. Snow and wind loads are higher than on the plains, the exterior building season is shorter, sites are often steep and rocky, and wildfire exposure shapes choices about roofing, siding, and decking.',
+      'Mountain construction is its own discipline. Snow and wind loads are higher than on the plains, the exterior building season is shorter, sites are often steep and rocky, and wildfire exposure shapes choices about siding and decking.',
       'Tourism drives the town\'s economy, so lodging and retail projects are often scheduled around the busy summer season.',
     ],
     projects: [
       { title: 'Cabin and vacation home remodels', body: 'Kitchens, baths, and updates to older cabins and second homes.' },
-      { title: 'Decks and exteriors', body: 'Deck replacement, roofing, and siding with fire-resistant and snow-ready materials.' },
+      { title: 'Decks and exteriors', body: 'Deck replacement and siding with fire-resistant and snow-ready materials.' },
       { title: 'Lodging and retail improvements', body: 'Renovations to lodging, shops, and restaurants, scheduled around peak season.' },
       { title: 'Additions on sloped sites', body: 'Additions that work with steep, rocky lots and mountain structural loads.' },
     ],
     conditions: [
       'Snow and wind loads are higher than on the plains, so framing, roofs, and decks are engineered for local values.',
-      'Much of the valley is in the wildland-urban interface, which shapes roofing, siding, vent, and decking choices.',
+      'Much of the valley is in the wildland-urban interface, which shapes siding, vent, and decking choices.',
       'The exterior building season is shorter, so exterior work and foundations are scheduled for the warmer months.',
     ],
     permits:
       'Permits are issued by the Town of Estes Park inside town limits and by Larimer County in the surrounding valley. Structural design has to reflect local snow and wind loads, and we coordinate the engineering that goes with it.',
     faqs: [
       { q: 'Do you work in Estes Park from Loveland?', a: 'Yes. Estes Park is about 45 minutes up US 34 from our Loveland office, and we schedule mountain work to make the most of each trip.' },
-      { q: 'When is the best time for exterior work in Estes Park?', a: 'Late spring through fall. Interior work can run year-round, but foundations, roofing, and decks are best scheduled for the snow-free months.' },
-      { q: 'Do you use fire-resistant materials?', a: 'Where the site calls for it. Class A roofing, ignition-resistant siding, ember-resistant vents, and noncombustible decking near the house are common choices in the wildland-urban interface.' },
+      { q: 'When is the best time for exterior work in Estes Park?', a: 'Late spring through fall. Interior work can run year-round, but foundations, exterior work, and decks are best scheduled for the snow-free months.' },
+      { q: 'Do you use fire-resistant materials?', a: 'Where the site calls for it. Ignition-resistant siding, ember-resistant vents, and noncombustible decking near the house are common choices in the wildland-urban interface.' },
       { q: 'Can you work around my lodging business\'s busy season?', a: 'Yes. We plan commercial work in Estes Park around peak season and phase it so the property can stay open when possible.' },
     ],
     focus: {
@@ -390,7 +390,7 @@ export const CITIES = [
     ],
     projects: [
       { title: 'Condo remodels', body: 'Kitchens, baths, flooring, and full interior renovations in Vail Village, Lionshead, and the residential neighborhoods along the valley.' },
-      { title: 'Exterior replacements', body: 'Siding, decks, windows, and roofing on homes and buildings from the resort\'s early decades.' },
+      { title: 'Exterior replacements', body: 'Siding, decks, and windows on homes and buildings from the resort\'s early decades.' },
       { title: 'Commercial tenant finish', body: 'Retail and restaurant build-outs in the villages, scheduled around the ski and summer seasons.' },
       { title: 'Second-home updates', body: 'Remodels managed for owners who are not on site, with regular progress updates.' },
     ],
@@ -423,14 +423,14 @@ export const CITIES = [
     lede: 'Remodeling, additions, tenant finish, and commercial construction in Avon, on I-70 at the base of Beaver Creek.',
     local: [
       'Avon sits at about 7,400 feet on the Eagle River in Eagle County, a few miles west of Vail on I-70 and at the foot of Beaver Creek Resort. The valley floor holds the town core, with condominiums, lodging, retail, and offices, and neighborhoods climb the hillsides above it.',
-      'Work here covers both sides of what we do: tenant finish and commercial construction in the town core, and remodels, additions, decks, and exterior replacements on homes and condos. Hillside lots bring steep access, engineered foundations, and wildfire exposure that shapes roofing, siding, and decking choices.',
+      'Work here covers both sides of what we do: tenant finish and commercial construction in the town core, and remodels, additions, decks, and exterior replacements on homes and condos. Hillside lots bring steep access, engineered foundations, and wildfire exposure that shapes siding and decking choices.',
       'Avon is also home to many of the people who work in the valley year-round, which means primary residences as well as second homes.',
     ],
     projects: [
       { title: 'Town core tenant finish', body: 'Retail, restaurant, and office build-outs in Avon\'s commercial center.' },
       { title: 'Hillside home remodels and additions', body: 'Remodels and additions on sloped lots, with the engineering steep sites require.' },
       { title: 'Condo renovations', body: 'Interior remodels in condominium buildings, coordinated with associations and property managers.' },
-      { title: 'Decks and exteriors', body: 'Deck, siding, and roofing replacement with snow-ready and fire-resistant materials.' },
+      { title: 'Decks and exteriors', body: 'Deck and siding replacement with snow-ready and fire-resistant materials.' },
     ],
     conditions: [
       'Hillside lots mean steep access, engineered foundations, and careful staging.',
@@ -544,7 +544,7 @@ export const CITIES = [
       { title: 'Condo remodels', body: 'Kitchens, baths, flooring, and full interior updates in resort condominiums.' },
       { title: 'Rental unit refreshes', body: 'Fast, scheduled updates between seasons so units return to the rental pool on time.' },
       { title: 'Commercial tenant finish', body: 'Build-outs for retail, dining, and services in the resort villages.' },
-      { title: 'Building exterior work', body: 'Siding, decks, and roofing repairs coordinated with associations.' },
+      { title: 'Building exterior work', body: 'Siding and deck repairs coordinated with associations.' },
     ],
     conditions: [
       'At about 9,700 feet, snow, cold, and a short summer season shape every exterior project.',
@@ -582,7 +582,7 @@ export const CITIES = [
       { title: 'Downtown tenant finish', body: 'Retail, restaurant, and office build-outs along Lincoln Avenue and in the downtown core.' },
       { title: 'Base-area condo remodels', body: 'Kitchens, baths, and interior renovations in condominiums near the ski area.' },
       { title: 'Ranch shops, barns, and garages', body: 'Detached shops, barns, and garages on rural Routt County properties.' },
-      { title: 'Additions and exteriors', body: 'Room additions, decks, roofing, and siding on in-town homes.' },
+      { title: 'Additions and exteriors', body: 'Room additions, decks, and siding on in-town homes.' },
     ],
     conditions: [
       'Heavy snowfall drives the design of roofs, decks, and entries, including where snow sheds.',

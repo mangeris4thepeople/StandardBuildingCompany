@@ -38,7 +38,7 @@ function Hero() {
         </p>
         <h1 className="hero__h1">General Contractor in Loveland and Northern Colorado</h1>
         <p className="hero__tagline">
-          Residential remodeling, basement finishing, home additions, and new home construction across Northern Colorado and mountain communities.
+          Kitchen and bathroom remodeling, basement finishing, home additions, and commercial construction across Northern Colorado. One accountable general contractor from planning through completion.
         </p>
         <div className="hero__actions">
           <a href="#contact" className="btn btn--primary">Start a Conversation</a>
@@ -50,13 +50,13 @@ function Hero() {
         </div>
       </div>
       <div className="hero__ticker" aria-hidden="true">
-        <span>Remodeling</span>
+        <span>Commercial</span>
         <span className="hero__ticker-dot" />
-        <span>Home Additions</span>
+        <span>Industrial</span>
         <span className="hero__ticker-dot" />
-        <span>Custom Homes</span>
+        <span>Government</span>
         <span className="hero__ticker-dot" />
-        <span>Basements</span>
+        <span>Design-Build</span>
         <span className="hero__ticker-dot" />
         <span>Residential</span>
         <span className="hero__ticker-dot" />
@@ -70,10 +70,17 @@ function AboutBody() {
   return (
     <div className="about__content">
       <h2 className="about__headline">
-        Residential construction.<br />Built with care.
+        More than management.<br />We're in it with you.
       </h2>
-      <p className="about__body">Standard Building Company is a residential general contractor founded in {SITE.founded} and based in Loveland, Colorado. We build and renovate homes across Northern Colorado and mountain communities, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/vail-co/">Vail</a>, and <a href="/service-areas/aspen-co/">Aspen</a>.</p>
-      <p className="about__body">Our focus is residential construction: kitchens, bathrooms, basements, additions, garages, ADUs, exterior improvements, and new homes. We emphasize quality workmanship, clear written scopes, and a dependable finished result.</p>
+      <p className="about__body">
+        Standard Building Company is a general contractor founded in {SITE.founded} and based in Loveland, Colorado. We build for commercial, industrial, and government clients, and for homeowners. Our work spans mid-rise, multifamily, retail, healthcare, senior living, industrial, municipal facilities, <a href="/commercial/tenant-finish/">tenant finish</a>, and <a href="/residential/">residential remodeling</a>. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
+      </p>
+      <p className="about__body">
+        Our leadership comes from the field. Behind SBC is a commercial construction executive who has led projects across those markets from the first schedule through the subcontractors, safety, inspections, and turnover to the owner. That background is held to ICC National Standard General Building Contractor (A) certification and OSHA and MSHA 40-hour safety training, and every SBC project is run with the same discipline, commercial or residential.
+      </p>
+      <p className="about__body">
+        What sets us apart is the depth of what we offer. We don't just manage projects. We consult. From early-stage <a href="/commercial/construction-management/">pre-construction planning</a>, budgeting, and feasibility through full construction delivery, our team brings hands-on expertise to every phase. Whether you need an owner's representative at the table or a licensed general contractor in the field, SBC does both.
+      </p>
       <div className="about__stats">
         <div className="about__stat">
           <span className="about__stat-number">Est.</span>
@@ -149,6 +156,16 @@ export function HomePage() {
             tone="dark"
             tabs={[
               {
+                key: 'commercial',
+                label: 'Commercial',
+                content: (
+                  <ServicePanel
+                    group="commercial"
+                    sub="General contracting, design-build, and construction management for commercial, industrial, and government clients."
+                  />
+                ),
+              },
+              {
                 key: 'residential',
                 label: 'Residential',
                 content: (
@@ -183,7 +200,7 @@ export function HomePage() {
 
 export function HubPage({ page }) {
   const group = GROUPS[page.group];
-  const other = GROUPS.residential;
+  const other = page.group === 'commercial' ? GROUPS.residential : GROUPS.commercial;
   return (
     <>
       <PageHero eyebrow="Standard Building Company" title={page.h1} lede={page.lede} trail={trailFor(page)} />
@@ -417,7 +434,7 @@ export function AreaPage({ page }) {
             <Tabs
               id="services"
               label={`Services in ${a.name}`}
-              tabs={['residential'].map((g) => ({
+              tabs={['commercial', 'residential'].map((g) => ({
                 key: g,
                 label: GROUPS[g].label,
                 content: (
@@ -463,6 +480,7 @@ const PRICING_RANGES = [
     { name: 'Basement finishing', low: 45, high: 110, note: 'Economy: resilient sheet flooring and standard trim. Luxury: premium Italian tile, upgraded millwork, and specialty spaces. Bathrooms and egress can increase cost.' },
     { name: 'Kitchen remodeling', low: 175, high: 450, note: 'Economy: Formica-style laminate countertops, linoleum or sheet-vinyl floors, and stock cabinets. Luxury: granite countertops, Italian tile, and custom cabinetry.' },
     { name: 'Bathroom remodeling', low: 250, high: 650, note: 'Economy: standard fixtures and resilient flooring. Luxury: Italian tile, stone countertops, custom shower, and premium fixtures.' },
+    { name: 'Commercial tenant improvements', low: 75, high: 250, note: 'Tenant-area pricing depends on occupancy, HVAC, fire protection, electrical upgrades, phasing, and finishes.' },
 ];
 
 const MOUNTAIN_MARKETS = {
@@ -494,7 +512,7 @@ function PriceSchedule({ location, slug }) {
           ) : (
             <p>We have not verified a defensible public per-square-foot remodeling schedule for {location}. Aspen/Vail pricing cannot simply be copied to this market. <a href="/contact/">Request a locally scoped estimate</a> covering labor, access, logistics, and finish allowances.</p>
           )}
-          <p>Basement finishing, additions, ground-up construction in {location} require project-specific pricing. No Front Range price floor or ceiling is implied.</p>
+          <p>Basement finishing, additions, commercial work, and ground-up construction in {location} require project-specific pricing. No Front Range price floor or ceiling is implied.</p>
         </>
       ) : (
         <>
@@ -510,8 +528,8 @@ function PriceSchedule({ location, slug }) {
           <p>Economy finishes include laminate countertops and linoleum or sheet-vinyl flooring where suitable. Luxury finishes can include Italian tile and granite countertops. Structural work and mechanical systems affect costs separately.</p>
         </>
       )}
-      <h3>Other residential construction work</h3>
-      <p>Additions, garages, decks, roofing, siding, concrete, structural repairs, and new home construction require a custom scope and estimate. <a href="/pricing/">See pricing assumptions</a> or <a href="/contact/">request an estimate</a>.</p>
+      <h3>Other residential and commercial work</h3>
+      <p>Additions, garages, decks, siding, concrete, structural repairs, and ground-up commercial construction require a custom scope and estimate. <a href="/pricing/">See pricing assumptions</a> or <a href="/contact/">request an estimate</a>.</p>
     </>
   );
 }
@@ -523,6 +541,7 @@ export function PricingPage({ page }) {
     ['Basement finishing', 'Finished square footage, framing and insulation, bathroom plumbing, egress, HVAC, electrical, and finish selections.'],
     ['Kitchen remodeling', 'Cabinetry, counters, appliances, layout changes, structural work, plumbing, and electrical upgrades.'],
     ['Bathroom remodeling', 'Shower waterproofing, tile, plumbing moves, ventilation, fixtures, and accessibility details.'],
+    ['Commercial tenant improvements', 'Occupancy and code requirements, drawings, building systems, phasing, inspections, and tenant schedule.'],
   ];
   return (
     <>
@@ -549,7 +568,7 @@ export function PricingPage({ page }) {
             <h2>Mountain resort pricing is different</h2>
             <p>Aspen, Vail, Avon, Steamboat Springs, Winter Park, Copper Mountain, and Estes Park cannot be priced using this Front Range schedule. Mountain markets require separate labor, mobilization, delivery, access, weather, and permitting budgets. See each <a href="/service-areas/">service-area page</a> for applicable market benchmarks or a custom-estimate explanation.</p>
             <h2>Other building and construction categories</h2>
-            <p>Home additions, garages and shops, decks, roofing, siding, concrete, structural repairs, new home construction are priced from the actual scope and site conditions. We will not publish unsupported square-foot estimates for those categories. <a href="/contact/">Request a project-specific budget</a>.</p>
+            <p>Home additions, garages and shops, decks, siding, concrete, structural repairs, ground-up commercial construction, and design-build work are priced from the actual scope and site conditions. We will not publish unsupported square-foot estimates for those categories. <a href="/contact/">Request a project-specific budget</a>.</p>
             <h2>What affects the price</h2>
             <ul className="link-list">{factors.map(([name, detail]) => <li key={name}><strong>{name}</strong><span>{detail}</span></li>)}</ul>
             <h2>What you receive</h2>
@@ -583,7 +602,7 @@ export function LocalBasementPage({ page }) {
           <article className="prose">
             <h2>Plan a basement finish in {area.name}</h2>
             <p>Standard Building Company is based in Loveland and coordinates basement finishing work for property owners in {area.name}. Whether you need a family room, bedroom, bathroom, office, or multi-use space, the first step is reviewing the existing structure and your goals.</p>
-            <p>We evaluate ceiling heights, moisture conditions, insulation, electrical capacity, HVAC distribution, stairways, and emergency escape openings before finalizing the scope. Qualified subcontractors complete specialized work as part of our residential construction services.</p>
+            <p>We evaluate ceiling heights, moisture conditions, insulation, electrical capacity, HVAC distribution, stairways, and emergency escape openings before finalizing the scope. Qualified subcontractors perform the field work under our project management.</p>
             <h2>Permits and local requirements</h2>
             <p>{area.permits}</p>
             <p>Bedroom egress, smoke and carbon-monoxide alarms, ventilation, electrical and plumbing work must be evaluated for the specific property and applicable codes. We confirm requirements with the authority having jurisdiction before construction.</p>
@@ -631,6 +650,7 @@ export function NotFoundPage() {
         <div className="container">
           <ul className="link-list">
             <li><a href="/">Home</a><span>Standard Building Company</span></li>
+            <li><a href={GROUPS.commercial.path}>Commercial construction</a><span>General contracting, tenant finish, design-build</span></li>
             <li><a href={GROUPS.residential.path}>Residential remodeling</a><span>Kitchens, baths, basements, exteriors</span></li>
             <li><a href="/contact/">Contact</a><span>{SITE.phoneDisplay}</span></li>
           </ul>

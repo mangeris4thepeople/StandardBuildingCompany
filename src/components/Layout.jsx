@@ -4,6 +4,7 @@ import { SERVICES, AREAS } from '../content/pages.js';
 import { track } from '../track.js';
 
 const NAV_LINKS = [
+  { label: 'Commercial', href: GROUPS.commercial.path },
   { label: 'Residential', href: GROUPS.residential.path },
   { label: 'Service Areas', href: '/service-areas/' },
   { label: 'Pricing', href: '/pricing/' },
@@ -124,7 +125,7 @@ export function MobileBar() {
 
 // Tabbed compartments. Every panel is in the prerendered HTML, so search engines and AI crawlers
 // read all of it; visitors see one panel at a time instead of scrolling past everything.
-// A tab can be linked directly using its hash anchor.
+// A tab can be linked directly: /#residential or /commercial/tenant-finish/#faq opens that tab.
 export function Tabs({ id, label, tabs, tone = 'light' }) {
   const [active, setActive] = useState(tabs[0].key);
   const listRef = useRef(null);
@@ -382,7 +383,8 @@ export function Contact({
                   <label htmlFor="projectType">Project type</label>
                   <select id="projectType" name="projectType" value={form.projectType} onChange={handleChange}>
                     <option value="">Select one</option>
-                    <option value="residential">Residential construction</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="residential">Residential</option>
                     <option value="other">Not sure yet</option>
                   </select>
                 </div>
@@ -445,6 +447,11 @@ export function Footer() {
             <a href={`mailto:${SITE.email}`} className="footer__email">{SITE.email}</a>
             <SocialLinks className="social--footer" />
           </div>
+          <FooterCol
+            title="Commercial"
+            href={GROUPS.commercial.path}
+            links={SERVICES.commercial.map((s) => ({ href: s.path, label: s.short }))}
+          />
           <FooterCol
             title="Residential"
             href={GROUPS.residential.path}

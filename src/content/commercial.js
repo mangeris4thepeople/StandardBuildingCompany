@@ -21,7 +21,7 @@ export const COMMERCIAL = [
       'Additions and expansions to occupied buildings',
       'Core and shell construction',
       'Site development, utilities, and paving',
-      'Building envelope repairs and re-roofs',
+      'Building envelope repairs',
       'Code and accessibility upgrades',
     ],
     sections: [

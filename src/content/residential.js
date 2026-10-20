@@ -439,55 +439,53 @@ export const RESIDENTIAL = [
   },
   {
     slug: 'exteriors',
-    name: 'Roofing, Siding, and Windows',
-    short: 'Roofing, Siding & Windows',
-    card: 'Roof replacement and repair, siding, gutters, windows, and exterior doors.',
-    title: 'Roofing, Siding & Windows in Loveland, CO | Standard Building Company',
+    name: 'Siding, Windows, and Doors',
+    short: 'Siding, Windows & Doors',
+    card: 'Siding, window replacement, exterior doors, and trim.',
+    title: 'Siding, Windows & Doors in Loveland, CO | Standard Building Company',
     description:
-      'Roofing, roof repair, siding, gutters, window replacement, and exterior doors in Loveland, Fort Collins, and Northern Colorado. Hail-ready exteriors from one contractor.',
-    h1: 'Roofing, Siding, and Window Replacement',
-    lede: 'Roof replacement and repair, siding, gutters, windows, and exterior doors from one contractor who looks at the whole envelope.',
+      'Siding, window replacement, exterior doors, and exterior trim in Loveland, Fort Collins, and Northern Colorado from one general contractor.',
+    h1: 'Siding, Window, and Door Replacement',
+    lede: 'Siding, windows, exterior doors, and trim from one contractor who looks at the whole wall.',
     intro: [
-      'The outside of a house is one system. The roof, the flashing, the siding, the windows, and the gutters all have to hand water off to each other, and most leaks happen where one meets the next.',
-      'We replace and repair exteriors throughout Northern Colorado. Because we are a general contractor, the same crew lead is responsible for the roof, the wall below it, and the window in that wall.',
+      'The walls of a house are one system. The siding, the weather barrier, the windows, and the doors all have to hand water off to each other, and most leaks happen where one meets the next.',
+      'We replace and repair siding, windows, and doors throughout Northern Colorado. Because we are a general contractor, the same crew lead is responsible for the wall, the opening in it, and the window or door that fills it.',
     ],
     scopeTitle: 'Exterior scope',
     scope: [
-      'Asphalt shingle and metal roofing',
-      'Roof repair and leak tracing',
       'Siding installation and repair',
-      'Gutters and downspouts',
       'Window replacement',
       'Exterior and patio doors',
-      'Attic and wall insulation',
-      'Fascia, soffit, and trim repair',
+      'Weather barrier and flashing at openings',
+      'Wall insulation',
+      'Exterior trim repair',
     ],
     sections: [
       {
-        heading: 'Built for hail',
+        heading: 'Built for Colorado weather',
         body: [
-          'The Front Range sees damaging hail most years. Impact-rated Class 4 shingles hold up better than standard shingles, and some insurers offer a discount for them, so it is worth asking yours. Fiber cement and engineered wood siding also stand up to hail better than vinyl.',
+          'The Front Range sees hail and high wind most years. Fiber cement and engineered wood siding stand up to hail better than vinyl, and properly flashed windows keep wind-driven rain out of the wall.',
         ],
       },
       {
-        heading: 'After a storm',
+        heading: 'One wall, one contractor',
         body: [
-          'If your home has storm damage, we can inspect the roof, siding, gutters, and windows together and give you a written scope and price for the repairs. One contractor for the whole exterior means one schedule and no gaps between trades.',
+          'When siding and windows are replaced together, the windows can be flashed and tied into the weather barrier the right way. One contractor for both means one schedule and no gaps between trades.',
         ],
       },
     ],
     faqs: [
       {
-        q: 'Repair or replace my roof?',
-        a: 'If the damage is limited and the rest of the roof has life left, a repair makes sense. Widespread granule loss, curling shingles, or leaks in several places usually point to replacement.',
-      },
-      {
-        q: 'Do I need a permit to replace a roof or windows?',
-        a: 'Most Northern Colorado jurisdictions require a permit for re-roofing, and many require one for window replacement. We pull the permit and schedule the inspection.',
+        q: 'Do I need a permit to replace windows?',
+        a: 'Many Northern Colorado jurisdictions require one, especially when the opening size changes. We pull the permit and schedule the inspection.',
       },
       {
         q: 'Can you replace siding and windows at the same time?',
         a: 'Yes, and it is the best time to do both. With the siding off, new windows can be flashed and integrated with the weather barrier properly.',
+      },
+      {
+        q: 'Which siding holds up best to hail?',
+        a: 'Fiber cement and engineered wood generally outperform vinyl. We walk through the options and costs before you choose.',
       },
     ],
     related: ['decks-outdoor-living', 'painting-drywall-trim', 'home-additions'],
@@ -503,7 +501,7 @@ export const RESIDENTIAL = [
     h1: 'Garages, ADUs, and Outbuildings',
     lede: 'Detached garages, accessory dwelling units, shops, and pole barns, from zoning check and permit to finished building.',
     intro: [
-      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, roofing, utilities, and finishes. We approach it with the same attention to structure, code compliance, and craftsmanship as any new home.',
+      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, utilities, and finishes. It is the kind of work a commercial general contractor is set up for.',
       'We build garages, accessory dwelling units, shops, and agricultural buildings across Larimer and Weld counties, in town and on rural acreage.',
     ],
     scopeTitle: 'What we build',
@@ -560,7 +558,7 @@ export const RESIDENTIAL = [
     lede: 'Small repairs, new-home punch lists, and the list of things that never got finished, handled by a general contractor instead of a rotating cast of trades.',
     intro: [
       'Not every job is a remodel. Sometimes it is a door that sticks, a patch of damaged drywall, a window well that needs a cover, or a list of twenty small things that have been waiting for a year.',
-      'We take small jobs across Northern Colorado and bring the same care and workmanship as our larger residential projects.',
+      'We take small jobs across Northern Colorado and bring the same standards to them that we bring to commercial work.',
     ],
     scopeTitle: 'Small-job scope',
     scope: [
