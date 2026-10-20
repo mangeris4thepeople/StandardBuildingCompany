@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: 'Commercial', href: GROUPS.commercial.path },
   { label: 'Residential', href: GROUPS.residential.path },
   { label: 'Service Areas', href: '/service-areas/' },
+  { label: 'Pricing', href: '/pricing/' },
   { label: 'Contact', href: '/contact/' },
 ];
 
