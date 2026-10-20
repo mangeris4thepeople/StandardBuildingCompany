@@ -38,7 +38,7 @@ function Hero() {
         </p>
         <h1 className="hero__h1">General Contractor in Loveland and Northern Colorado</h1>
         <p className="hero__tagline">
-          Commercial, industrial, and government construction, plus residential remodeling. Structure you can trust. Results you can see.
+          Kitchen and bathroom remodeling, basement finishing, home additions, and commercial construction across Northern Colorado. One accountable general contractor from planning through completion.
         </p>
         <div className="hero__actions">
           <a href="#contact" className="btn btn--primary">Start a Conversation</a>
