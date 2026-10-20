@@ -19,6 +19,7 @@ for (const marker of ['<!--app-head-->', '<!--app-html-->']) {
 
 // Preload the two fonts every page paints with first, so text does not wait on the stylesheet.
 const assets = await readdir(join(dist, 'assets'));
+const assetBase = process.env.GITHUB_ACTIONS === 'true' ? '/StandardBuildingCompany/' : '/';
 const preloads = ['barlow-latin-400-normal', 'barlow-condensed-latin-700-normal']
   .map((name) => assets.find((f) => f.startsWith(name) && f.endsWith('.woff2')))
   .filter(Boolean)
