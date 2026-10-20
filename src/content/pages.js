@@ -35,9 +35,9 @@ export function findService(group, slug) {
 const home = {
   type: 'home',
   path: '/',
-  title: 'General Contractor in Loveland, CO | Standard Building Company',
+  title: 'Home Remodeling & General Contractor | Loveland, CO',
   description:
-    'General contractor in Loveland, Colorado. Commercial, industrial, and government construction plus residential remodeling across Northern Colorado and the mountain towns.',
+    'Home remodeling, additions, kitchens, bathrooms, and general contracting in Loveland and Northern Colorado. Commercial construction and tenant improvements too.',
   priority: '1.0',
 };
 
@@ -70,7 +70,7 @@ const hubs = [
       'Homeowners hire us for the same reason commercial owners do: one contractor who plans the work, pulls the permits, schedules every trade, and answers for the result.',
       'We take on residential projects of every size across Larimer and Weld counties, from a punch list of small repairs to a full addition.',
     ],
-    priority: '0.9',
+    priority: '1.0',
   },
 ];
 
