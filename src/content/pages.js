@@ -1,16 +1,14 @@
 // Route table. Every entry here is prerendered to its own HTML file at build time
 // and listed in sitemap.xml. Add a service or city in the content files and it appears here.
 import { SITE, GROUPS } from './site.js';
-import { COMMERCIAL } from './commercial.js';
 import { RESIDENTIAL } from './residential.js';
 import { CITIES } from './cities.js';
 
 export const SERVICES = {
-  commercial: COMMERCIAL.map((s) => ({ ...s, group: 'commercial', path: `/commercial/${s.slug}/` })),
   residential: RESIDENTIAL.map((s) => ({ ...s, group: 'residential', path: `/residential/${s.slug}/` })),
 };
 
-export const ALL_SERVICES = [...SERVICES.commercial, ...SERVICES.residential];
+export const ALL_SERVICES = [...SERVICES.residential];
 
 // Page titles are kept to 60 characters so search results show them in full.
 const BRANDS = [' | Standard Building Co.', ' | Standard Building'];
@@ -37,26 +35,11 @@ const home = {
   path: '/',
   title: 'Home Remodeling & General Contractor | Loveland, CO',
   description:
-    'Home remodeling, additions, kitchens, bathrooms, and general contracting in Loveland and Northern Colorado. Commercial construction and tenant improvements too.',
+    'Home remodeling, additions, kitchens, bathrooms, and general contracting in Loveland and Northern Colorado. Residential construction and renovations across Colorado.',
   priority: '1.0',
 };
 
 const hubs = [
-  {
-    type: 'hub',
-    group: 'commercial',
-    path: GROUPS.commercial.path,
-    title: 'Commercial Construction in Northern Colorado | Standard Building Company',
-    description:
-      'Commercial, industrial, and government construction in Northern Colorado: general contracting, tenant finish, design-build, construction management, and steel erection.',
-    h1: 'Commercial Construction in Northern Colorado',
-    lede: 'General contracting, tenant finish, design-build, and construction management for commercial, industrial, and government clients.',
-    intro: [
-      'Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, we manage qualified subcontractors across every trade, from sitework and structure through finishes and building systems.',
-      'That covers concrete foundations and flatwork, masonry, structural steel and miscellaneous metals, framing, roofing and waterproofing, doors and storefronts, interior finishes, fire suppression, plumbing, HVAC, electrical and low voltage, earthwork, exterior improvements, and underground utilities.',
-    ],
-    priority: '0.9',
-  },
   {
     type: 'hub',
     group: 'residential',
@@ -65,9 +48,9 @@ const hubs = [
     description:
       'Residential remodeling in Loveland and Northern Colorado: kitchens, bathrooms, basements, additions, flooring, decks, concrete, roofing, siding, garages, and ADUs.',
     h1: 'Residential Remodeling in Loveland and Northern Colorado',
-    lede: 'Kitchens, bathrooms, basements, additions, exteriors, and outdoor living, built by a general contractor who also builds commercial.',
+    lede: 'Kitchens, bathrooms, basements, additions, exteriors, and outdoor living, built for Colorado homeowners.',
     intro: [
-      'Homeowners hire us for the same reason commercial owners do: one contractor who plans the work, pulls the permits, schedules every trade, and answers for the result.',
+      'Homeowners hire us for dependable residential construction, careful workmanship, clear scopes, and accountability from start to finish.',
       'We take on residential projects of every size across Larimer and Weld counties, from a punch list of small repairs to a full addition.',
     ],
     priority: '1.0',
@@ -113,7 +96,7 @@ const contact = {
   path: '/contact/',
   title: 'Contact Standard Building Company | Loveland Contractor',
   description:
-    'Call (970) 430-5884 or send a message to talk through your commercial or residential construction project in Loveland, Northern Colorado, or the mountain towns.',
+    'Call (970) 430-5884 or send a message to talk through your residential construction project in Loveland, Northern Colorado, or the mountain towns.',
   h1: 'Contact Standard Building Company',
   lede: "Tell us about the project. Whether you're in early planning or ready to build, someone from our team will be in touch.",
   priority: '0.6',
