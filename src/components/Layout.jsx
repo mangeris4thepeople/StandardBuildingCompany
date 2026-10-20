@@ -4,7 +4,6 @@ import { SERVICES, AREAS } from '../content/pages.js';
 import { track } from '../track.js';
 
 const NAV_LINKS = [
-  { label: 'Commercial', href: GROUPS.commercial.path },
   { label: 'Residential', href: GROUPS.residential.path },
   { label: 'Service Areas', href: '/service-areas/' },
   { label: 'Pricing', href: '/pricing/' },
@@ -383,8 +382,7 @@ export function Contact({
                   <label htmlFor="projectType">Project type</label>
                   <select id="projectType" name="projectType" value={form.projectType} onChange={handleChange}>
                     <option value="">Select one</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="residential">Residential</option>
+                    <option value="residential">Residential construction</option>
                     <option value="other">Not sure yet</option>
                   </select>
                 </div>
@@ -447,11 +445,6 @@ export function Footer() {
             <a href={`mailto:${SITE.email}`} className="footer__email">{SITE.email}</a>
             <SocialLinks className="social--footer" />
           </div>
-          <FooterCol
-            title="Commercial"
-            href={GROUPS.commercial.path}
-            links={SERVICES.commercial.map((s) => ({ href: s.path, label: s.short }))}
-          />
           <FooterCol
             title="Residential"
             href={GROUPS.residential.path}
