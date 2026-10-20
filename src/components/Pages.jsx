@@ -427,6 +427,7 @@ export function AreaPage({ page }) {
             <h2>Permits and jurisdiction in {a.name}</h2>
             <p>{a.permits}</p>
 
+            <PriceSchedule location={a.name} />
             <h2>Basement finishing in {a.name}</h2>
             <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>
             <h2>Services in {a.name}</h2>
@@ -475,15 +476,34 @@ export function AreaPage({ page }) {
   );
 }
 
-/* --------------------------------------------------------- PRICING / LOCAL BASEMENTS */
-
-export function PricingPage({ page }) {
-  const ranges = [
+const PRICING_RANGES = [
     { name: 'Basement finishing', low: 45, high: 110, note: 'Economy: resilient sheet flooring and standard trim. Luxury: premium Italian tile, upgraded millwork, and specialty spaces. Bathrooms and egress can increase cost.' },
     { name: 'Kitchen remodeling', low: 175, high: 450, note: 'Economy: Formica-style laminate countertops, linoleum or sheet-vinyl floors, and stock cabinets. Luxury: granite countertops, Italian tile, and custom cabinetry.' },
     { name: 'Bathroom remodeling', low: 250, high: 650, note: 'Economy: standard fixtures and resilient flooring. Luxury: Italian tile, stone countertops, custom shower, and premium fixtures.' },
     { name: 'Commercial tenant improvements', low: 75, high: 250, note: 'Tenant-area pricing depends on occupancy, HVAC, fire protection, electrical upgrades, phasing, and finishes.' },
-  ];
+];
+
+function PriceSchedule({ location }) {
+  return (
+    <>
+      <h2>{location ? `Construction price schedule for ${location}` : 'Construction price schedule'}</h2>
+      <p><strong>Preliminary Northern Colorado planning ranges, not fixed bids.</strong> The same baseline figures are shown for every service area until SBC verifies location-specific labor, mobilization, permit, and material costs. Mountain travel, access, seasonality, and jurisdictional requirements may change the final estimate.</p>
+      <ul className="link-list">
+        {PRICING_RANGES.map((r) => (
+          <li key={r.name}>
+            <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
+            <span>{r.note}</span>
+          </li>
+        ))}
+      </ul>
+      <p>Low-end uses standard materials such as Formica-style laminate counters and linoleum or sheet-vinyl flooring where appropriate; high-end includes finishes such as granite countertops and Italian tile. Scope, structural work, and building systems can affect cost separately from finishes. <a href="/pricing/">See pricing assumptions and request a written estimate</a>.</p>
+    </>
+  );
+}
+
+/* --------------------------------------------------------- PRICING / LOCAL BASEMENTS */
+
+export function PricingPage({ page }) {
   const factors = [
     ['Basement finishing', 'Finished square footage, framing and insulation, bathroom plumbing, egress, HVAC, electrical, and finish selections.'],
     ['Kitchen remodeling', 'Cabinetry, counters, appliances, layout changes, structural work, plumbing, and electrical upgrades.'],
@@ -501,7 +521,7 @@ export function PricingPage({ page }) {
             <h2>Preliminary planning ranges per square foot</h2>
             <p><strong>Illustrative budgeting guidance — not an SBC quote or guaranteed minimum.</strong> These broad ranges are preliminary assumptions for Northern Colorado projects, not a price list validated against SBC's current subcontractor bids. Final pricing depends on site conditions, drawings, finish selections, and the written scope.</p>
             <ul className="link-list">
-              {ranges.map((r) => (
+              {PRICING_RANGES.map((r) => (
                 <li key={r.name}>
                   <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
                   <span>{r.note}</span>
@@ -549,6 +569,7 @@ export function LocalBasementPage({ page }) {
             <h2>Permits and local requirements</h2>
             <p>{area.permits}</p>
             <p>Bedroom egress, smoke and carbon-monoxide alarms, ventilation, electrical and plumbing work must be evaluated for the specific property and applicable codes. We confirm requirements with the authority having jurisdiction before construction.</p>
+            <PriceSchedule location={area.name} />
             <h2>What affects basement finishing cost in {area.name}?</h2>
             <p>Size, bathroom rough-ins, egress modifications, moisture remediation, soundproofing, cabinetry, and finish selections all affect cost. See our <a href="/pricing/">pricing and estimating guide</a> for how we develop a written scope and estimate.</p>
             <h2>Related {area.name} resources</h2>
