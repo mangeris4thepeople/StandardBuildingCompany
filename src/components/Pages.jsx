@@ -313,7 +313,7 @@ export function ServicePage({ page }) {
                 },
               ]}
             />
-            <h2>Where we provide {lc(s.short)}</h2>
+            {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a> · Browse local basement finishing pages below.</p>}\n            <h2>Where we provide {lc(s.short)}</h2>\n            {page.slug === 'basement-finishing' && <ul className="link-list">{AREAS.map(a => <li key={a.slug}><a href={`/basement-finishing/${a.slug}/`}>Basement Finishing in {a.name}, CO</a></li>)}</ul>}
             <p>
               Standard Building Company is based in Loveland and provides {lc(s.short)} across Northern Colorado, including {linkList(AREA_REGIONS[0].areas)}.
             </p>
@@ -425,7 +425,7 @@ export function AreaPage({ page }) {
             <h2>Permits and jurisdiction in {a.name}</h2>
             <p>{a.permits}</p>
 
-            <h2>Services in {a.name}</h2>
+            <h2>Basement finishing in {a.name}</h2>\n            <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>\n            <h2>Services in {a.name}</h2>
             <Tabs
               id="services"
               label={`Services in ${a.name}`}
