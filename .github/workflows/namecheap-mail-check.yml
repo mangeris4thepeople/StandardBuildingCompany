@@ -1,0 +1,31 @@
+name: Namecheap mailbox scheduled check
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+permissions:
+  contents: read
+jobs:
+  check-inbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: lead-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: lead-agent/package-lock.json
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Check Namecheap inbox
+        env:
+          EMAIL_USER: ${{ secrets.NAMECHEAP_EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.NAMECHEAP_EMAIL_PASSWORD }}
+          IMAP_HOST: mail.privateemail.com
+          IMAP_PORT: '993'
+          DB_PATH: ./data/leads.sqlite
+        run: npm run check
