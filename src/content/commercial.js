@@ -4,7 +4,7 @@ export const COMMERCIAL = [
     slug: 'general-contracting',
     name: 'Commercial General Contracting',
     short: 'General Contracting',
-    card: 'Full-service project delivery from groundbreaking to closeout. We self-perform and subcontract with the same standard of accountability on every job.',
+    card: 'Full-service project delivery from groundbreaking to closeout. We coordinate qualified subcontractors with consistent oversight of schedule, quality, and safety.',
     title: 'Commercial General Contractor in Loveland, CO | Standard Building Company',
     description:
       'Commercial general contractor based in Loveland, CO. Ground-up construction, renovations, and build-outs across Northern Colorado and the mountain towns.',
@@ -12,7 +12,7 @@ export const COMMERCIAL = [
     lede: 'Ground-up buildings, renovations, and build-outs for owners who want one accountable contractor from the first budget to the certificate of occupancy.',
     intro: [
       'Standard Building Company is a commercial general contractor based in Loveland, Colorado. We build for private owners, developers, and public agencies across Larimer and Weld counties and the northern Front Range.',
-      'We manage and deliver every trade on the job, from sitework and concrete through finishes and building systems. Some of it we self-perform, the rest goes to subcontractors we hold to the same standard. Either way, you deal with one contractor who owns the schedule, the budget, and the result.',
+      'We manage and deliver every trade on the job, from sitework and concrete through finishes and building systems. Field construction is performed by our subcontractor partners, with Standard Building Company responsible for project management, coordination, scheduling, and quality oversight. You have one accountable point of contact throughout.',
     ],
     scopeTitle: 'What we build',
     scope: [
@@ -45,7 +45,7 @@ export const COMMERCIAL = [
       },
       {
         q: 'Do you self-perform work or subcontract it?',
-        a: 'Both. We self-perform where it gives the project better control of schedule and quality, and we subcontract specialty trades to firms we know. You have one contract and one point of contact either way.',
+        a: 'Our field construction is performed by subcontractors. Standard Building Company manages their work, schedule, quality, and coordination so you have one accountable point of contact.',
       },
       {
         q: 'Can you get involved before the drawings are finished?',
