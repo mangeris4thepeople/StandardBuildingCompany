@@ -183,7 +183,7 @@ export function HomePage() {
 
 export function HubPage({ page }) {
   const group = GROUPS[page.group];
-  const other = page.group === 'commercial' ? GROUPS.residential : GROUPS.commercial;
+  const other = GROUPS.residential;
   return (
     <>
       <PageHero eyebrow="Standard Building Company" title={page.h1} lede={page.lede} trail={trailFor(page)} />
@@ -583,7 +583,7 @@ export function LocalBasementPage({ page }) {
           <article className="prose">
             <h2>Plan a basement finish in {area.name}</h2>
             <p>Standard Building Company is based in Loveland and coordinates basement finishing work for property owners in {area.name}. Whether you need a family room, bedroom, bathroom, office, or multi-use space, the first step is reviewing the existing structure and your goals.</p>
-            <p>We evaluate ceiling heights, moisture conditions, insulation, electrical capacity, HVAC distribution, stairways, and emergency escape openings before finalizing the scope. Qualified subcontractors perform the field work under our project management.</p>
+            <p>We evaluate ceiling heights, moisture conditions, insulation, electrical capacity, HVAC distribution, stairways, and emergency escape openings before finalizing the scope. Qualified subcontractors complete specialized work as part of our residential construction services.</p>
             <h2>Permits and local requirements</h2>
             <p>{area.permits}</p>
             <p>Bedroom egress, smoke and carbon-monoxide alarms, ventilation, electrical and plumbing work must be evaluated for the specific property and applicable codes. We confirm requirements with the authority having jurisdiction before construction.</p>
