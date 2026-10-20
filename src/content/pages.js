@@ -35,9 +35,9 @@ export function findService(group, slug) {
 const home = {
   type: 'home',
   path: '/',
-  title: 'General Contractor in Loveland, CO | Standard Building Company',
+  title: 'Home Remodeling & General Contractor | Loveland, CO',
   description:
-    'General contractor in Loveland, Colorado. Commercial, industrial, and government construction plus residential remodeling across Northern Colorado and the mountain towns.',
+    'Home remodeling, additions, kitchens, bathrooms, and general contracting in Loveland and Northern Colorado. Commercial construction and tenant improvements too.',
   priority: '1.0',
 };
 
@@ -52,7 +52,7 @@ const hubs = [
     h1: 'Commercial Construction in Northern Colorado',
     lede: 'General contracting, tenant finish, design-build, and construction management for commercial, industrial, and government clients.',
     intro: [
-      'Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, we self-perform and manage work across every trade, from sitework and structure through finishes and building systems.',
+      'Standard Building Company provides full-service general contracting, construction management, design-build, and pre-construction consulting to commercial, industrial, and government clients across Northern Colorado. Based in Loveland, we manage qualified subcontractors across every trade, from sitework and structure through finishes and building systems.',
       'That covers concrete foundations and flatwork, masonry, structural steel and miscellaneous metals, framing, roofing and waterproofing, doors and storefronts, interior finishes, fire suppression, plumbing, HVAC, electrical and low voltage, earthwork, exterior improvements, and underground utilities.',
     ],
     priority: '0.9',
@@ -70,9 +70,32 @@ const hubs = [
       'Homeowners hire us for the same reason commercial owners do: one contractor who plans the work, pulls the permits, schedules every trade, and answers for the result.',
       'We take on residential projects of every size across Larimer and Weld counties, from a punch list of small repairs to a full addition.',
     ],
-    priority: '0.9',
+    priority: '1.0',
   },
 ];
+
+const pricing = {
+  type: 'pricing',
+  path: '/pricing/',
+  title: 'Remodeling Costs & Estimates in Northern Colorado',
+  description: 'Understand what affects kitchen, bathroom, and basement remodeling costs in Loveland and Northern Colorado. Request a written, project-specific estimate.',
+  h1: 'Remodeling Pricing and Project Estimates',
+  lede: 'Transparent scope, clear allowances, and a written estimate built around your property and selections.',
+  priority: '0.8',
+};
+
+// Each location receives its own basement finishing landing page, with a local
+// permit discussion and links to the city page and full service description.
+const localBasements = AREAS.map((a) => ({
+  type: 'local-basement',
+  slug: a.slug,
+  path: `/basement-finishing/${a.slug}/`,
+  title: `Basement Finishing ${a.name}, CO | Standard Building`.slice(0, 60),
+  description: `Basement finishing and remodeling in ${a.name}, Colorado. Bedrooms, bathrooms, egress, permits, and project-specific estimates from Standard Building Company.`,
+  h1: `Basement Finishing in ${a.name}, Colorado`,
+  lede: `Planning a finished basement in ${a.name}? We coordinate design, subcontractors, permits, inspections, and final walkthroughs.`,
+  priority: '0.8',
+}));
 
 const areasHub = {
   type: 'areas',
@@ -115,7 +138,7 @@ const areaPages = AREAS.map((c) => ({
   priority: '0.7',
 }));
 
-export const PAGES = [home, ...hubs, ...servicePages, areasHub, ...areaPages, contact];
+export const PAGES = [home, ...hubs, ...servicePages, pricing, ...localBasements, areasHub, ...areaPages, contact];
 
 export const NOT_FOUND = {
   type: 'notfound',

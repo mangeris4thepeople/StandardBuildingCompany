@@ -8,7 +8,7 @@ import {
   AreasPage,
   AreaPage,
   ContactPage,
-  NotFoundPage,
+  NotFoundPage,\n  PricingPage,\n  LocalBasementPage,
 } from './components/Pages.jsx';
 
 const VIEWS = {
@@ -17,7 +17,7 @@ const VIEWS = {
   service: ServicePage,
   areas: AreasPage,
   area: AreaPage,
-  contact: ContactPage,
+  contact: ContactPage,\n  pricing: PricingPage,\n  'local-basement': LocalBasementPage,
   notfound: NotFoundPage,
 };
 
