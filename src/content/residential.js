@@ -503,7 +503,7 @@ export const RESIDENTIAL = [
     h1: 'Garages, ADUs, and Outbuildings',
     lede: 'Detached garages, accessory dwelling units, shops, and pole barns, from zoning check and permit to finished building.',
     intro: [
-      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, roofing, utilities, and finishes. It is the kind of work a commercial general contractor is set up for.',
+      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, roofing, utilities, and finishes. We approach it with the same attention to structure, code compliance, and craftsmanship as any new home.',
       'We build garages, accessory dwelling units, shops, and agricultural buildings across Larimer and Weld counties, in town and on rural acreage.',
     ],
     scopeTitle: 'What we build',
@@ -560,7 +560,7 @@ export const RESIDENTIAL = [
     lede: 'Small repairs, new-home punch lists, and the list of things that never got finished, handled by a general contractor instead of a rotating cast of trades.',
     intro: [
       'Not every job is a remodel. Sometimes it is a door that sticks, a patch of damaged drywall, a window well that needs a cover, or a list of twenty small things that have been waiting for a year.',
-      'We take small jobs across Northern Colorado and bring the same standards to them that we bring to commercial work.',
+      'We take small jobs across Northern Colorado and bring the same care and workmanship as our larger residential projects.',
     ],
     scopeTitle: 'Small-job scope',
     scope: [
