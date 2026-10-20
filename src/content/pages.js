@@ -74,6 +74,29 @@ const hubs = [
   },
 ];
 
+const pricing = {
+  type: 'pricing',
+  path: '/pricing/',
+  title: 'Remodeling Costs & Estimates in Northern Colorado',
+  description: 'Understand what affects kitchen, bathroom, and basement remodeling costs in Loveland and Northern Colorado. Request a written, project-specific estimate.',
+  h1: 'Remodeling Pricing and Project Estimates',
+  lede: 'Transparent scope, clear allowances, and a written estimate built around your property and selections.',
+  priority: '0.8',
+};
+
+// Each location receives its own basement finishing landing page, with a local
+// permit discussion and links to the city page and full service description.
+const localBasements = AREAS.map((a) => ({
+  type: 'local-basement',
+  slug: a.slug,
+  path: `/basement-finishing/${a.slug}/`,
+  title: `Basement Finishing ${a.name}, CO | Standard Building`.slice(0, 60),
+  description: `Basement finishing and remodeling in ${a.name}, Colorado. Bedrooms, bathrooms, egress, permits, and project-specific estimates from Standard Building Company.`,
+  h1: `Basement Finishing in ${a.name}, Colorado`,
+  lede: `Planning a finished basement in ${a.name}? We coordinate design, subcontractors, permits, inspections, and final walkthroughs.`,
+  priority: '0.8',
+}));
+
 const areasHub = {
   type: 'areas',
   path: '/service-areas/',
@@ -115,7 +138,7 @@ const areaPages = AREAS.map((c) => ({
   priority: '0.7',
 }));
 
-export const PAGES = [home, ...hubs, ...servicePages, areasHub, ...areaPages, contact];
+export const PAGES = [home, ...hubs, ...servicePages, pricing, ...localBasements, areasHub, ...areaPages, contact];
 
 export const NOT_FOUND = {
   type: 'notfound',
