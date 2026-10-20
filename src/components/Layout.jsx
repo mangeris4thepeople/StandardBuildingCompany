@@ -124,7 +124,7 @@ export function MobileBar() {
 
 // Tabbed compartments. Every panel is in the prerendered HTML, so search engines and AI crawlers
 // read all of it; visitors see one panel at a time instead of scrolling past everything.
-// A tab can be linked directly: /#residential or /commercial/tenant-finish/#faq opens that tab.
+// A tab can be linked directly using its hash anchor.
 export function Tabs({ id, label, tabs, tone = 'light' }) {
   const [active, setActive] = useState(tabs[0].key);
   const listRef = useRef(null);
