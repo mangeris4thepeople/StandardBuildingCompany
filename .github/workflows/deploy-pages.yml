@@ -27,7 +27,12 @@ jobs:
       - name: Validate prerendered output
         run: |
           test -f dist/index.html
+          test -f dist/pricing/index.html
+          test -f dist/basement-finishing/berthoud/index.html || test -f dist/basement-finishing/berthoud-co/index.html
+          grep -q 'Basement finishing' dist/pricing/index.html
+          grep -q '175' dist/pricing/index.html
           test -f dist/sitemap.xml
+          grep -q '/pricing/' dist/sitemap.xml
           test -f dist/robots.txt
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
