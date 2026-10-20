@@ -67,6 +67,11 @@ export function trailFor(page) {
     const a = AREAS.find((c) => c.slug === page.slug);
     return [homeCrumb, { name: 'Service Areas', path: '/service-areas/' }, { name: a.name, path: page.path }];
   }
+  if (page.type === 'pricing') return [homeCrumb, { name: 'Pricing', path: page.path }];
+  if (page.type === 'local-basement') {
+    const a = AREAS.find((c) => c.slug === page.slug);
+    return [homeCrumb, { name: 'Basement Finishing', path: '/residential/basement-finishing/' }, { name: a.name, path: page.path }];
+  }
   if (page.type === 'contact') return [homeCrumb, { name: 'Contact', path: page.path }];
   return [];
 }
