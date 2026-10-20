@@ -496,6 +496,8 @@ function PriceSchedule({ location }) {
           </li>
         ))}
       </ul>
+      <h3>Other residential and commercial work</h3>
+      <p>Home additions, garages and shops, decks, roofing, siding, concrete, structural repairs, ground-up commercial construction, and design-build projects require a custom estimate. We do not publish unverified per-square-foot prices for these scopes because sitework, structure, access, and code requirements vary substantially.</p>
       <p>Low-end uses standard materials such as Formica-style laminate counters and linoleum or sheet-vinyl flooring where appropriate; high-end includes finishes such as granite countertops and Italian tile. Scope, structural work, and building systems can affect cost separately from finishes. <a href="/pricing/">See pricing assumptions and request a written estimate</a>.</p>
     </>
   );
@@ -532,6 +534,8 @@ export function PricingPage({ page }) {
             <h2>What low-end and high-end mean</h2>
             <p><strong>Low-end</strong> means practical, durable finishes such as laminate (Formica-style) countertops, linoleum or sheet-vinyl flooring, stock cabinets, and standard fixtures. <strong>High-end</strong> means premium finishes such as Italian tile, granite countertops, custom cabinetry, and upgraded plumbing and lighting fixtures. The specific finish materials depend on the room and project scope.</p>
             <p>Finish quality is only one variable. Structural changes, moving plumbing, electrical upgrades, permits, site conditions, and labor can change the total even when economical materials are selected.</p>
+            <h2>Other building and construction categories</h2>
+            <p>Home additions, garages and shops, decks, roofing, siding, concrete, structural repairs, ground-up commercial construction, and design-build work are priced from the actual scope and site conditions. We will not publish unsupported square-foot estimates for those categories. <a href="/contact/">Request a project-specific budget</a>.</p>
             <h2>What affects the price</h2>
             <ul className="link-list">{factors.map(([name, detail]) => <li key={name}><strong>{name}</strong><span>{detail}</span></li>)}</ul>
             <h2>What you receive</h2>
