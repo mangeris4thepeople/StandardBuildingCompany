@@ -478,6 +478,12 @@ export function AreaPage({ page }) {
 /* --------------------------------------------------------- PRICING / LOCAL BASEMENTS */
 
 export function PricingPage({ page }) {
+  const ranges = [
+    { name: 'Basement finishing', low: 45, high: 110, note: 'Economy: resilient sheet flooring and standard trim. Luxury: premium Italian tile, upgraded millwork, and specialty spaces. Bathrooms and egress can increase cost.' },
+    { name: 'Kitchen remodeling', low: 175, high: 450, note: 'Economy: Formica-style laminate countertops, linoleum or sheet-vinyl floors, and stock cabinets. Luxury: granite countertops, Italian tile, and custom cabinetry.' },
+    { name: 'Bathroom remodeling', low: 250, high: 650, note: 'Economy: standard fixtures and resilient flooring. Luxury: Italian tile, stone countertops, custom shower, and premium fixtures.' },
+    { name: 'Commercial tenant improvements', low: 75, high: 250, note: 'Tenant-area pricing depends on occupancy, HVAC, fire protection, electrical upgrades, phasing, and finishes.' },
+  ];
   const factors = [
     ['Basement finishing', 'Finished square footage, framing and insulation, bathroom plumbing, egress, HVAC, electrical, and finish selections.'],
     ['Kitchen remodeling', 'Cabinetry, counters, appliances, layout changes, structural work, plumbing, and electrical upgrades.'],
