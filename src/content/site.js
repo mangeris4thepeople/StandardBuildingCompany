@@ -21,7 +21,6 @@ export const SITE = {
 // and listed as sameAs in the business schema.
 export const SOCIAL = [
   { name: 'LinkedIn', key: 'linkedin', url: 'https://www.linkedin.com/company/standardbuildingcompany/' },
-  { name: 'Instagram', key: 'instagram', url: 'https://www.instagram.com/standardbuildingcompany/' },
   { name: 'Facebook', key: 'facebook', url: 'https://www.facebook.com/profile.php?id=61595003715696' },
 ];
 
