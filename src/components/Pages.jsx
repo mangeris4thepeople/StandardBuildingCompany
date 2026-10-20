@@ -471,6 +471,79 @@ export function AreaPage({ page }) {
   );
 }
 
+/* --------------------------------------------------------- PRICING / LOCAL BASEMENTS */
+
+export function PricingPage({ page }) {
+  const factors = [
+    ['Basement finishing', 'Finished square footage, framing and insulation, bathroom plumbing, egress, HVAC, electrical, and finish selections.'],
+    ['Kitchen remodeling', 'Cabinetry, counters, appliances, layout changes, structural work, plumbing, and electrical upgrades.'],
+    ['Bathroom remodeling', 'Shower waterproofing, tile, plumbing moves, ventilation, fixtures, and accessibility details.'],
+    ['Commercial tenant improvements', 'Occupancy and code requirements, drawings, building systems, phasing, inspections, and tenant schedule.'],
+  ];
+  return (
+    <>
+      <PageHero eyebrow="Project planning" title={page.h1} lede={page.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            <h2>What will my project cost?</h2>
+            <p>We do not publish one-size-fits-all quotes because two projects with the same square footage can have very different structural, mechanical, and finish requirements. We review your project and provide a written scope and project-specific estimate. Any preliminary budget is an estimate, not a fixed-price offer.</p>
+            <h2>What affects the price</h2>
+            <ul className="link-list">{factors.map(([name, detail]) => <li key={name}><strong>{name}</strong><span>{detail}</span></li>)}</ul>
+            <h2>What you receive</h2>
+            <ul className="check-list">
+              <li>Scope of work and assumptions</li>
+              <li>Material and finish allowances where selections are pending</li>
+              <li>Known permit, engineering, and subcontractor requirements</li>
+              <li>Schedule considerations and major cost risks</li>
+              <li>A clear process for approving changes</li>
+            </ul>
+            <h2>Compare proposals fairly</h2>
+            <p>Ask each contractor whether demolition, waste removal, permits, waterproofing, electrical, HVAC, inspections, and cleanup are included. An inexpensive quote that excludes essential work can cost more later.</p>
+            <p>Explore <a href="/residential/basement-finishing/">basement finishing</a>, <a href="/residential/kitchen-remodeling/">kitchen remodeling</a>, and <a href="/residential/bathroom-remodeling/">bathroom remodeling</a>, or <a href="/contact/">request an estimate</a>.</p>
+          </article>
+          <aside className="side"><SideCta /><SideLinks title="Where we work" links={areaLinks} /></aside>
+        </div>
+      </section>
+      <Contact heading="Request a project-specific estimate" />
+    </>
+  );
+}
+
+export function LocalBasementPage({ page }) {
+  const area = AREAS.find((a) => a.slug === page.slug);
+  if (!area) return <NotFoundPage />;
+  return (
+    <>
+      <PageHero eyebrow={area.county} title={page.h1} lede={page.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            <h2>Plan a basement finish in {area.name}</h2>
+            <p>Standard Building Company is based in Loveland and coordinates basement finishing work for property owners in {area.name}. Whether you need a family room, bedroom, bathroom, office, or multi-use space, the first step is reviewing the existing structure and your goals.</p>
+            <p>We evaluate ceiling heights, moisture conditions, insulation, electrical capacity, HVAC distribution, stairways, and emergency escape openings before finalizing the scope. Qualified subcontractors perform the field work under our project management.</p>
+            <h2>Permits and local requirements</h2>
+            <p>{area.permits}</p>
+            <p>Bedroom egress, smoke and carbon-monoxide alarms, ventilation, electrical and plumbing work must be evaluated for the specific property and applicable codes. We confirm requirements with the authority having jurisdiction before construction.</p>
+            <h2>What affects basement finishing cost in {area.name}?</h2>
+            <p>Size, bathroom rough-ins, egress modifications, moisture remediation, soundproofing, cabinetry, and finish selections all affect cost. See our <a href="/pricing/">pricing and estimating guide</a> for how we develop a written scope and estimate.</p>
+            <h2>Related {area.name} resources</h2>
+            <p>Read our <a href={area.path}>{area.name} construction and permitting guide</a> and our <a href="/residential/basement-finishing/">full basement finishing service page</a>.</p>
+            <h2>Questions before starting</h2>
+            <Faq items={[
+              {q:`Do I need a permit to finish a basement in ${area.name}?`,a:'Finishing habitable space typically involves permits and inspections. The applicable jurisdiction depends on the property address and scope; we verify it before work begins.'},
+              {q:'Can I add a bedroom or bathroom?',a:'Often, subject to egress, plumbing, ceiling height, ventilation, and applicable building code requirements. We evaluate the existing conditions before pricing.'},
+              {q:'Can you give me a fixed price from square footage alone?',a:'Not reliably. We need the scope, site conditions, and material selections to prepare a meaningful estimate.'},
+            ]} />
+          </article>
+          <aside className="side"><SideCta /><SideLinks title="Other service areas" links={areaLinks} /></aside>
+        </div>
+      </section>
+      <Contact heading={`Discuss your ${area.name} basement project`} />
+    </>
+  );
+}
+
 /* --------------------------------------------------------- CONTACT / 404 */
 
 export function ContactPage({ page }) {
