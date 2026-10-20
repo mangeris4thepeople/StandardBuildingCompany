@@ -427,7 +427,7 @@ export function AreaPage({ page }) {
             <h2>Permits and jurisdiction in {a.name}</h2>
             <p>{a.permits}</p>
 
-            <PriceSchedule location={a.name} />
+            <PriceSchedule location={a.name} slug={a.slug} />
             <h2>Basement finishing in {a.name}</h2>
             <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>
             <h2>Services in {a.name}</h2>
@@ -483,22 +483,53 @@ const PRICING_RANGES = [
     { name: 'Commercial tenant improvements', low: 75, high: 250, note: 'Tenant-area pricing depends on occupancy, HVAC, fire protection, electrical upgrades, phasing, and finishes.' },
 ];
 
-function PriceSchedule({ location }) {
+const MOUNTAIN_MARKETS = {
+  'aspen-co': { label: 'Aspen', kitchen: '$200,000–$450,000+', bath: '$100,000–$275,000+', whole: '$350–$700+ per sq. ft.' },
+  'vail-co': { label: 'Vail', kitchen: '$175,000–$400,000+', bath: '$85,000–$250,000+', whole: '$300–$600+ per sq. ft.' },
+  'avon-co': { label: 'Avon', kitchen: '$140,000–$325,000', bath: '$70,000–$190,000', whole: '$240–$475 per sq. ft.' },
+};
+const MOUNTAIN_SLUGS = new Set(['aspen-co', 'vail-co', 'avon-co', 'winter-park-co', 'copper-mountain-co', 'steamboat-springs-co', 'estes-park-co']);
+
+function PriceSchedule({ location, slug }) {
+  const isMountain = MOUNTAIN_SLUGS.has(slug);
+  const benchmark = MOUNTAIN_MARKETS[slug];
   return (
     <>
-      <h2>{location ? `Construction price schedule for ${location}` : 'Construction price schedule'}</h2>
-      <p><strong>Preliminary Northern Colorado planning ranges, not fixed bids.</strong> The same baseline figures are shown for every service area until SBC verifies location-specific labor, mobilization, permit, and material costs. Mountain travel, access, seasonality, and jurisdictional requirements may change the final estimate.</p>
-      <ul className="link-list">
-        {PRICING_RANGES.map((r) => (
-          <li key={r.name}>
-            <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
-            <span>{r.note}</span>
-          </li>
-        ))}
-      </ul>
+      <h2>{location ? `Construction cost planning in ${location}` : 'Construction cost planning'}</h2>
+      {isMountain ? (
+        <>
+          <p><strong>Mountain resort construction is a separate pricing market.</strong> Front Range remodeling figures do not apply here. Mountain projects require independent estimates for local trade availability, travel, lodging, delivery, weather, snow-load requirements, permits, and property access.</p>
+          {benchmark ? (
+            <>
+              <p><strong>Published 2026 local-market remodeling benchmarks (not SBC bids):</strong></p>
+              <ul className="link-list">
+                <li><strong>Kitchen remodel: {benchmark.kitchen} per project</strong></li>
+                <li><strong>Bathroom remodel: {benchmark.bath} per project</strong></li>
+                <li><strong>Whole-home remodel: {benchmark.whole}</strong></li>
+              </ul>
+              <p>Source: <a href="https://www.bulldogaspen.com/blog/best-remodeling-ideas-vail-aspen-2026">Bulldog Construction's 2026 mountain-market remodeling guide</a>. These are market examples for different scopes, not a guaranteed SBC price schedule or directly comparable square-foot kitchen/bath rates.</p>
+            </>
+          ) : (
+            <p>We have not verified a defensible public per-square-foot remodeling schedule for {location}. Aspen/Vail pricing cannot simply be copied to this market. <a href="/contact/">Request a locally scoped estimate</a> covering labor, access, logistics, and finish allowances.</p>
+          )}
+          <p>Basement finishing, additions, commercial work, and ground-up construction in {location} require project-specific pricing. No Front Range price floor or ceiling is implied.</p>
+        </>
+      ) : (
+        <>
+          <p><strong>Preliminary Front Range planning ranges, not fixed bids.</strong> These figures apply to Loveland-area budgeting only until SBC verifies local subcontractor and material costs.</p>
+          <ul className="link-list">
+            {PRICING_RANGES.map((r) => (
+              <li key={r.name}>
+                <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
+                <span>{r.note}</span>
+              </li>
+            ))}
+          </ul>
+          <p>Economy finishes include laminate countertops and linoleum or sheet-vinyl flooring where suitable. Luxury finishes can include Italian tile and granite countertops. Structural work and mechanical systems affect costs separately.</p>
+        </>
+      )}
       <h3>Other residential and commercial work</h3>
-      <p>Home additions, garages and shops, decks, roofing, siding, concrete, structural repairs, ground-up commercial construction, and design-build projects require a custom estimate. We do not publish unverified per-square-foot prices for these scopes because sitework, structure, access, and code requirements vary substantially.</p>
-      <p>Low-end uses standard materials such as Formica-style laminate counters and linoleum or sheet-vinyl flooring where appropriate; high-end includes finishes such as granite countertops and Italian tile. Scope, structural work, and building systems can affect cost separately from finishes. <a href="/pricing/">See pricing assumptions and request a written estimate</a>.</p>
+      <p>Additions, garages, decks, roofing, siding, concrete, structural repairs, and ground-up commercial construction require a custom scope and estimate. <a href="/pricing/">See pricing assumptions</a> or <a href="/contact/">request an estimate</a>.</p>
     </>
   );
 }
@@ -521,7 +552,7 @@ export function PricingPage({ page }) {
             <h2>What will my project cost?</h2>
             <p>We do not publish one-size-fits-all quotes because two projects with the same square footage can have very different structural, mechanical, and finish requirements. We review your project and provide a written scope and project-specific estimate. Any preliminary budget is an estimate, not a fixed-price offer.</p>
             <h2>Preliminary planning ranges per square foot</h2>
-            <p><strong>Illustrative budgeting guidance — not an SBC quote or guaranteed minimum.</strong> These broad ranges are preliminary assumptions for Northern Colorado projects, not a price list validated against SBC's current subcontractor bids. Final pricing depends on site conditions, drawings, finish selections, and the written scope.</p>
+            <p><strong>Front Range only — not for mountain resort towns.</strong> Illustrative budgeting guidance — not an SBC quote or guaranteed minimum. These broad ranges are preliminary assumptions for Northern Colorado projects, not a price list validated against SBC's current subcontractor bids. Final pricing depends on site conditions, drawings, finish selections, and the written scope.</p>
             <ul className="link-list">
               {PRICING_RANGES.map((r) => (
                 <li key={r.name}>
@@ -534,7 +565,7 @@ export function PricingPage({ page }) {
             <h2>What low-end and high-end mean</h2>
             <p><strong>Low-end</strong> means practical, durable finishes such as laminate (Formica-style) countertops, linoleum or sheet-vinyl flooring, stock cabinets, and standard fixtures. <strong>High-end</strong> means premium finishes such as Italian tile, granite countertops, custom cabinetry, and upgraded plumbing and lighting fixtures. The specific finish materials depend on the room and project scope.</p>
             <p>Finish quality is only one variable. Structural changes, moving plumbing, electrical upgrades, permits, site conditions, and labor can change the total even when economical materials are selected.</p>
-            <h2>Other building and construction categories</h2>
+            <h2>Mountain resort pricing is different</h2>\n            <p>Aspen, Vail, Avon, Steamboat Springs, Winter Park, Copper Mountain, and Estes Park cannot be priced using this Front Range schedule. Mountain markets require separate labor, mobilization, delivery, access, weather, and permitting budgets. See each <a href="/service-areas/">service-area page</a> for applicable market benchmarks or a custom-estimate explanation.</p>\n            <h2>Other building and construction categories</h2>
             <p>Home additions, garages and shops, decks, roofing, siding, concrete, structural repairs, ground-up commercial construction, and design-build work are priced from the actual scope and site conditions. We will not publish unsupported square-foot estimates for those categories. <a href="/contact/">Request a project-specific budget</a>.</p>
             <h2>What affects the price</h2>
             <ul className="link-list">{factors.map(([name, detail]) => <li key={name}><strong>{name}</strong><span>{detail}</span></li>)}</ul>
@@ -573,7 +604,7 @@ export function LocalBasementPage({ page }) {
             <h2>Permits and local requirements</h2>
             <p>{area.permits}</p>
             <p>Bedroom egress, smoke and carbon-monoxide alarms, ventilation, electrical and plumbing work must be evaluated for the specific property and applicable codes. We confirm requirements with the authority having jurisdiction before construction.</p>
-            <PriceSchedule location={area.name} />
+            <PriceSchedule location={area.name} slug={area.slug} />
             <h2>What affects basement finishing cost in {area.name}?</h2>
             <p>Size, bathroom rough-ins, egress modifications, moisture remediation, soundproofing, cabinetry, and finish selections all affect cost. See our <a href="/pricing/">pricing and estimating guide</a> for how we develop a written scope and estimate.</p>
             <h2>Related {area.name} resources</h2>
