@@ -2,6 +2,9 @@
 export const SITE = {
   name: 'Standard Building Company',
   legalName: 'Standard Building Company Inc.',
+  // Plain-language business description used in schema and shared with Google Business Profile.
+  description:
+    'Standard Building Company is a home remodeling contractor founded in 2020 and based in Loveland, Colorado. We build for homeowners: kitchens, bathrooms, basement finishing, home additions, decks and outdoor living, exteriors, garages, and ADUs. One accountable contractor from planning through completion, serving Northern Colorado and the mountain towns.',
   url: 'https://www.standardbuildingcompany.net',
   phoneDisplay: '(970) 430-5884',
   phoneHref: 'tel:+19704305884',

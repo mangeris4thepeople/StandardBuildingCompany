@@ -13,6 +13,7 @@ function business() {
     '@id': BUSINESS_ID,
     name: SITE.name,
     legalName: SITE.legalName,
+    description: SITE.description,
     url: `${SITE.url}/`,
     image: SITE.url + SITE.ogImage,
     telephone: SITE.phoneE164,
