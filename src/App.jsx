@@ -11,6 +11,9 @@ import {
   NotFoundPage,
   PricingPage,
   LocalBasementPage,
+  StaticPage,
+  InsightsPage,
+  PostPage,
 } from './components/Pages.jsx';
 
 const VIEWS = {
@@ -22,6 +25,9 @@ const VIEWS = {
   contact: ContactPage,
   pricing: PricingPage,
   'local-basement': LocalBasementPage,
+  static: StaticPage,
+  insights: InsightsPage,
+  post: PostPage,
   notfound: NotFoundPage,
 };
 

@@ -56,12 +56,38 @@ for (const file of files) {
   const noindex = /noindex/i.test(robots);
   const types = [];
   let ldOk = ld.length > 0;
+  const ldErrors = [];
+  // Required properties per schema type, so a regression in head.js fails the build instead of
+  // silently losing rich results.
+  const REQUIRED = {
+    LocalBusiness: ['name', 'address', 'telephone', 'url', 'image'],
+    PostalAddress: ['streetAddress', 'addressLocality', 'addressRegion', 'postalCode', 'addressCountry'],
+    Service: ['name', 'provider', 'areaServed', 'serviceType'],
+    BreadcrumbList: ['itemListElement'],
+    FAQPage: ['mainEntity'],
+    Question: ['name', 'acceptedAnswer'],
+    Answer: ['text'],
+    Article: ['headline', 'datePublished', 'dateModified', 'author', 'publisher', 'mainEntityOfPage'],
+    ListItem: ['position', 'name', 'item'],
+  };
+  const visit = (node, where) => {
+    if (Array.isArray(node)) return node.forEach((n, i) => visit(n, `${where}[${i}]`));
+    if (!node || typeof node !== 'object') return;
+    const ts = [].concat(node['@type'] || []);
+    const topLevel = /^graph\[\d+\]$/.test(where);
+    for (const t of ts) {
+      if ((t === 'Service' || t === 'Article') && !topLevel) continue; // items listed inside an OfferCatalog or CollectionPage only need name and url
+      for (const req of REQUIRED[t] || []) if (!(req in node)) ldErrors.push(`${t} at ${where} missing ${req}`);
+    }
+    for (const [k, v] of Object.entries(node)) if (k !== '@type' && k !== '@context') visit(v, `${where}.${k}`);
+  };
   for (const block of ld) {
     try {
       const data = JSON.parse(block);
       const nodes = data['@graph'] || [data];
       for (const n of nodes) types.push([].concat(n['@type']).join('+'));
       if (!data['@context']) ldOk = false;
+      visit(nodes, 'graph');
     } catch { ldOk = false; }
   }
   const imgsNoAlt = (html.match(/<img(?![^>]*\balt=)[^>]*>/gi) || []).length;
@@ -85,6 +111,7 @@ for (const file of files) {
     if (canonical && !canonical.startsWith('https://')) fail('canonical is not https');
     if (canonical && !canonical.endsWith(route === '/' ? '/' : `${route}/`)) fail(`canonical ${canonical} does not match route`);
     if (!ldOk) fail('missing or invalid JSON-LD');
+    for (const e of ldErrors) fail(`JSON-LD: ${e}`);
     if (wc < MIN_WORDS) fail(`only ${wc} words in <main> (want ${MIN_WORDS}+)`);
     if (seenTitle.has(title)) fail(`duplicate title (also on ${seenTitle.get(title)})`);
     if (seenDesc.has(desc)) fail(`duplicate description (also on ${seenDesc.get(desc)})`);

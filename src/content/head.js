@@ -1,6 +1,8 @@
 // Builds the per-page <head> block: title, description, canonical, social tags, and JSON-LD.
 import { SITE, GROUPS, OTHER_AREAS, SOCIAL } from './site.js';
 import { ALL_SERVICES, AREAS, findService, absoluteUrl } from './pages.js';
+import { POSTS, AUTHOR } from './posts.js';
+import { STATIC_PAGES } from './static-pages.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -9,17 +11,28 @@ const BUSINESS_ID = `${SITE.url}/#business`;
 
 function business() {
   return {
-    '@type': ['GeneralContractor', 'LocalBusiness'],
+    '@type': ['HomeAndConstructionBusiness', 'GeneralContractor', 'LocalBusiness', 'Organization'],
     '@id': BUSINESS_ID,
     name: SITE.name,
     legalName: SITE.legalName,
+    alternateName: 'SBC',
     description: SITE.description,
     url: `${SITE.url}/`,
+    logo: { '@type': 'ImageObject', url: SITE.url + SITE.logo, width: 1200, height: 630 },
     image: SITE.url + SITE.ogImage,
     telephone: SITE.phoneE164,
     email: SITE.email,
     foundingDate: SITE.founded,
     priceRange: '$$',
+    knowsAbout: ['Design-build', 'Home remodeling', 'Kitchen remodeling', 'Bathroom remodeling', 'Basement finishing', 'Home additions', 'Custom homes', 'Accessory dwelling units', 'Residential architectural design'],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: SITE.hours.days,
+        opens: SITE.hours.opens,
+        closes: SITE.hours.closes,
+      },
+    ],
     sameAs: SOCIAL.map((s) => s.url),
     address: {
       '@type': 'PostalAddress',
@@ -71,9 +84,18 @@ export function trailFor(page) {
   if (page.type === 'pricing') return [homeCrumb, { name: 'Pricing', path: page.path }];
   if (page.type === 'local-basement') {
     const a = AREAS.find((c) => c.slug === page.slug);
-    return [homeCrumb, { name: 'Basement Finishing', path: '/residential/basement-finishing/' }, { name: a.name, path: page.path }];
+    return [homeCrumb, { name: 'Basement Finishing', path: '/services/basement-finishing/' }, { name: a.name, path: page.path }];
   }
   if (page.type === 'contact') return [homeCrumb, { name: 'Contact', path: page.path }];
+  if (page.type === 'static') {
+    const sp = STATIC_PAGES.find((x) => x.slug === page.slug);
+    return [homeCrumb, { name: sp.eyebrow === 'How we work' ? 'Design-Build' : sp.eyebrow, path: page.path }];
+  }
+  if (page.type === 'insights') return [homeCrumb, { name: 'Insights', path: page.path }];
+  if (page.type === 'post') {
+    const post = POSTS.find((x) => x.slug === page.slug);
+    return [homeCrumb, { name: 'Insights', path: '/insights/' }, { name: post.title, path: page.path }];
+  }
   return [];
 }
 
@@ -157,6 +179,68 @@ function graphFor(page) {
     graph.push({ '@type': 'ContactPage', url: absoluteUrl(page.path), about: { '@id': BUSINESS_ID } });
   }
 
+  if (page.type === 'static') {
+    const sp = STATIC_PAGES.find((x) => x.slug === page.slug);
+    graph.push({
+      '@type': page.slug === 'about' ? 'AboutPage' : 'WebPage',
+      '@id': `${absoluteUrl(page.path)}#webpage`,
+      url: absoluteUrl(page.path),
+      name: sp.h1,
+      description: sp.description,
+      about: { '@id': BUSINESS_ID },
+    });
+    if (page.slug === 'design-build') {
+      graph.push({
+        '@type': 'Service',
+        '@id': `${absoluteUrl(page.path)}#service`,
+        name: 'Residential design-build',
+        serviceType: 'Design-build construction',
+        description: sp.description,
+        url: absoluteUrl(page.path),
+        provider: { '@id': BUSINESS_ID },
+        areaServed: AREAS.map((a) => ({ '@type': 'City', name: `${a.name}, CO` })),
+      });
+    }
+    if (sp.faqs && sp.faqs.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        mainEntity: sp.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+      });
+    }
+  }
+
+  if (page.type === 'insights') {
+    graph.push({
+      '@type': 'CollectionPage',
+      '@id': `${absoluteUrl(page.path)}#webpage`,
+      url: absoluteUrl(page.path),
+      name: page.h1,
+      description: page.description,
+      hasPart: POSTS.map((p) => ({ '@type': 'Article', headline: p.title, url: absoluteUrl(`/insights/${p.slug}/`), datePublished: p.published })),
+    });
+  }
+
+  if (page.type === 'post') {
+    const post = POSTS.find((x) => x.slug === page.slug);
+    const text = post.body.filter((b) => !b.startsWith('## ')).join(' ');
+    graph.push({
+      '@type': 'Article',
+      '@id': `${absoluteUrl(page.path)}#article`,
+      headline: post.h1,
+      description: post.description,
+      url: absoluteUrl(page.path),
+      mainEntityOfPage: absoluteUrl(page.path),
+      datePublished: post.published,
+      dateModified: post.updated || post.published,
+      articleSection: post.category,
+      wordCount: text.split(/\s+/).length,
+      image: SITE.url + SITE.ogImage,
+      author: { '@type': 'Organization', name: AUTHOR.name, url: AUTHOR.url, '@id': BUSINESS_ID },
+      publisher: { '@id': BUSINESS_ID },
+      inLanguage: 'en-US',
+    });
+  }
+
   return { '@context': 'https://schema.org', '@graph': graph };
 }
 
@@ -170,7 +254,17 @@ function fitTitle(title) {
   return title.replace(/ \| Standard Building Company$/, '');
 }
 
-export function buildHead(page) {
+// Search engine verification tokens. Set GOOGLE_SITE_VERIFICATION and BING_SITE_VERIFICATION as build
+// environment variables on the host. The Google default is the token already verified for this property.
+export function verificationTags(env = {}) {
+  const google = env.GOOGLE_SITE_VERIFICATION || 'nC4LZipWKEw515pkdTicr5fgcN_ZIy6erNHNBfWf4xc';
+  const bing = env.BING_SITE_VERIFICATION || '';
+  const tags = [`<meta name="google-site-verification" content="${esc(google)}" />`];
+  if (bing) tags.push(`<meta name="msvalidate.01" content="${esc(bing)}" />`);
+  return tags;
+}
+
+export function buildHead(page, env = {}) {
   page = { ...page, title: fitTitle(page.title) };
   const url = absoluteUrl(page.path);
   const image = SITE.url + SITE.ogImage;
@@ -182,12 +276,13 @@ export function buildHead(page) {
     `<title>${esc(page.title)}</title>`,
     `<meta name="description" content="${esc(page.description)}" />`,
     `<meta name="robots" content="${robots}" />`,
+    ...verificationTags(env),
   ];
 
   if (!page.noindex) {
     tags.push(
       `<link rel="canonical" href="${esc(url)}" />`,
-      `<meta property="og:type" content="website" />`,
+      `<meta property="og:type" content="${page.type === 'post' ? 'article' : 'website'}" />`,
       `<meta property="og:site_name" content="${esc(SITE.name)}" />`,
       `<meta property="og:url" content="${esc(url)}" />`,
       `<meta property="og:title" content="${esc(page.title)}" />`,

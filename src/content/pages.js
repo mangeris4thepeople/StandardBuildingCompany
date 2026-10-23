@@ -1,12 +1,41 @@
 // Route table. Every entry here is prerendered to its own HTML file at build time
-// and listed in sitemap.xml. Add a service or city in the content files and it appears here.
+// and listed in sitemap.xml. Add a service, city, or post in the content files and it appears here.
 import { SITE, GROUPS } from './site.js';
 import { RESIDENTIAL } from './residential.js';
+import { DESIGN_BUILD } from './design-build-services.js';
 import { CITIES } from './cities.js';
+import { STATIC_PAGES } from './static-pages.js';
+import { POSTS } from './posts.js';
+
+// Core design-build services lead the list; trade and small-job services follow.
+const SERVICE_ORDER = [
+  'whole-home-remodels',
+  'kitchen-remodeling',
+  'bathroom-remodeling',
+  'basement-finishing',
+  'home-additions',
+  'custom-homes',
+  'garages-adus',
+  'decks-outdoor-living',
+  'roofing-coordination',
+  'architectural-design-permitting',
+  'exteriors',
+  'flooring',
+  'painting-drywall-trim',
+  'concrete',
+  'handyman-punch-list',
+];
+
+const rank = (slug) => { const i = SERVICE_ORDER.indexOf(slug); return i < 0 ? 99 : i; };
 
 export const SERVICES = {
-  residential: RESIDENTIAL.map((s) => ({ ...s, group: 'residential', path: `/residential/${s.slug}/` })),
+  residential: [...DESIGN_BUILD, ...RESIDENTIAL]
+    .sort((a, b) => rank(a.slug) - rank(b.slug))
+    .map((s) => ({ ...s, group: 'residential', path: `${GROUPS.residential.path}${s.slug}/` })),
 };
+
+// The ten services shown on the home page and in the nav. Everything else is reachable from the hub.
+export const CORE_SERVICES = SERVICES.residential.filter((s) => rank(s.slug) < 10);
 
 export const ALL_SERVICES = [...SERVICES.residential];
 
@@ -18,7 +47,13 @@ function areaTitle(name) {
   return t.length <= 60 ? t : `Home Remodeling in ${name}, Colorado`;
 }
 
-export const AREAS = CITIES.map((c) => ({ region: 'northern', title: areaTitle(c.name), ...c, path: `/service-areas/${c.slug}/` }));
+export const AREAS = CITIES.map((c) => ({
+  region: 'northern',
+  title: areaTitle(c.name),
+  h1: `Home Remodeling in ${c.name}, CO`,
+  ...c,
+  path: `/service-areas/${c.slug}/`,
+}));
 
 // Service areas grouped for listings. Order here is the order the groups appear on the page.
 export const AREA_REGIONS = [
@@ -33,9 +68,9 @@ export function findService(group, slug) {
 const home = {
   type: 'home',
   path: '/',
-  title: 'Home Remodeling Contractor | Loveland, CO',
+  title: 'Design-Build Remodeling & Custom Homes | Loveland, CO',
   description:
-    'Home remodeling in Loveland and Northern Colorado: kitchens, bathrooms, basements, additions, decks, siding, garages, and ADUs. One accountable contractor.',
+    'Residential design-build contractor in Loveland, CO. Whole-home and kitchen remodels, basements, additions, custom homes, and ADUs across Northern Colorado.',
   priority: '1.0',
 };
 
@@ -44,16 +79,16 @@ const hubs = [
     type: 'hub',
     group: 'residential',
     path: GROUPS.residential.path,
-    title: 'Home Remodeling Contractor in Loveland, CO | Standard Building Company',
+    title: 'Home Remodeling & Design-Build Services | Northern Colorado',
     description:
-      'Residential remodeling in Loveland and Northern Colorado: kitchens, bathrooms, basements, additions, flooring, decks, concrete, siding, windows, garages, and ADUs.',
-    h1: 'Residential Remodeling in Loveland and Northern Colorado',
-    lede: 'Kitchens, bathrooms, basements, additions, exteriors, and outdoor living, planned and built by one accountable contractor.',
+      'Design-build services in Loveland and Northern Colorado: whole-home, kitchen, and bath remodels, basement finishes, additions, custom homes, ADUs, decks, and design.',
+    h1: 'Design-Build and Remodeling Services in Northern Colorado',
+    lede: 'Whole-home remodels, kitchens, baths, basements, additions, custom homes, and ADUs, designed and built by one accountable contractor.',
     intro: [
-      'Homeowners hire us for one reason: one contractor who plans the work, pulls the permits, schedules every trade, and answers for the result.',
-      'We take on residential projects of every size across Larimer and Weld counties, from a punch list of small repairs to a full addition.',
+      'Homeowners hire us for one reason: one firm that draws the plan, prices it as it is drawn, pulls the permit, schedules every trade, and answers for the result.',
+      'We take on residential projects of every size across Larimer and Weld counties and in the mountain towns, from a bathroom to a custom home. Each service below has its own page with scope, process, timelines, what drives cost, and answers to the questions we hear most.',
     ],
-    priority: '1.0',
+    priority: '0.9',
   },
 ];
 
@@ -64,7 +99,7 @@ const pricing = {
   description: 'Understand what affects kitchen, bathroom, and basement remodeling costs in Loveland and Northern Colorado. Request a written, project-specific estimate.',
   h1: 'Remodeling Pricing and Project Estimates',
   lede: 'Transparent scope, clear allowances, and a written estimate built around your property and selections.',
-  priority: '0.8',
+  priority: '0.7',
 };
 
 // Each location receives its own basement finishing landing page, with a local
@@ -74,21 +109,21 @@ const localBasements = AREAS.map((a) => ({
   slug: a.slug,
   path: `/basement-finishing/${a.slug}/`,
   title: `Basement Finishing ${a.name}, CO | Standard Building`.slice(0, 60),
-  description: `Basement finishing and remodeling in ${a.name}, Colorado. Bedrooms, bathrooms, egress, permits, and project-specific estimates from Standard Building Company.`,
-  h1: `Basement Finishing in ${a.name}, Colorado`,
-  lede: `Planning a finished basement in ${a.name}? We coordinate design, subcontractors, permits, inspections, and final walkthroughs.`,
-  priority: '0.8',
+  description: `Basement finishing in ${a.name}, CO. Bedrooms, bathrooms, egress windows, permits, inspections, and written estimates from Standard Building Company.`,
+  h1: `Basement Finishing in ${a.name}, CO`,
+  lede: `Planning a finished basement in ${a.name}? We handle design, permits, subcontractors, inspections, and the final walkthrough.`,
+  priority: '0.6',
 }));
 
 const areasHub = {
   type: 'areas',
   path: '/service-areas/',
-  title: 'Remodeling Service Areas: Northern Colorado & Mountains',
+  title: 'Service Areas: Northern Colorado & Mountain Towns | SBC',
   description:
-    'Home remodeling contractor serving Loveland, Fort Collins, Greeley, Longmont, Windsor, Estes Park, Vail, Avon, Aspen, Winter Park, Copper Mountain, and Steamboat Springs.',
+    'Design-build contractor serving Loveland, Fort Collins, Greeley, Longmont, Windsor, Estes Park, Vail, Avon, Aspen, Winter Park, Copper Mountain, and Steamboat.',
   h1: 'Northern Colorado and Mountain Town Service Areas',
   lede: 'Based in Loveland and working across the northern Front Range and into the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.',
-  priority: '0.7',
+  priority: '0.8',
 };
 
 const contact = {
@@ -102,6 +137,27 @@ const contact = {
   priority: '0.6',
 };
 
+const insightsHub = {
+  type: 'insights',
+  path: '/insights/',
+  title: 'Remodeling Insights for Northern Colorado | SBC Loveland',
+  description:
+    'Cost guides, permit explainers, and planning advice for remodeling, additions, ADUs, and custom homes in Loveland, Fort Collins, and the Colorado mountain towns.',
+  h1: 'Remodeling Insights for Northern Colorado Homeowners',
+  lede: 'Cost ranges, permit rules, and planning advice written by the people who draw and build the projects.',
+  priority: '0.7',
+};
+
+const postPages = POSTS.map((p) => ({
+  type: 'post',
+  slug: p.slug,
+  path: `/insights/${p.slug}/`,
+  title: p.title,
+  description: p.description,
+  priority: '0.6',
+  lastmod: p.updated || p.published,
+}));
+
 const servicePages = ALL_SERVICES.map((s) => ({
   type: 'service',
   group: s.group,
@@ -109,7 +165,7 @@ const servicePages = ALL_SERVICES.map((s) => ({
   path: s.path,
   title: s.title,
   description: s.description,
-  priority: '0.8',
+  priority: rank(s.slug) < 10 ? '0.9' : '0.8',
 }));
 
 const areaPages = AREAS.map((c) => ({
@@ -118,16 +174,30 @@ const areaPages = AREAS.map((c) => ({
   path: c.path,
   title: c.title,
   description: c.description,
-  priority: '0.7',
+  priority: c.region === 'mountain' ? '0.7' : '0.8',
 }));
 
-export const PAGES = [home, ...hubs, ...servicePages, pricing, ...localBasements, areasHub, ...areaPages, contact];
+const staticPages = STATIC_PAGES.map((p) => ({ ...p }));
+
+export const PAGES = [
+  home,
+  ...hubs,
+  ...servicePages,
+  ...staticPages,
+  pricing,
+  areasHub,
+  ...areaPages,
+  ...localBasements,
+  insightsHub,
+  ...postPages,
+  contact,
+];
 
 export const NOT_FOUND = {
   type: 'notfound',
   path: '/404/',
   title: 'Page Not Found | Standard Building Company',
-  description: 'The page you were looking for could not be found.',
+  description: 'That page does not exist or has moved. Find our remodeling, design-build, and custom home services, service areas, and contact details from the links on this page.',
   noindex: true,
 };
 

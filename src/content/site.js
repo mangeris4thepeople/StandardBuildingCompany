@@ -4,7 +4,7 @@ export const SITE = {
   legalName: 'Standard Building Company Inc.',
   // Plain-language business description used in schema and shared with Google Business Profile.
   description:
-    'Standard Building Company is a home remodeling contractor founded in 2020 and based in Loveland, Colorado. We build for homeowners: kitchens, bathrooms, basement finishing, home additions, decks and outdoor living, exteriors, garages, and ADUs. One accountable contractor from planning through completion, serving Northern Colorado and the mountain towns.',
+    'Standard Building Company is a residential design-build general contractor founded in 2020 and based in Loveland, Colorado. We design and build for homeowners: whole-home and kitchen remodels, bathrooms, basement finishes, additions, custom homes, ADUs, decks, and architectural design and permitting. One accountable contractor from concept through completion, serving Northern Colorado and the mountain towns.',
   url: 'https://www.standardbuildingcompany.net',
   phoneDisplay: '(970) 430-5884',
   phoneHref: 'tel:+19704305884',
@@ -15,7 +15,12 @@ export const SITE = {
   region: 'CO',
   postalCode: '80537',
   streetAddress: '1180 E. 3rd St.',
+  // The exact NAP string. Use it verbatim on every citation, the footer, the contact page, and schema.
+  addressDisplay: '1180 E. 3rd St., Loveland, CO 80537',
   geo: { latitude: 40.3978, longitude: -105.075 },
+  // Office hours for schema and Google Business Profile.
+  hours: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '17:00' },
+  logo: '/og-image.png',
   formEndpoint: 'https://formspree.io/f/mnjkjabl',
   ogImage: '/og-image.png',
 };
@@ -32,10 +37,10 @@ export const SOCIAL = [
 
 export const GROUPS = {
   residential: {
-    slug: 'residential',
-    path: '/residential/',
-    label: 'Residential',
-    name: 'Residential Remodeling',
+    slug: 'services',
+    path: '/services/',
+    label: 'Services',
+    name: 'Design-Build and Remodeling',
   },
 };
 
@@ -45,16 +50,16 @@ export const OTHER_AREAS = ['Milliken', 'Evans', 'Severance', 'Laporte', 'Masonv
 export const PROCESS = {
   residential: [
     {
-      title: 'Walkthrough',
-      body: 'We look at the space with you, talk through what you want, and flag anything that affects cost or schedule up front.',
+      title: 'Walkthrough and concept',
+      body: 'We look at the space with you, talk through what you want, measure, and flag anything that affects cost or schedule before design starts.',
     },
     {
-      title: 'Written scope and price',
-      body: 'You get a written scope of work and price before anything starts, so there is no guessing about what is included.',
+      title: 'Design and written price',
+      body: 'Our design side draws the plan, we price it as it is drawn, and you get a written scope and price before anything is demolished.',
     },
     {
-      title: 'Build',
-      body: 'We handle permits, schedule the trades, protect the rest of your home, and keep you posted as the work moves.',
+      title: 'Permits and build',
+      body: 'We submit the permit set, schedule every trade, protect the rest of your home, and keep you posted as the work moves.',
     },
     {
       title: 'Final walkthrough',

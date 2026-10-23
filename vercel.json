@@ -12,26 +12,60 @@
       "destination": "https://www.standardbuildingcompany.net/:path*",
       "permanent": true
     },
+    { "source": "/residential", "destination": "/services/", "permanent": true },
+    { "source": "/residential/", "destination": "/services/", "permanent": true },
+    { "source": "/residential/:slug", "destination": "/services/:slug/", "permanent": true },
+    { "source": "/residential/:slug/", "destination": "/services/:slug/", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/:path+/index.html", "destination": "/:path+/", "permanent": true },
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/home/", "destination": "/", "permanent": true },
+    { "source": "/blog", "destination": "/insights/", "permanent": true },
+    { "source": "/blog/", "destination": "/insights/", "permanent": true },
+    { "source": "/blog/:slug/", "destination": "/insights/:slug/", "permanent": true },
+    { "source": "/areas", "destination": "/service-areas/", "permanent": true },
+    { "source": "/areas/", "destination": "/service-areas/", "permanent": true },
+    { "source": "/commercial", "destination": "https://standarddevelopmentcompany.com/commercial/", "permanent": true },
+    { "source": "/commercial/", "destination": "https://standarddevelopmentcompany.com/commercial/", "permanent": true },
+    { "source": "/commercial/:slug/", "destination": "https://standarddevelopmentcompany.com/commercial/:slug/", "permanent": true },
+    { "source": "/commercial/:slug", "destination": "https://standarddevelopmentcompany.com/commercial/:slug/", "permanent": true }
+  ],
+  "headers": [
     {
-      "source": "/commercial",
-      "destination": "https://standarddevelopmentcompany.com/commercial/",
-      "permanent": true
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
     },
     {
-      "source": "/commercial/",
-      "destination": "https://standarddevelopmentcompany.com/commercial/",
-      "permanent": true
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|avif|svg|ico|woff2)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+      ]
     },
     {
-      "source": "/commercial/:slug/",
-      "destination": "https://standarddevelopmentcompany.com/commercial/:slug/",
-      "permanent": true
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
     },
     {
-      "source": "/commercial/:slug",
-      "destination": "https://standarddevelopmentcompany.com/commercial/:slug/",
-      "permanent": true
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
     }
   ],
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)social' ':(exclude).github'"
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)social' ':(exclude)bidwatch' ':(exclude).github' ':(exclude)seo-audit'"
 }

@@ -1,4 +1,4 @@
-// Residential service pages. Each entry becomes /residential/<slug>/.
+// Residential service pages. Each entry becomes /services/<slug>/.
 export const RESIDENTIAL = [
   {
     slug: 'kitchen-remodeling',
@@ -53,7 +53,7 @@ export const RESIDENTIAL = [
         a: 'Cabinets and countertops are usually the largest line items, followed by any layout changes that move plumbing, gas, or walls. Keeping the sink and range where they are is the simplest way to control cost.',
       },
     ],
-    related: ['bathroom-remodeling', 'flooring', 'home-additions'],
+    related: ['bathroom-remodeling', 'whole-home-remodels', 'home-additions'],
   },
   {
     slug: 'bathroom-remodeling',
@@ -62,7 +62,7 @@ export const RESIDENTIAL = [
     card: 'Custom tile showers, tub conversions, vanities, and aging-in-place upgrades.',
     title: 'Bathroom Remodeling in Loveland, CO | Standard Building Company',
     description:
-      'Bathroom remodeling in Loveland, Fort Collins, and Northern Colorado. Custom tile showers, tub-to-shower conversions, vanities, flooring, and aging-in-place upgrades.',
+      'Bathroom remodeling in Loveland, Fort Collins, and Northern Colorado. Custom tile showers, tub-to-shower conversions, vanities, flooring, and accessible upgrades.',
     h1: 'Bathroom Remodeling in Loveland and Northern Colorado',
     lede: 'Custom tile showers, tub-to-shower conversions, new vanities and flooring, and accessible bathrooms built to stay dry behind the tile.',
     intro: [
@@ -168,59 +168,79 @@ export const RESIDENTIAL = [
   },
   {
     slug: 'home-additions',
-    name: 'Home Additions and Whole-Home Remodeling',
-    short: 'Additions & Whole-Home Remodels',
-    card: 'Room additions, second stories, primary suites, and full-house renovations.',
-    title: 'Home Additions & Remodeling in Loveland, CO | Standard Building Company',
+    name: 'Home Additions',
+    short: 'Home Additions',
+    card: 'Room additions, second stories, bump-outs, and primary suites, designed and built by one firm.',
+    title: 'Home Additions in Northern Colorado | Standard Building Co.',
     description:
-      'Home additions and whole-home remodeling in Loveland, Fort Collins, and Northern Colorado. Room additions, primary suites, structural changes, and full renovations.',
-    h1: 'Home Additions and Whole-Home Remodeling',
-    lede: 'Room additions, primary suites, and full-house renovations for owners who like where they live and need the house to catch up.',
+      'Home additions in Loveland, Fort Collins, Berthoud, and Northern Colorado. Room additions, second stories, primary suites, and bump-outs, designed and permitted.',
+    h1: 'Home Additions in Northern Colorado',
+    lede: 'Room additions, second stories, and primary suites for owners who like where they live and need the house to catch up.',
     intro: [
-      'When the lot is right and the neighborhood is right, adding on or renovating often makes more sense than moving. These are the projects where a full general contractor earns its keep: foundations, structure, roof tie-ins, and every trade in sequence.',
-      'We build additions and take on whole-home remodels across Loveland, Fort Collins, Berthoud, and the rest of Northern Colorado.',
+      'When the lot is right and the neighborhood is right, adding on often makes more sense than moving. These are the projects where a design-build general contractor earns its keep: the drawings, the foundation, the structure, the roof tie-in, and every trade in sequence, under one contract.',
+      'We design and build additions across Loveland, Fort Collins, Berthoud, Windsor, and the rest of Northern Colorado, from a 120 square foot bump-out to a full second story.',
     ],
-    scopeTitle: 'Addition and remodel scope',
+    scopeTitle: 'Addition scope',
     scope: [
       'Room and bump-out additions',
-      'Primary suite additions and remodels',
+      'Primary suite additions',
       'Second-story additions',
+      'Sunrooms and four-season rooms',
       'Structural wall removal and beams',
-      'Whole-home interior renovations',
-      'Aging-in-place modifications',
       'Foundation, framing, and roof tie-ins',
       'Electrical service and HVAC upgrades',
+      'Aging-in-place and main-floor living additions',
     ],
     sections: [
       {
         heading: 'What an addition involves',
         body: [
           'An addition is a small new house attached to your existing one. It needs a foundation suited to local soils, framing that ties into the existing structure, a roof that sheds water where the two meet, and mechanical systems sized for the added space. It also has to fit the setbacks and lot coverage limits of your zoning.',
-          'We work through those questions with you and the designer before the drawings are finished, so the plan you fall for is one that can be permitted and built for the budget.',
+          'Because we draw the plans and build them, those questions get answered before the drawings are finished, so the plan you fall for is one that can be permitted and built for the budget.',
         ],
       },
       {
-        heading: 'Older homes',
+        heading: 'Up or out',
         body: [
-          'Remodeling an older home means dealing with what is behind the walls: outdated wiring, undersized framing, and materials that need careful handling. We open things up methodically and tell you what we find before it becomes a surprise on the invoice.',
+          'Building out is usually simpler if the lot has room: a new foundation, four walls, and a roof that ties into the existing one. Building up avoids new foundation work but involves the existing structure, the stairs, the roof, and much more disruption inside the house. We price both when the lot allows either.',
+        ],
+      },
+      {
+        heading: 'Expansive soils and foundations',
+        body: [
+          'Much of the Front Range sits on expansive clay. A new addition foundation has to match how the existing house was built or be isolated from it, and the soils report decides which. Skipping that step is how additions crack away from the house a few years later. We get the soils information before we design the foundation.',
+        ],
+      },
+      {
+        heading: 'Timeline and cost',
+        body: [
+          'Design, engineering, and permitting for an addition typically run two to four months. Construction runs three to six months depending on size and finish. The biggest cost drivers are foundation type, the structural work where new meets old, bathrooms, and whether the furnace, air conditioning, and electrical panel can carry the added load.',
         ],
       },
     ],
     faqs: [
       {
         q: 'Do I need an architect for an addition?',
-        a: 'You need permit drawings, and most additions need structural engineering. We can work with your architect or connect you with a designer or drafter suited to the size of the project.',
+        a: 'You need permit drawings and, for most additions, structural engineering. Our architectural design side produces the set and coordinates the engineer as part of the design-build process.',
       },
       {
         q: 'Is it cheaper to build up or out?',
         a: 'Building out is usually simpler if the lot has room. Building up avoids new foundation work but involves the existing structure, the roof, and more disruption inside the house.',
       },
       {
-        q: 'Can we live in the house during a whole-home remodel?',
-        a: 'Sometimes. It depends on how much of the house is affected at once. We will be straight with you about whether phasing the work or moving out for a stretch makes more sense.',
+        q: 'Can we live in the house during an addition?',
+        a: 'Usually yes. Most of the work happens outside the existing walls until the final tie-in, and we schedule that step so the house is open to the new space for as short a time as possible.',
+      },
+      {
+        q: 'How close to the property line can I build?',
+        a: 'Each city sets its own setbacks and lot coverage limits, and HOAs can add more. We check zoning for your address before design starts.',
+      },
+      {
+        q: 'Will an addition need a new furnace or electrical panel?',
+        a: 'Sometimes. We load-check the existing systems during design and price an upgrade as its own line if the added space exceeds what they can carry.',
       },
     ],
-    related: ['kitchen-remodeling', 'garages-adus', 'basement-finishing'],
+    related: ['whole-home-remodels', 'architectural-design-permitting', 'garages-adus', 'roofing-coordination'],
   },
   {
     slug: 'flooring',
@@ -488,21 +508,21 @@ export const RESIDENTIAL = [
         a: 'Fiber cement and engineered wood generally outperform vinyl. We walk through the options and costs before you choose.',
       },
     ],
-    related: ['decks-outdoor-living', 'painting-drywall-trim', 'home-additions'],
+    related: ['roofing-coordination', 'decks-outdoor-living', 'painting-drywall-trim'],
   },
   {
     slug: 'garages-adus',
-    name: 'Garages, ADUs, and Outbuildings',
-    short: 'Garages, ADUs & Shops',
-    card: 'Detached garages, accessory dwelling units, shops, sheds, and pole barns.',
-    title: 'Garage & ADU Builder in Loveland, CO | Standard Building Company',
+    name: 'ADUs, Garages, and Outbuildings',
+    short: 'ADUs & Garages',
+    card: 'Accessory dwelling units, garage apartments, detached garages, shops, and pole barns, designed and permitted.',
+    title: 'ADU Builder in Northern Colorado | Standard Building Company',
     description:
-      'Garage and ADU builder in Loveland, Fort Collins, and Northern Colorado. Detached garages, accessory dwelling units, shops, sheds, and pole barns, permitted and built.',
-    h1: 'Garages, ADUs, and Outbuildings',
-    lede: 'Detached garages, accessory dwelling units, shops, and pole barns, from zoning check and permit to finished building.',
+      'ADU and garage builder in Loveland, Fort Collins, and Northern Colorado. Accessory dwelling units, garage apartments, detached garages, shops, and pole barns.',
+    h1: 'ADUs, Garages, and Outbuildings in Northern Colorado',
+    lede: 'Accessory dwelling units, garage apartments, detached garages, shops, and pole barns, from zoning check and design through permit and finished building.',
     intro: [
-      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, utilities, and finishes. It is the kind of work a full general contractor is set up for.',
-      'We build garages, accessory dwelling units, shops, and agricultural buildings across Larimer and Weld counties, in town and on rural acreage.',
+      'A new building on your property is ground-up construction at a small scale: site work, foundation, framing, utilities, and finishes. It is the kind of work a design-build general contractor is set up for, because the zoning check, the drawings, the permit, and the construction all come from one firm.',
+      'We design and build accessory dwelling units, garages, shops, and agricultural buildings across Larimer and Weld counties, in town and on rural acreage. ADUs are the fastest-growing part of this work since Colorado required most Front Range cities to allow them.',
     ],
     scopeTitle: 'What we build',
     scope: [
@@ -544,7 +564,7 @@ export const RESIDENTIAL = [
         a: 'Yes. A conversion involves insulation, a raised or insulated floor, heating and cooling, egress, and a permit for the change of use.',
       },
     ],
-    related: ['home-additions', 'concrete', 'decks-outdoor-living'],
+    related: ['custom-homes', 'home-additions', 'architectural-design-permitting'],
   },
   {
     slug: 'handyman-punch-list',

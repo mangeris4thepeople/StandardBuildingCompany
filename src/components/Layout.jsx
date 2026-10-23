@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SITE, GROUPS, PROCESS, SOCIAL } from '../content/site.js';
-import { SERVICES, AREAS } from '../content/pages.js';
+import { SERVICES, CORE_SERVICES, AREAS, AREA_REGIONS } from '../content/pages.js';
 import { track } from '../track.js';
 
 const NAV_LINKS = [
   { label: 'Services', href: GROUPS.residential.path },
+  { label: 'Design-Build', href: '/design-build/' },
   { label: 'Service Areas', href: '/service-areas/' },
   { label: 'Pricing', href: '/pricing/' },
+  { label: 'Insights', href: '/insights/' },
+  { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ];
 
@@ -84,7 +87,7 @@ export function Nav({ solid = false, current = '' }) {
           <li key={l.href}>
             <a
               href={l.href}
-              aria-current={current.startsWith(l.href) ? 'page' : undefined}
+              aria-current={current === l.href || (l.href !== '/' && current.startsWith(l.href)) ? 'page' : undefined}
               onClick={() => setMenuOpen(false)}
             >
               {l.label}
@@ -117,7 +120,7 @@ export function MobileBar() {
   return (
     <div className={`mobile-bar${shown ? ' mobile-bar--shown' : ''}`}>
       <a href={SITE.phoneHref} className="mobile-bar__call" tabIndex={shown ? 0 : -1}>Call {SITE.phoneDisplay}</a>
-      <a href="#contact" className="mobile-bar__quote" tabIndex={shown ? 0 : -1}>Request a quote</a>
+      <a href="#contact" className="mobile-bar__quote" tabIndex={shown ? 0 : -1}>Request a consultation</a>
     </div>
   );
 }
@@ -348,7 +351,8 @@ export function Contact({
             <p className="contact__body">{body}</p>
             <a href={SITE.phoneHref} className="contact__phone">{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`} className="contact__email">{SITE.email}</a>
-            <p className="contact__location">Loveland, CO · Serving Northern Colorado and the mountain towns</p>
+            <p className="contact__location">{SITE.addressDisplay}</p>
+            <p className="contact__location">Serving Northern Colorado and the mountain towns</p>
           </div>
           <div className="contact__form-wrap">
             {status === 'sent' ? (
@@ -385,8 +389,10 @@ export function Contact({
                     <option value="kitchen-bath">Kitchen or bathroom</option>
                     <option value="basement">Basement finishing</option>
                     <option value="addition">Addition or whole-home remodel</option>
-                    <option value="exterior">Decks, siding, windows, or concrete</option>
-                    <option value="garage-adu">Garage, ADU, or shop</option>
+                    <option value="custom-home">Custom home</option>
+                    <option value="garage-adu">ADU, garage, or shop</option>
+                    <option value="exterior">Decks, roofing, siding, windows, or concrete</option>
+                    <option value="design">Architectural design and permitting</option>
                     <option value="other">Something else</option>
                   </select>
                 </div>
@@ -445,6 +451,7 @@ export function Footer() {
               <span className="footer__logo-main">STANDARD BUILDING</span>
               <span className="footer__logo-sub">COMPANY · LOVELAND, CO · EST. {SITE.founded}</span>
             </div>
+            <p className="footer__address">{SITE.name}<br />{SITE.addressDisplay}</p>
             <a href={SITE.phoneHref} className="footer__phone">{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`} className="footer__email">{SITE.email}</a>
             <SocialLinks className="social--footer" />
@@ -455,9 +462,26 @@ export function Footer() {
             links={SERVICES.residential.map((s) => ({ href: s.path, label: s.short }))}
           />
           <FooterCol
-            title="Service Areas"
+            title="Company"
+            href="/about/"
+            links={[
+              { href: '/design-build/', label: 'Design-Build' },
+              { href: '/process/', label: 'Our Process' },
+              { href: '/about/', label: 'About' },
+              { href: '/pricing/', label: 'Pricing' },
+              { href: '/insights/', label: 'Insights' },
+              { href: '/contact/', label: 'Contact' },
+            ]}
+          />
+          <FooterCol
+            title="Northern Colorado"
             href="/service-areas/"
-            links={AREAS.map((a) => ({ href: a.path, label: a.name }))}
+            links={AREA_REGIONS[0].areas.map((a) => ({ href: a.path, label: `${a.name}, CO` }))}
+          />
+          <FooterCol
+            title="Mountain Towns"
+            href="/service-areas/"
+            links={AREA_REGIONS[1].areas.map((a) => ({ href: a.path, label: `${a.name}, CO` }))}
           />
         </div>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>

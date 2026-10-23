@@ -1,0 +1,38 @@
+name: Submit sitemap to IndexNow after deploy
+
+# Runs after every push to main that touches the site. Vercel deploys from the same push; this job
+# waits for the live sitemap to carry the new commit, then submits every URL to IndexNow (which feeds
+# Bing and partner engines) and, if BING_WEBMASTER_API_KEY is set, resubmits the sitemap to Bing.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'social/**'
+      - 'bidwatch/**'
+      - 'seo-audit/**'
+      - '.github/workflows/bidwatch.yml'
+      - '.github/workflows/social-*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for the deploy, then submit every URL in the sitemap
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          BING_WEBMASTER_API_KEY: ${{ secrets.BING_WEBMASTER_API_KEY }}
+          WAIT_MINUTES: '20'
+        run: node scripts/indexnow-submit.mjs

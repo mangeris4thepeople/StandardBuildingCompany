@@ -1,6 +1,8 @@
 import React from 'react';
 import { SITE, GROUPS, OTHER_AREAS, COMMERCIAL_REFERRAL } from '../content/site.js';
-import { SERVICES, AREAS, AREA_REGIONS, findService } from '../content/pages.js';
+import { SERVICES, CORE_SERVICES, AREAS, AREA_REGIONS, findService } from '../content/pages.js';
+import { POSTS } from '../content/posts.js';
+import { STATIC_PAGES } from '../content/static-pages.js';
 import { trailFor } from '../content/head.js';
 import { PageHero, ServiceCards, ProcessSteps, SideCta, SideLinks, Contact, Tabs, Faq } from './Layout.jsx';
 
@@ -28,6 +30,10 @@ const FORM_TYPE = {
   concrete: 'exterior',
   exteriors: 'exterior',
   'garages-adus': 'garage-adu',
+  'whole-home-remodels': 'addition',
+  'custom-homes': 'custom-home',
+  'roofing-coordination': 'exterior',
+  'architectural-design-permitting': 'design',
 };
 
 // One line pointing commercial inquiries to the separate firm that handles them.
@@ -57,13 +63,13 @@ function Hero() {
           <span className="hero__headline-rule" />
           <span className="hero__headline-bottom">BUILDING</span>
         </p>
-        <h1 className="hero__h1">Home Remodeling Contractor in Loveland and Northern Colorado</h1>
+        <h1 className="hero__h1">Design-Build Remodeling and Custom Homes in Loveland and Northern Colorado</h1>
         <p className="hero__tagline">
-          Kitchen and bathroom remodeling, basement finishing, home additions, and outdoor living across Northern Colorado. One accountable contractor from planning through completion.
+          Standard Building Company designs, permits, and builds whole-home remodels, kitchens, bathrooms, basements, additions, ADUs, and custom homes for homeowners in Loveland, Fort Collins, and Northern Colorado. One contract, one accountable builder, from concept to completion.
         </p>
         <div className="hero__actions">
-          <a href="#contact" className="btn btn--primary">Start a Conversation</a>
-          <a href={SITE.phoneHref} className="btn btn--ghost">Call {SITE.phoneDisplay}</a>
+          <a href={SITE.phoneHref} className="btn btn--primary">Call {SITE.phoneDisplay}</a>
+          <a href="#contact" className="btn btn--ghost">Request a Consultation</a>
         </div>
         </div>
         <div className="hero__drawing">
@@ -71,15 +77,15 @@ function Hero() {
         </div>
       </div>
       <div className="hero__ticker" aria-hidden="true">
-        <span>Kitchens</span>
+        <span>Design-Build</span>
         <span className="hero__ticker-dot" />
-        <span>Bathrooms</span>
+        <span>Whole-Home Remodels</span>
         <span className="hero__ticker-dot" />
-        <span>Basements</span>
+        <span>Kitchens and Baths</span>
         <span className="hero__ticker-dot" />
-        <span>Additions</span>
+        <span>Additions and ADUs</span>
         <span className="hero__ticker-dot" />
-        <span>Outdoor Living</span>
+        <span>Custom Homes</span>
         <span className="hero__ticker-dot" />
         <span>Northern Colorado</span>
       </div>
@@ -94,13 +100,13 @@ function AboutBody() {
         Your home.<br />Built right.
       </h2>
       <p className="about__body">
-        Standard Building Company is a home remodeling contractor founded in {SITE.founded} and based in Loveland, Colorado. We build for homeowners: <a href="/residential/kitchen-remodeling/">kitchens</a>, <a href="/residential/bathroom-remodeling/">bathrooms</a>, <a href="/residential/basement-finishing/">basements</a>, <a href="/residential/home-additions/">additions</a>, decks, exteriors, garages, and ADUs. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
+        Standard Building Company is a residential <a href="/design-build/">design-build</a> general contractor founded in {SITE.founded} and based in Loveland, Colorado. We design and build for homeowners: <a href="/services/whole-home-remodels/">whole-home remodels</a>, <a href="/services/kitchen-remodeling/">kitchens</a>, <a href="/services/bathroom-remodeling/">bathrooms</a>, <a href="/services/basement-finishing/">basements</a>, <a href="/services/home-additions/">additions</a>, <a href="/services/custom-homes/">custom homes</a>, <a href="/services/garages-adus/">ADUs</a>, decks, and the <a href="/services/architectural-design-permitting/">architectural design and permitting</a> behind all of it. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
       </p>
       <p className="about__body">
         Our leadership comes from the field. Behind SBC is a builder who has run projects from the first schedule through the subcontractors, safety, inspections, and turnover to the owner. That background is held to ICC National Standard General Building Contractor (A) certification and OSHA and MSHA 40-hour safety training, and every home we work on is run with the same discipline.
       </p>
       <p className="about__body">
-        What sets us apart is how a job is run. You get a written scope and price before work starts, one point of contact the whole way through, permits and inspections handled for you, and a final walkthrough before we call it done. Small repair or full addition, the standard is the same.
+        What sets us apart is how a job is run. You get a written scope and price before work starts, one point of contact the whole way through, permits and inspections handled for you, and a final walkthrough before we call it done. Small repair or custom home, the standard is the same. Read more <a href="/about/">about the company</a> and <a href="/process/">how a project runs</a>.
       </p>
       <div className="about__stats">
         <div className="about__stat">
@@ -154,6 +160,9 @@ function ServicePanel({ group, sub, variant }) {
     <>
       <p className="services__sub">{sub}</p>
       <ServiceCards services={SERVICES[group]} variant={variant} />
+      <p className="services__sub">
+        Every project starts with a <a href="/design-build/">design-build plan</a>: one firm draws it, prices it, permits it, and builds it. See <a href="/process/">how a project runs</a> or <a href="/insights/">read our cost and permit guides</a>.
+      </p>
       <a href={GROUPS[group].path} className={`services__all${variant === 'light' ? '' : ' services__all--light'}`}>
         All {GROUPS[group].label.toLowerCase()} services
       </a>
@@ -173,7 +182,7 @@ export function HomePage() {
           </div>
           <ServicePanel
             group="residential"
-            sub="Kitchens, baths, basements, additions, exteriors, and outdoor living for Northern Colorado homeowners."
+            sub="Whole-home remodels, kitchens, baths, basements, additions, custom homes, ADUs, decks, roofing coordination, and architectural design for Northern Colorado homeowners."
           />
         </div>
       </section>
@@ -308,7 +317,7 @@ export function ServicePage({ page }) {
                 },
               ]}
             />
-            {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a> · Browse local basement finishing pages below.</p>}
+            {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a>, or browse the local basement finishing pages below.</p>}
             <h2>Where we provide {lc(s.short)}</h2>
             {page.slug === 'basement-finishing' && <ul className="link-list">{AREAS.map(a => <li key={a.slug}><a href={`/basement-finishing/${a.slug}/`}>Basement Finishing in {a.name}, CO</a></li>)}</ul>}
             <p>
@@ -372,6 +381,13 @@ export function AreasPage({ page }) {
             <p>
               {OTHER_AREAS.join(', ')}, and the unincorporated areas of Larimer and Weld counties. If your project is on the northern Front Range or in a mountain community near the ones above, <a href="/contact/">get in touch</a> and we will tell you whether it is one we can take.
             </p>
+            <h2>How we work across the region</h2>
+            <p>
+              Every project, in every town, runs the same way: a walkthrough at the house, a cost range before design, a written scope and fixed price at the permit set, permits pulled under our name, one project lead through construction, and a final walkthrough before we call it done. What changes from town to town is the building department, the soils, the snow load, and the drive. Front Range projects get site visits on short notice from our Loveland office. Mountain projects are planned in blocks, with a project lead on site through demolition, rough-in, inspections, and finish, and with travel and logistics shown as their own lines in the estimate.
+            </p>
+            <p>
+              The same <a href="/services/">design-build services</a> are offered everywhere we work: whole-home remodels, kitchens, baths, basement finishes, additions, custom homes, ADUs, decks, roofing coordination, and architectural design and permitting. Read <a href="/insights/remodeling-mountain-towns-colorado/">what is different about remodeling in the mountain towns</a> or <a href="/process/">how a project runs</a>.
+            </p>
           </div>
         </div>
       </section>
@@ -389,7 +405,7 @@ export function AreaPage({ page }) {
     <>
       <PageHero
         eyebrow={a.county}
-        title={`Home Remodeling Contractor in ${a.name}, Colorado`}
+        title={a.h1}
         lede={a.lede}
         trail={trailFor(page)}
       />
@@ -426,6 +442,7 @@ export function AreaPage({ page }) {
             <h2>Basement finishing in {a.name}</h2>
             <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>
             <h2>Services in {a.name}</h2>
+            <p>These are the services homeowners in {a.name} ask for most. Every one of them is run design-build: one firm draws the plan, prices it, pulls the permit, and builds it.</p>
             <ul className="link-list">
               {services.map((s) => (
                 <li key={s.path}>
@@ -434,7 +451,8 @@ export function AreaPage({ page }) {
                 </li>
               ))}
             </ul>
-            <p><a href={GROUPS.residential.path}>All home remodeling services</a></p>
+            <h3>Every service we offer in {a.name}</h3>
+            <p>{linkList(SERVICES.residential.map((s) => ({ path: s.path, name: s.short })))}. <a href={GROUPS.residential.path}>See all services</a> or <a href="/design-build/">how design-build works</a>.</p>
             <CommercialNote />
 
             {a.faqs && (
@@ -465,53 +483,34 @@ const PRICING_RANGES = [
     { name: 'Bathroom remodeling', low: 250, high: 650, note: 'Economy: standard fixtures and resilient flooring. Luxury: Italian tile, stone countertops, custom shower, and premium fixtures.' },
 ];
 
-const MOUNTAIN_MARKETS = {
-  'aspen-co': { label: 'Aspen', kitchen: '$200,000–$450,000+', bath: '$100,000–$275,000+', whole: '$350–$700+ per sq. ft.' },
-  'vail-co': { label: 'Vail', kitchen: '$175,000–$400,000+', bath: '$85,000–$250,000+', whole: '$300–$600+ per sq. ft.' },
-  'avon-co': { label: 'Avon', kitchen: '$140,000–$325,000', bath: '$70,000–$190,000', whole: '$240–$475 per sq. ft.' },
-};
 const MOUNTAIN_SLUGS = new Set(['aspen-co', 'vail-co', 'avon-co', 'winter-park-co', 'copper-mountain-co', 'steamboat-springs-co', 'estes-park-co']);
 
 function PriceSchedule({ location, slug }) {
   const isMountain = MOUNTAIN_SLUGS.has(slug);
-  const benchmark = MOUNTAIN_MARKETS[slug];
   return (
     <>
       <h2>{location ? `Construction cost planning in ${location}` : 'Construction cost planning'}</h2>
       {isMountain ? (
         <>
-          <p><strong>Mountain resort construction is a separate pricing market.</strong> Front Range remodeling figures do not apply here. Mountain projects require independent estimates for local trade availability, travel, lodging, delivery, weather, snow-load requirements, permits, and property access.</p>
-          {benchmark ? (
-            <>
-              <p><strong>Published 2026 local-market remodeling benchmarks (not SBC bids):</strong></p>
-              <ul className="link-list">
-                <li><strong>Kitchen remodel: {benchmark.kitchen} per project</strong></li>
-                <li><strong>Bathroom remodel: {benchmark.bath} per project</strong></li>
-                <li><strong>Whole-home remodel: {benchmark.whole}</strong></li>
-              </ul>
-              <p>Source: <a href="https://www.bulldogaspen.com/blog/best-remodeling-ideas-vail-aspen-2026">Bulldog Construction's 2026 mountain-market remodeling guide</a>. These are market examples for different scopes, not a guaranteed SBC price schedule or directly comparable square-foot kitchen/bath rates.</p>
-            </>
-          ) : (
-            <p>We have not verified a defensible public per-square-foot remodeling schedule for {location}. Aspen/Vail pricing cannot simply be copied to this market. <a href="/contact/">Request a locally scoped estimate</a> covering labor, access, logistics, and finish allowances.</p>
-          )}
-          <p>Basement finishing, additions, garages, and new outbuildings in {location} require project-specific pricing. No Front Range price floor or ceiling is implied.</p>
+          <p><strong>Mountain resort construction is a separate pricing market.</strong> Front Range remodeling figures do not apply in {location}. Trade availability, travel and lodging for crews, delivery logistics, design review, snow-load engineering, and the finish level expected in a resort town all push costs well above Northern Colorado ranges.</p>
+          <p>We price every mountain project from a site visit, with travel and logistics shown as their own lines so you can see what is construction and what is distance. <a href="/contact/">Request a locally scoped estimate</a> or read <a href="/insights/remodeling-mountain-towns-colorado/">what is different about remodeling in the mountain towns</a>.</p>
         </>
       ) : (
         <>
-          <p><strong>Preliminary Front Range planning ranges, not fixed bids.</strong> These figures apply to Loveland-area budgeting only until SBC verifies local subcontractor and material costs.</p>
+          <p><strong>Preliminary Front Range planning ranges, not fixed bids.</strong> These figures are for early budgeting in {location || 'Northern Colorado'}. Your written estimate is built from your scope, your house, and your selections.</p>
           <ul className="link-list">
             {PRICING_RANGES.map((r) => (
               <li key={r.name}>
-                <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
+                <strong>{r.name}: ${r.low} to ${r.high} per sq. ft.</strong>
                 <span>{r.note}</span>
               </li>
             ))}
           </ul>
-          <p>Economy finishes include laminate countertops and linoleum or sheet-vinyl flooring where suitable. Luxury finishes can include Italian tile and granite countertops. Structural work and mechanical systems affect costs separately.</p>
+          <p>Economy finishes include laminate countertops and sheet-vinyl flooring where suitable. Premium finishes can include large-format tile, stone countertops, and custom cabinetry. Structural work, electrical service upgrades, and mechanical systems affect cost separately.</p>
         </>
       )}
       <h3>Other home projects</h3>
-      <p>Additions, garages, ADUs, decks, siding, concrete, and structural repairs require a custom scope and estimate. <a href="/pricing/">See pricing assumptions</a> or <a href="/contact/">request an estimate</a>.</p>
+      <p>Additions, custom homes, ADUs, garages, decks, siding, roofing, and concrete are priced from a real scope and site conditions. <a href="/pricing/">See how estimates are built</a> or <a href="/contact/">request an estimate</a>.</p>
     </>
   );
 }
@@ -537,7 +536,7 @@ export function PricingPage({ page }) {
             <ul className="link-list">
               {PRICING_RANGES.map((r) => (
                 <li key={r.name}>
-                  <strong>{r.name}: ${r.low}–${r.high} per sq. ft.</strong>
+                  <strong>{r.name}: ${r.low} to ${r.high} per sq. ft.</strong>
                   <span>{r.note}</span>
                 </li>
               ))}
@@ -547,7 +546,7 @@ export function PricingPage({ page }) {
             <p><strong>Low-end</strong> means practical, durable finishes such as laminate (Formica-style) countertops, linoleum or sheet-vinyl flooring, stock cabinets, and standard fixtures. <strong>High-end</strong> means premium finishes such as Italian tile, granite countertops, custom cabinetry, and upgraded plumbing and lighting fixtures. The specific finish materials depend on the room and project scope.</p>
             <p>Finish quality is only one variable. Structural changes, moving plumbing, electrical upgrades, permits, site conditions, and labor can change the total even when economical materials are selected.</p>
             <h2>Mountain resort pricing is different</h2>
-            <p>Aspen, Vail, Avon, Steamboat Springs, Winter Park, Copper Mountain, and Estes Park cannot be priced using this Front Range schedule. Mountain markets require separate labor, mobilization, delivery, access, weather, and permitting budgets. See each <a href="/service-areas/">service-area page</a> for applicable market benchmarks or a custom-estimate explanation.</p>
+            <p>Aspen, Vail, Avon, Steamboat Springs, Winter Park, Copper Mountain, and Estes Park cannot be priced using this Front Range schedule. Mountain markets require separate labor, mobilization, delivery, access, weather, and permitting budgets. See each <a href="/service-areas/">service-area page</a> or read <a href="/insights/remodeling-mountain-towns-colorado/">what is different about mountain-town remodeling</a>.</p>
             <h2>Other home projects</h2>
             <p>Home additions, garages, ADUs and shops, decks, siding, concrete, and structural repairs are priced from the actual scope and site conditions. We will not publish unsupported square-foot estimates for those categories. <a href="/contact/">Request a project-specific budget</a>.</p>
             <h2>What affects the price</h2>
@@ -562,7 +561,7 @@ export function PricingPage({ page }) {
             </ul>
             <h2>Compare proposals fairly</h2>
             <p>Ask each contractor whether demolition, waste removal, permits, waterproofing, electrical, HVAC, inspections, and cleanup are included. An inexpensive quote that excludes essential work can cost more later.</p>
-            <p>Explore <a href="/residential/basement-finishing/">basement finishing</a>, <a href="/residential/kitchen-remodeling/">kitchen remodeling</a>, and <a href="/residential/bathroom-remodeling/">bathroom remodeling</a>, or <a href="/contact/">request an estimate</a>.</p>
+            <p>Explore <a href="/services/basement-finishing/">basement finishing</a>, <a href="/services/kitchen-remodeling/">kitchen remodeling</a>, and <a href="/services/bathroom-remodeling/">bathroom remodeling</a>, read our <a href="/insights/kitchen-remodel-cost-northern-colorado/">kitchen remodel cost guide</a>, or <a href="/contact/">request an estimate</a>.</p>
           </article>
           <aside className="side"><SideCta /><SideLinks title="Where we work" links={areaLinks} /></aside>
         </div>
@@ -591,7 +590,7 @@ export function LocalBasementPage({ page }) {
             <h2>What affects basement finishing cost in {area.name}?</h2>
             <p>Size, bathroom rough-ins, egress modifications, moisture remediation, soundproofing, cabinetry, and finish selections all affect cost. See our <a href="/pricing/">pricing and estimating guide</a> for how we develop a written scope and estimate.</p>
             <h2>Related {area.name} resources</h2>
-            <p>Read our <a href={area.path}>{area.name} construction and permitting guide</a> and our <a href="/residential/basement-finishing/">full basement finishing service page</a>.</p>
+            <p>Read our <a href={area.path}>{area.name} remodeling and permitting guide</a>, our <a href="/services/basement-finishing/">full basement finishing service page</a>, and our <a href="/insights/basement-finish-permits-loveland-fort-collins/">guide to basement finish permits in Loveland and Fort Collins</a>.</p>
             <h2>Questions before starting</h2>
             <Faq items={[
               {q:`Do I need a permit to finish a basement in ${area.name}?`,a:'Finishing habitable space typically involves permits and inspections. The applicable jurisdiction depends on the property address and scope; we verify it before work begins.'},
@@ -607,12 +606,221 @@ export function LocalBasementPage({ page }) {
   );
 }
 
+/* ------------------------------------------------------ STATIC / INSIGHTS / POST */
+
+// Renders a post body line: "## " is an H2, "- " a list item, **bold** inline. Everything else is a paragraph.
+function inline(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  return parts.map((part, i) =>
+    part.startsWith('**') ? <strong key={i}>{part.slice(2, -2)}</strong> : <React.Fragment key={i}>{part}</React.Fragment>
+  );
+}
+
+function RichBody({ body }) {
+  const out = [];
+  let list = [];
+  const flush = () => {
+    if (list.length) out.push(<ul className="check-list check-list--single" key={`l${out.length}`}>{list}</ul>);
+    list = [];
+  };
+  body.forEach((line, i) => {
+    if (line.startsWith('- ')) { list.push(<li key={i}>{inline(line.slice(2))}</li>); return; }
+    flush();
+    if (line.startsWith('## ')) out.push(<h2 key={i}>{line.slice(3)}</h2>);
+    else out.push(<p key={i}>{inline(line)}</p>);
+  });
+  flush();
+  return out;
+}
+
+const coreServiceLinks = CORE_SERVICES.map((s) => ({ href: s.path, label: s.short }));
+
+export function StaticPage({ page }) {
+  const sp = STATIC_PAGES.find((x) => x.slug === page.slug);
+  return (
+    <>
+      <PageHero eyebrow={sp.eyebrow} title={sp.h1} lede={sp.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            {sp.sections.map((sec) => (
+              <React.Fragment key={sec.heading}>
+                <h2>{sec.heading}</h2>
+                {sec.body.map((p) => <p key={p}>{p}</p>)}
+              </React.Fragment>
+            ))}
+            {page.slug === 'design-build' && (
+              <>
+                <h2>Design-build services</h2>
+                <ul className="link-list">
+                  {CORE_SERVICES.map((s) => (
+                    <li key={s.path}><a href={s.path}>{s.short}</a><span>{s.card}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {page.slug === 'process' && (
+              <>
+                <h2>The short version</h2>
+                <ProcessSteps group="residential" />
+              </>
+            )}
+            {page.slug === 'about' && (
+              <>
+                <h2>Where we work</h2>
+                <p>
+                  Northern Colorado: {linkList(AREA_REGIONS[0].areas)}. Mountain towns: {linkList(AREA_REGIONS[1].areas)}. See all <a href="/service-areas/">service areas</a>.
+                </p>
+              </>
+            )}
+            {sp.faqs && (
+              <>
+                <h2>Common questions</h2>
+                <Faq items={sp.faqs} />
+              </>
+            )}
+            <CommercialNote />
+          </article>
+          <aside className="side">
+            <SideCta />
+            <SideLinks title="Services" links={coreServiceLinks} />
+            <SideLinks
+              title="Learn more"
+              links={[
+                { href: '/design-build/', label: 'Design-build' },
+                { href: '/process/', label: 'Our process' },
+                { href: '/about/', label: 'About SBC' },
+                { href: '/pricing/', label: 'Pricing and estimates' },
+                { href: '/insights/', label: 'Insights' },
+              ].filter((l) => l.href !== page.path)}
+            />
+          </aside>
+        </div>
+      </section>
+      <Contact />
+    </>
+  );
+}
+
+const fmtDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+export function InsightsPage({ page }) {
+  return (
+    <>
+      <PageHero eyebrow="Insights" title={page.h1} lede={page.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            <p>
+              These guides answer the questions we hear at the first walkthrough: what a project costs in Northern Colorado, what the permit will require, what the rules are for an ADU, what changes in the mountain towns, and how design-build compares to the traditional way of hiring. They are written by the people who draw and build the projects, and they are updated when codes and costs change.
+            </p>
+            <p>
+              A note on the cost figures in these guides. They are planning ranges for the Front Range in 2026, drawn from the scopes we see on Loveland, Fort Collins, Windsor, and Berthoud homes. They are not quotes, and they do not apply to the mountain towns, where every project is priced from a site visit. The permit and code summaries describe the rules as adopted by each city or county at the time of writing; codes change, and we confirm the current requirements for your address before any design starts. If a guide and a building department disagree, the building department wins.
+            </p>
+            <h2>Guides</h2>
+            <ul className="link-list">
+              {POSTS.map((p) => (
+                <li key={p.slug}>
+                  <a href={`/insights/${p.slug}/`}>{p.title}</a>
+                  <span>{p.description} <em>{p.category}, {fmtDate(p.updated || p.published)}.</em></span>
+                </li>
+              ))}
+            </ul>
+            <h2>Have a question these do not answer?</h2>
+            <p>
+              Call {SITE.phoneDisplay} or <a href="/contact/">send the details</a>. If it is a question other homeowners ask too, it becomes the next guide. For the services behind these guides, see <a href="/services/">all design-build and remodeling services</a>, <a href="/service-areas/">where we work</a>, and <a href="/pricing/">how we price</a>.
+            </p>
+          </article>
+          <aside className="side">
+            <SideCta />
+            <SideLinks title="Services" links={coreServiceLinks} />
+            <SideLinks title="Areas we serve" links={areaLinks} />
+          </aside>
+        </div>
+      </section>
+      <Contact />
+    </>
+  );
+}
+
+export function PostPage({ page }) {
+  const post = POSTS.find((x) => x.slug === page.slug);
+  const related = post.related.map((slug) => findService('residential', slug)).filter(Boolean);
+  const others = POSTS.filter((p) => p.slug !== post.slug).map((p) => ({ href: `/insights/${p.slug}/`, label: p.title }));
+  return (
+    <>
+      <PageHero eyebrow={post.category} title={post.h1} lede={post.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            <p className="prose__note">
+              By {SITE.name}. Published {fmtDate(post.published)}{post.updated && post.updated !== post.published ? `, updated ${fmtDate(post.updated)}` : ''}.
+            </p>
+            <RichBody body={post.body} />
+            <h2>Related services</h2>
+            <ul className="link-list">
+              {related.map((s) => (
+                <li key={s.path}><a href={s.path}>{s.short}</a><span>{s.card}</span></li>
+              ))}
+            </ul>
+            <CommercialNote />
+          </article>
+          <aside className="side">
+            <SideCta />
+            <SideLinks title="More insights" links={others} />
+            <SideLinks title="Areas we serve" links={areaLinks} />
+          </aside>
+        </div>
+      </section>
+      <Contact heading="Planning a project? Start with a walkthrough." body="Tell us the house, the town, and what you want to do. We will tell you what it takes and what it will cost before anything is drawn." />
+    </>
+  );
+}
+
 /* --------------------------------------------------------- CONTACT / 404 */
 
 export function ContactPage({ page }) {
   return (
     <>
       <PageHero eyebrow="Standard Building Company" title={page.h1} lede={page.lede} trail={trailFor(page)} actions={false} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            <h2>Call, email, or send the form</h2>
+            <p>
+              Standard Building Company is a residential design-build general contractor based in Loveland, Colorado. We design, permit, and build whole-home remodels, kitchens, bathrooms, basement finishes, additions, custom homes, ADUs, and decks for homeowners across Northern Colorado and in the mountain towns. The fastest way to reach us is the phone. The form works well too, especially if you want to attach what you have in mind.
+            </p>
+            <p>
+              Phone: <a href={SITE.phoneHref}>{SITE.phoneDisplay}</a>. Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Office: {SITE.addressDisplay}. Calls are answered during business hours, Monday through Friday, and the form is read the same day it is sent. If we are on a job site when you call, leave a message with your name, the town, and the project and we will call back.
+            </p>
+            <h2>What to have ready</h2>
+            <p>
+              The address of the house, roughly what you want to do, and when you want it done. Photos help. A budget range helps more than anything, because design-build only works when the price travels with the design. If you have drawings, an inspection report, an HOA letter, or an insurance scope, mention it and we will ask for it.
+            </p>
+            <h2>Projects we are the right fit for</h2>
+            <p>
+              Anything on a home that involves more than one trade, a permit, or a drawing: a kitchen that moves the sink, a basement with a bathroom, an addition, a second story, an ADU, a custom home on your lot, or a whole house that needs everything at once. We also take decks, roofing coordinated with a larger project or a hail claim, siding and windows, and small-job lists for owners who want a general contractor rather than a rotating cast of trades. We do not take commercial, multifamily, or public work; that goes to a separate firm, named at the bottom of this page.
+            </p>
+            <h2>What happens next</h2>
+            <p>
+              We call or write back to ask a few questions. If the project is one we are the right fit for, we schedule a walkthrough at the house, which is free. From the walkthrough you get either a written scope and price, for kitchens, baths, and basements, or concept options with a cost range, for additions, ADUs, whole-home remodels, and custom homes. Our <a href="/process/">process page</a> walks through every stage after that.
+            </p>
+            <h2>Where we work</h2>
+            <p>
+              Northern Colorado: {linkList(AREA_REGIONS[0].areas)}. Mountain towns: {linkList(AREA_REGIONS[1].areas)}. Also {OTHER_AREAS.join(', ')}, and the unincorporated areas of Larimer and Weld counties.
+            </p>
+            <h2>Services</h2>
+            <p>
+              {linkList(SERVICES.residential.map((s) => ({ path: s.path, name: s.short })))}. Every project is run <a href="/design-build/">design-build</a>.
+            </p>
+            <CommercialNote />
+          </article>
+          <aside className="side">
+            <SideCta />
+            <SideLinks title="Learn more" links={[{ href: '/process/', label: 'How a project runs' }, { href: '/pricing/', label: 'Pricing and estimates' }, { href: '/about/', label: 'About SBC' }, { href: '/insights/', label: 'Insights' }]} />
+          </aside>
+        </div>
+      </section>
       <Contact heading="Send us the details." />
     </>
   );
@@ -631,7 +839,9 @@ export function NotFoundPage() {
         <div className="container">
           <ul className="link-list">
             <li><a href="/">Home</a><span>Standard Building Company</span></li>
-            <li><a href={GROUPS.residential.path}>Home remodeling services</a><span>Kitchens, baths, basements, additions, exteriors</span></li>
+            <li><a href={GROUPS.residential.path}>Design-build and remodeling services</a><span>Whole-home, kitchens, baths, basements, additions, custom homes, ADUs</span></li>
+            <li><a href="/service-areas/">Service areas</a><span>Northern Colorado and the mountain towns</span></li>
+            <li><a href="/insights/">Insights</a><span>Cost guides and permit explainers</span></li>
             <li><a href="/contact/">Contact</a><span>{SITE.phoneDisplay}</span></li>
           </ul>
         </div>

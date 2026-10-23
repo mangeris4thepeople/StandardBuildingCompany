@@ -7,12 +7,12 @@ import { SITE } from './content/site.js';
 
 export { PAGES, NOT_FOUND, SITE };
 
-export function render(path) {
+export function render(path, env = {}) {
   const page = path === NOT_FOUND.path ? NOT_FOUND : findPage(path);
   const html = renderToString(
     <React.StrictMode>
       <App path={page.path} />
     </React.StrictMode>
   );
-  return { html, head: buildHead(page), page };
+  return { html, head: buildHead(page, env), page };
 }
