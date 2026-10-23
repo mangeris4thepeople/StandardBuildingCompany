@@ -91,7 +91,7 @@ for (const file of files) {
     } catch { ldOk = false; }
   }
   const imgsNoAlt = (html.match(/<img(?![^>]*\balt=)[^>]*>/gi) || []).length;
-  const emDash = html.includes('—');
+  const emDash = html.includes(String.fromCharCode(0x2014));
 
   const page = { route: is404 ? '/404.html' : route, title, desc, canonical, h1, h1s, ld: types.length, types, wc, noindex, lang, imgsNoAlt };
   rows.push(page);
