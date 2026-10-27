@@ -484,6 +484,9 @@ export function Footer() {
             links={AREA_REGIONS[1].areas.map((a) => ({ href: a.path, label: `${a.name}, CO` }))}
           />
         </div>
+        <p className="footer__sister">
+          <strong>Sister companies.</strong> Need a roof? <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a> handles residential and commercial roofing. Going big and commercial? That is <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>.
+        </p>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>
       </div>
     </footer>

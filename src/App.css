@@ -1619,3 +1619,7 @@ textarea:focus-visible {
   .social--nav a { width: 44px; height: 44px; }
   .social--nav svg { width: 24px; height: 24px; }
 }
+
+/* Sister companies strip */
+.footer__sister { border-top: 1px solid rgba(255,255,255,.14); margin: 40px 0 0; padding: 22px 0 0; font-size: 14px; line-height: 1.7; opacity: .9; }
+.footer__sister a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
