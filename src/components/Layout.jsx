@@ -485,7 +485,7 @@ export function Footer() {
           />
         </div>
         <p className="footer__sister">
-          <strong>Sister companies.</strong> Need a roof? <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a> handles residential and commercial roofing. Going big and commercial? That is <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>.
+          <strong>Full service, residential to commercial.</strong> Homes are designed and built by us, Standard Building Company. Commercial projects are developed and built by <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>. And the roof on top of it all comes from <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a>.
         </p>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>
       </div>
