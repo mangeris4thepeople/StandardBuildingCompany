@@ -17,7 +17,6 @@ const SERVICE_ORDER = [
   'custom-homes',
   'garages-adus',
   'decks-outdoor-living',
-  'roofing-coordination',
   'architectural-design-permitting',
   'exteriors',
   'flooring',

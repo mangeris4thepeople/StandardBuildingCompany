@@ -57,7 +57,6 @@ Add each as a service under the matching category. Descriptions match the websit
 | Custom Home Building | New homes on your lot in Northern Colorado and the mountain towns: site evaluation, design, permits, and construction under one contract. |
 | ADUs and Garages | Accessory dwelling units, garage apartments, detached garages, shops, and pole barns, from zoning check through finished building. |
 | Decks and Outdoor Living | Decks, covered patios, pergolas, and outdoor kitchens built for Front Range sun, hail, and snow. |
-| Roofing Coordination | Roof replacement managed as part of an addition, remodel, or hail claim by your general contractor. |
 | Architectural Design and Permitting | Concept drawings, permit sets, engineering coordination, and the permit submittal itself, priced as they are drawn. |
 | Siding, Windows, and Doors | Siding, window replacement, exterior doors, and trim from one contractor who looks at the whole wall. |
 
@@ -127,7 +126,7 @@ Post 4 (Offer, no expiration): Free walkthrough and cost range. Before anything 
 
 Post 5 (Update): What does a kitchen remodel cost in Northern Colorado in 2026? It depends on three decisions: does the layout change, what are the cabinets, what is behind the walls. We put real ranges by scope in one guide. Button: Learn more, link /insights/kitchen-remodel-cost-northern-colorado/.
 
-Post 6 (Update): Hail season leaves a lot of Loveland and Windsor roofs due for replacement. If the house is also due for an addition or a remodel, do it once: we coordinate the roof, the flashing, the gutters, and the siding under one contract and one schedule. Button: Learn more, link /services/roofing-coordination/.
+Post 6 (Update): Hail season leaves a lot of Loveland and Windsor roofs due for replacement. Roofing goes to our sister company, Standard Roofing Company (standardroofingcompany.net); if the house is also due for an addition or a remodel, we schedule both so the work is done once.
 
 **Week 4**
 

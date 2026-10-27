@@ -240,7 +240,7 @@ export const RESIDENTIAL = [
         a: 'Sometimes. We load-check the existing systems during design and price an upgrade as its own line if the added space exceeds what they can carry.',
       },
     ],
-    related: ['whole-home-remodels', 'architectural-design-permitting', 'garages-adus', 'roofing-coordination'],
+    related: ['whole-home-remodels', 'architectural-design-permitting', 'garages-adus'],
   },
   {
     slug: 'flooring',
@@ -508,7 +508,7 @@ export const RESIDENTIAL = [
         a: 'Fiber cement and engineered wood generally outperform vinyl. We walk through the options and costs before you choose.',
       },
     ],
-    related: ['roofing-coordination', 'decks-outdoor-living', 'painting-drywall-trim'],
+    related: ['decks-outdoor-living', 'painting-drywall-trim'],
   },
   {
     slug: 'garages-adus',

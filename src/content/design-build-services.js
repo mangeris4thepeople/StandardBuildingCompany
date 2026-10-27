@@ -109,7 +109,7 @@ export const DESIGN_BUILD = [
       'Structural, soils, and septic engineering',
       'Permits, plan review responses, and inspections',
       'Site work, excavation, and foundation',
-      'Framing, roofing, windows, and envelope',
+      'Framing, windows, and envelope, with the roof by our sister company Standard Roofing Company',
       'Mechanical, electrical, and plumbing',
       'Interior finish, cabinetry, and final cleaning',
     ],
@@ -172,82 +172,6 @@ export const DESIGN_BUILD = [
       },
     ],
     related: ['architectural-design-permitting', 'garages-adus', 'home-additions', 'whole-home-remodels'],
-  },
-  {
-    slug: 'roofing-coordination',
-    name: 'Roofing Coordination',
-    short: 'Roofing Coordination',
-    card: 'Roof replacement managed as part of a remodel, addition, or hail claim by your general contractor.',
-    title: 'Roofing Coordination in Northern Colorado | SBC Loveland',
-    description:
-      'Roof replacement coordinated by a general contractor in Loveland, Fort Collins, and Northern Colorado. Hail claims and re-roofs tied to additions, on schedule.',
-    h1: 'Roofing Coordination in Northern Colorado',
-    lede: 'When a roof is part of a larger project, or a hail storm has just made it one, we manage the roofing scope so it lands in the right place on the schedule and the rest of the house is protected.',
-    intro: [
-      'Standard Building Company is a general contractor, and roofing on our projects is handled the way everything else is: scoped, scheduled, inspected, and warranted under our contract. We coordinate licensed roofing crews for re-roofs that go with an addition, a whole-home remodel, a new garage or ADU, or a hail claim, and we tie the roof into the flashing, the gutters, the ventilation, and the attic insulation so the whole system works.',
-      'Northern Colorado gets hail nearly every summer. Loveland, Windsor, Greeley, and Johnstown have all seen storms that replaced thousands of roofs at once. When that happens, the question is not only who will put shingles on, but who will make sure the decking, the ventilation, the ice and water barrier, and the siding and windows that took the same hail are all handled together.',
-    ],
-    scopeTitle: 'Roofing scope we coordinate',
-    scope: [
-      'Asphalt shingle and Class 4 impact-resistant roof replacement',
-      'Standing seam and stone-coated metal roofing',
-      'Roof framing and decking repair',
-      'Ice and water barrier, underlayment, and flashing',
-      'Ridge and soffit ventilation',
-      'Gutters, downspouts, and drainage',
-      'Tie-in of addition and ADU roofs to the existing roof',
-      'Hail damage assessment and insurance claim support',
-    ],
-    sections: [
-      {
-        heading: 'Roofs as part of a bigger project',
-        body: [
-          'An addition changes the roofline. A second-story build changes it completely. A whole-home remodel is the time to replace a roof that has a few years left rather than coming back to do it after the new drywall is up. We handle the roof as a line in the same contract so the framing, the roofing, and the flashing are sequenced by one schedule instead of three.',
-        ],
-      },
-      {
-        heading: 'Hail claims',
-        body: [
-          'After a storm, we document the damage to the roof and everything else the hail hit, meet the adjuster, and build a scope that matches what the policy covers. If the house is also due for a remodel, this is a chance to fold the insurance-funded work into a larger project and do it once.',
-          'We do not steer claims and we do not pay for or waive deductibles. We write an honest scope and build it.',
-        ],
-      },
-      {
-        heading: 'Impact-resistant roofing on the Front Range',
-        body: [
-          'Class 4 impact-resistant shingles cost more up front and many Colorado insurers discount premiums for them. On the Front Range, where hail is a matter of when and not if, we recommend them on nearly every roof we coordinate and price both options so you can decide.',
-        ],
-      },
-      {
-        heading: 'Timeline and cost',
-        body: [
-          'A standalone re-roof on a typical Northern Colorado home is one to three days of crew time once materials are on site. Tied to an addition, the roof goes on as soon as the new framing is complete. Cost is driven by roof area, pitch, number of layers to tear off, decking condition, and material choice, with metal roughly two to three times the cost of architectural shingles.',
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: 'Are you a roofing company?',
-        a: 'We are a residential general contractor. We coordinate licensed roofing crews on our projects and under our contract and warranty, and we take on re-roofs that are part of an addition, remodel, new garage, or hail claim.',
-      },
-      {
-        q: 'Will you work with my insurance company on a hail claim?',
-        a: 'Yes. We document the damage, meet the adjuster, and write a scope that matches the policy. We do not waive deductibles or inflate scopes.',
-      },
-      {
-        q: 'Should I get an impact-resistant roof?',
-        a: 'On the Front Range, usually yes. Class 4 shingles stand up to hail better and many insurers discount premiums for them. We price both options.',
-      },
-      {
-        q: 'Can you match the new roof on an addition to the existing roof?',
-        a: 'If the existing shingle is still made, yes. If it is discontinued or near the end of its life, we usually recommend replacing the whole roof so the house has one roof with one warranty.',
-      },
-      {
-        q: 'Do you do roof repairs only?',
-        a: 'We take repairs as part of our handyman and punch list work when they are small, and as part of a larger project when they are not. For an emergency tarp after a storm, call us and we will get someone out.',
-      },
-    ],
-    related: ['exteriors', 'home-additions', 'garages-adus', 'handyman-punch-list'],
   },
   {
     slug: 'architectural-design-permitting',

@@ -32,7 +32,6 @@ const FORM_TYPE = {
   'garages-adus': 'garage-adu',
   'whole-home-remodels': 'addition',
   'custom-homes': 'custom-home',
-  'roofing-coordination': 'exterior',
   'architectural-design-permitting': 'design',
 };
 
