@@ -485,7 +485,7 @@ export function Footer() {
           />
         </div>
         <p className="footer__sister">
-          <strong>Full service, residential to commercial.</strong> Homes are designed and built by us, Standard Building Company. Commercial projects are developed and built by <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>. And the roof on top of it all comes from <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a>.
+          <strong>Full service, residential to commercial.</strong> Homes are designed and built by us, Standard Building Company. Commercial projects are developed and built by <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>. And the roof on top of it all comes from <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a>. And the websites and data tools behind it all are built by <a href="https://standarddatacompany.net/" rel="noopener">Standard Data Company</a>.
         </p>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>
       </div>
