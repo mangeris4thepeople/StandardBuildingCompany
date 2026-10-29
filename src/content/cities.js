@@ -8,9 +8,9 @@ export const CITIES = [
     slug: 'loveland-co',
     name: 'Loveland',
     county: 'Larimer County',
-    title: 'Loveland Remodeling & Construction | Standard Building Co.',
+    title: 'General Contractor in Loveland, CO | Standard Building Co.',
     description:
-      'Loveland-based home remodeling contractor: kitchen and bath remodels, basement finishing, additions, decks, and concrete across Loveland, CO.',
+      'Loveland-based general contractor for homes: kitchen and bath remodels, basement finishing, additions, decks, and concrete across Loveland, CO.',
     lede: 'Loveland is home. Standard Building Company is based here, and it is where most of our remodeling work starts.',
     local: [
       'Loveland sits between Fort Collins and Longmont on US 287, with US 34 running east to I-25 and Greeley and west into the Big Thompson Canyon. The city mixes a historic downtown along 4th Street, established neighborhoods around Lake Loveland and Boyd Lake, and newer neighborhoods on the east side near I-25.',

@@ -64,7 +64,7 @@ export const RESIDENTIAL = [
     description:
       'Bathroom remodeling in Loveland, Fort Collins, and Northern Colorado. Custom tile showers, tub-to-shower conversions, vanities, flooring, and accessible upgrades.',
     h1: 'Bathroom Remodeling in Loveland and Northern Colorado',
-    lede: 'Custom tile showers, tub-to-shower conversions, new vanities and flooring, and accessible bathrooms built to stay dry behind the tile.',
+    lede: 'Walk-in and curbless tile showers, tub-to-shower conversions, new vanities and flooring, and accessible bathrooms built to stay dry behind the tile.',
     intro: [
       'Bathrooms are small rooms with a lot packed into them, and water is hard on shortcuts. What matters most in a bathroom remodel is the part you never see: the waterproofing, the slope to the drain, and the ventilation.',
       'We remodel hall baths, primary suites, and basement bathrooms throughout Northern Colorado, from a straightforward update to a full gut and reconfiguration.',
@@ -85,6 +85,13 @@ export const RESIDENTIAL = [
         heading: 'Tile showers that last',
         body: [
           'A tile shower is only as good as what is under the tile. We build showers on a continuous waterproofing system with a properly sloped pan, and we test it before any tile goes on.',
+        ],
+      },
+      {
+        heading: 'Walk-in showers, curbless showers, and shower replacement',
+        body: [
+          'Most bathroom calls we get are about the shower. Replacing a leaking or dated shower, converting a tub to a walk-in shower, or building a curbless, zero-entry shower all start the same way: the old pan and walls come out down to the framing so we can see what the water has done.',
+          'Every shower pan we build is sloped to the drain and covered with a continuous waterproofing membrane, and we flood test it before tile. A curbless shower takes more planning, because the floor has to be recessed or the drain moved so water stays where it belongs, and we work that out during design rather than on the day of the install.',
         ],
       },
       {

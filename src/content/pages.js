@@ -39,17 +39,18 @@ export const CORE_SERVICES = SERVICES.residential.filter((s) => rank(s.slug) < 1
 export const ALL_SERVICES = [...SERVICES.residential];
 
 // Page titles are kept to 60 characters so search results show them in full.
-const BRANDS = [' | Standard Building Co.', ' | Standard Building'];
+const BRANDS = [' | Standard Building Co.', ' | Standard Building', ' | SBC'];
+// Searchers in every town mostly type "general contractor <town>" or "building contractor <town>",
+// so area titles lead with that phrase.
 function areaTitle(name) {
-  for (const b of BRANDS) { const t = `Home Remodeling in ${name}, CO${b}`; if (t.length <= 60) return t; }
-  const t = `${name}, CO Home Remodeling | Standard Building`;
-  return t.length <= 60 ? t : `Home Remodeling in ${name}, Colorado`;
+  for (const b of BRANDS) { const t = `General Contractor in ${name}, CO${b}`; if (t.length <= 60) return t; }
+  return `General Contractor in ${name}, CO`;
 }
 
 export const AREAS = CITIES.map((c) => ({
   region: 'northern',
   title: areaTitle(c.name),
-  h1: `Home Remodeling in ${c.name}, CO`,
+  h1: `General Contractor and Home Remodeling in ${c.name}, CO`,
   ...c,
   path: `/service-areas/${c.slug}/`,
 }));
@@ -67,9 +68,9 @@ export function findService(group, slug) {
 const home = {
   type: 'home',
   path: '/',
-  title: 'Design-Build Remodeling & Custom Homes | Loveland, CO',
+  title: 'General Contractor in Loveland, CO | Design-Build Remodeling',
   description:
-    'Residential design-build contractor in Loveland, CO. Whole-home and kitchen remodels, basements, additions, custom homes, and ADUs across Northern Colorado.',
+    'Residential general contractor in Loveland, CO. Design-build kitchen and bath remodels, basements, additions, custom homes, and ADUs across Northern Colorado.',
   priority: '1.0',
 };
 

@@ -66,7 +66,7 @@ function Hero() {
         <div className="hero__copy">
           <p className="hero__eyebrow"><span className="hero__dot" />Residential design-build · Loveland, Colorado</p>
           <h1 className="hero__h1">
-            Design-build remodeling and custom homes in <em>Loveland and Northern Colorado</em>
+            Design-build general contractor for remodels and custom homes in <em>Loveland and Northern Colorado</em>
           </h1>
           <p className="hero__tagline">
             We design, permit, and build whole-home remodels, kitchens, bathrooms, basements, additions, ADUs, and custom homes for homeowners in Loveland, Fort Collins, and across Northern Colorado. One contract and one accountable builder, from the first sketch to the final walkthrough.
