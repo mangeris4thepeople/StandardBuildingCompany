@@ -928,12 +928,15 @@ a.family__card .family__note::after { content: " \2192"; }
 }
 
 @media (max-width: 1080px) {
-  .nav { padding: 0 1.25rem; }
+  /* A backdrop-filter on the nav would trap the fixed menu inside the nav bar, so it is dropped here. */
+  .nav { padding: 0 1.25rem; -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(251, 249, 244, 0.98); }
   .nav__hamburger { display: flex; position: relative; z-index: 2; }
   .nav__links {
     display: none;
     position: fixed;
     inset: 0;
+    height: 100vh;
+    height: 100dvh;
     background: var(--linen);
     flex-direction: column;
     justify-content: center;
