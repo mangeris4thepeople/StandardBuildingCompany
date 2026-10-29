@@ -6,7 +6,7 @@ export const DESIGN_BUILD = [
     name: 'Whole-Home Remodeling',
     short: 'Whole-Home Remodels',
     card: 'Gut renovations, floor plan changes, and full updates of older homes, designed and built by one firm.',
-    title: 'Whole-Home Remodeling in Northern Colorado | SBC Loveland',
+    title: 'Home Remodeling in Loveland, CO | Standard Building',
     description:
       'Whole-home remodeling in Loveland, Fort Collins, and Northern Colorado. Floor plan changes, systems upgrades, and full renovations by one design-build firm.',
     h1: 'Whole-Home Remodeling in Northern Colorado',
@@ -93,10 +93,10 @@ export const DESIGN_BUILD = [
     name: 'Custom Home Building',
     short: 'Custom Homes',
     card: 'New homes on your lot in Northern Colorado and the mountain towns, from site plan to keys.',
-    title: 'Custom Home Builder in Northern Colorado | Standard Building',
+    title: 'Custom Home Builder in Loveland, CO | Standard Building',
     description:
       'Custom home builder in Loveland, Fort Collins, Berthoud, and the Colorado mountain towns. New homes on your lot: design, permits, and construction by one firm.',
-    h1: 'Custom Home Building in Northern Colorado',
+    h1: 'Custom Home Builder in Loveland and Northern Colorado',
     lede: 'A new home on your lot, designed and built by one firm: site evaluation, architectural design, engineering, permitting, and construction under one contract.',
     intro: [
       'Building a custom home is a long list of decisions, and the first one determines how the rest go: who is responsible for the whole thing. With a separate architect and a separate builder, every problem lands between them. With a design-build contractor, the firm that drew the house is the firm that has to build it, so the drawings are buildable, the budget is real, and there is one phone number for the next two years.',
