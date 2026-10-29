@@ -366,19 +366,28 @@ export function Contact({
     e.preventDefault();
     if (e.target.elements._gotcha.value) return;
     setStatus('sending');
+    const body = JSON.stringify({ ...form, page: window.location.pathname });
+    const post = (url) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body });
+    let saved = false;
+    let emailed = false;
     try {
-      const res = await fetch(SITE.formEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...form, page: window.location.pathname }),
-      });
-      if (res.ok) {
-        setStatus('sent');
-        track('generate_lead', { form_id: 'contact', project_type: form.projectType || 'unspecified' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
+      // Primary: our own endpoint saves the inquiry and emails it.
+      const res = await post(SITE.formEndpoint);
+      const j = await res.json().catch(() => ({}));
+      saved = res.ok && j.ok === true;
+      emailed = j.emailed === true;
+    } catch {}
+    if (!saved || !emailed) {
+      // Backup notifier, so an inquiry still reaches the inbox if our email leg is down.
+      try {
+        const res = await post(SITE.formFallback);
+        if (res.ok) saved = true;
+      } catch {}
+    }
+    if (saved) {
+      setStatus('sent');
+      track('generate_lead', { form_id: 'contact', project_type: form.projectType || 'unspecified' });
+    } else {
       setStatus('error');
     }
   };

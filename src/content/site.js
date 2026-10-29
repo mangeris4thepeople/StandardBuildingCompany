@@ -21,7 +21,8 @@ export const SITE = {
   // Office hours for schema and Google Business Profile.
   hours: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '17:00' },
   logo: '/og-image.png',
-  formEndpoint: 'https://formspree.io/f/mnjkjabl',
+  formEndpoint: '/api/contact/',
+  formFallback: 'https://formspree.io/f/mnjkjabl',
   ogImage: '/og-image.png',
 };
 
