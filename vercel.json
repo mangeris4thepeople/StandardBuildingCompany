@@ -106,6 +106,16 @@
       "source": "/commercial/:slug",
       "destination": "https://standarddevelopmentcompany.com/commercial/:slug/",
       "permanent": true
+    },
+    {
+      "source": "/why-sbc",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/why-sbc/",
+      "destination": "/about/",
+      "permanent": true
     }
   ],
   "headers": [

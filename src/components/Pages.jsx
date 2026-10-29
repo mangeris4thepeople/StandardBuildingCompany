@@ -46,47 +46,87 @@ function CommercialNote() {
 
 /* ------------------------------------------------------------------ HOME */
 
+const PROMISES = [
+  { title: 'A written price first', body: 'Scope and price in writing before anything is demolished.' },
+  { title: 'One point of contact', body: 'The same person from the first walkthrough to the last punch item.' },
+  { title: 'Permits handled', body: 'We draw, submit, and schedule every inspection for you.' },
+  { title: 'Signed-off walkthrough', body: 'We walk the finished work with you before we call it done.' },
+];
+
+const Check = () => (
+  <svg className="icon icon--check" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+    <path d="M5 12.5l4.5 4.5L19 7.5" />
+  </svg>
+);
+
 function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero__grid-overlay" aria-hidden="true">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="hero__grid-col" />
-        ))}
-      </div>
-      <div className="hero__content">
+      <div className="container hero__content">
         <div className="hero__copy">
-        <p className="hero__eyebrow">Loveland, Colorado · Est. {SITE.founded}</p>
-        <p className="hero__headline" aria-hidden="true">
-          <span className="hero__headline-top">STANDARD</span>
-          <span className="hero__headline-rule" />
-          <span className="hero__headline-bottom">BUILDING</span>
-        </p>
-        <h1 className="hero__h1">Design-Build Remodeling and Custom Homes in Loveland and Northern Colorado</h1>
-        <p className="hero__tagline">
-          Standard Building Company designs, permits, and builds whole-home remodels, kitchens, bathrooms, basements, additions, ADUs, and custom homes for homeowners in Loveland, Fort Collins, and Northern Colorado. One contract, one accountable builder, from concept to completion.
-        </p>
-        <div className="hero__actions">
-          <a href={SITE.phoneHref} className="btn btn--primary">Call {SITE.phoneDisplay}</a>
-          <a href="#contact" className="btn btn--ghost">Request a Consultation</a>
+          <p className="hero__eyebrow"><span className="hero__dot" />Residential design-build · Loveland, Colorado</p>
+          <h1 className="hero__h1">
+            Design-build remodeling and custom homes in <em>Loveland and Northern Colorado</em>
+          </h1>
+          <p className="hero__tagline">
+            We design, permit, and build whole-home remodels, kitchens, bathrooms, basements, additions, ADUs, and custom homes for homeowners in Loveland, Fort Collins, and across Northern Colorado. One contract and one accountable builder, from the first sketch to the final walkthrough.
+          </p>
+          <div className="hero__actions">
+            <a href="#contact" className="btn btn--primary">Request a consultation</a>
+            <a href={SITE.phoneHref} className="btn btn--ghost">Call {SITE.phoneDisplay}</a>
+          </div>
+          <ul className="hero__trust">
+            <li><Check />Written price before work starts</li>
+            <li><Check />Permits and inspections handled</li>
+            <li><Check />Front Range and mountain towns</li>
+          </ul>
         </div>
-        </div>
-        <div className="hero__drawing">
-          <HeroDrawing />
+        <div className="hero__visual">
+          <div className="hero__drawing">
+            <HeroDrawing />
+          </div>
+          <div className="hero__badge">
+            <span className="hero__badge-big">One contract</span>
+            <span className="hero__badge-small">Design, permits, and build under one roof</span>
+          </div>
         </div>
       </div>
-      <div className="hero__ticker" aria-hidden="true">
-        <span>Design-Build</span>
-        <span className="hero__ticker-dot" />
-        <span>Whole-Home Remodels</span>
-        <span className="hero__ticker-dot" />
-        <span>Kitchens and Baths</span>
-        <span className="hero__ticker-dot" />
-        <span>Additions and ADUs</span>
-        <span className="hero__ticker-dot" />
-        <span>Custom Homes</span>
-        <span className="hero__ticker-dot" />
-        <span>Northern Colorado</span>
+    </section>
+  );
+}
+
+function Promises() {
+  return (
+    <section className="promises" aria-label="How we work">
+      <div className="container">
+        <ul className="promises__list">
+          {PROMISES.map((p, i) => (
+            <li className="promises__item" key={p.title}>
+              <span className="promises__num">{String(i + 1).padStart(2, '0')}</span>
+              <h2 className="promises__title">{p.title}</h2>
+              <p className="promises__body">{p.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function ProcessBand() {
+  return (
+    <section className="process-band">
+      <div className="container">
+        <div className="section-head section-head--split">
+          <div>
+            <span className="section-label section-label--light">How it works</span>
+            <h2 className="section-title section-title--light">From walkthrough to keys, <em>one team</em></h2>
+          </div>
+          <p className="section-intro section-intro--light">
+            Design and construction under one contract means the price is set while the plan is drawn, and nobody is waiting on anybody else. <a href="/design-build/">Why design-build</a> · <a href="/process/">Our full process</a>
+          </p>
+        </div>
+        <ProcessSteps group="residential" />
       </div>
     </section>
   );
@@ -96,7 +136,7 @@ function AboutBody() {
   return (
     <div className="about__content">
       <h2 className="about__headline">
-        Your home.<br />Built right.
+        Your home. <em>Built right.</em>
       </h2>
       <p className="about__body">
         Standard Building Company is a residential <a href="/design-build/">design-build</a> general contractor founded in {SITE.founded} and based in Loveland, Colorado. We design and build for homeowners: <a href="/services/whole-home-remodels/">whole-home remodels</a>, <a href="/services/kitchen-remodeling/">kitchens</a>, <a href="/services/bathroom-remodeling/">bathrooms</a>, <a href="/services/basement-finishing/">basements</a>, <a href="/services/home-additions/">additions</a>, <a href="/services/custom-homes/">custom homes</a>, <a href="/services/garages-adus/">ADUs</a>, decks, and the <a href="/services/architectural-design-permitting/">architectural design and permitting</a> behind all of it. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
@@ -109,18 +149,16 @@ function AboutBody() {
       </p>
       <div className="about__stats">
         <div className="about__stat">
-          <span className="about__stat-number">Est.</span>
-          <span className="about__stat-label">{SITE.founded}</span>
+          <span className="about__stat-number">{SITE.founded}</span>
+          <span className="about__stat-label">Founded in Loveland</span>
         </div>
-        <div className="about__stat-divider" />
         <div className="about__stat">
           <span className="about__stat-number">ICC (A)</span>
-          <span className="about__stat-label">Certified</span>
+          <span className="about__stat-label">Certified general building contractor</span>
         </div>
-        <div className="about__stat-divider" />
         <div className="about__stat">
-          <span className="about__stat-number">N. CO</span>
-          <span className="about__stat-label">Based</span>
+          <span className="about__stat-number">16</span>
+          <span className="about__stat-label">Towns served, Front Range to the mountains</span>
         </div>
       </div>
     </div>
@@ -154,37 +192,27 @@ function AreasBody({ heading = 'Where we work' }) {
   );
 }
 
-function ServicePanel({ group, sub, variant }) {
-  return (
-    <>
-      <p className="services__sub">{sub}</p>
-      <ServiceCards services={SERVICES[group]} variant={variant} />
-      <p className="services__sub">
-        Every project starts with a <a href="/design-build/">design-build plan</a>: one firm draws it, prices it, permits it, and builds it. See <a href="/process/">how a project runs</a> or <a href="/insights/">read our cost and permit guides</a>.
-      </p>
-      <a href={GROUPS[group].path} className={`services__all${variant === 'light' ? '' : ' services__all--light'}`}>
-        All {GROUPS[group].label.toLowerCase()} services
-      </a>
-    </>
-  );
-}
-
 export function HomePage() {
   return (
     <>
       <Hero />
+      <Promises />
       <section className="services">
         <div className="container">
-          <div className="services__header">
-            <span className="section-label section-label--light">Services</span>
-            <h2 className="services__headline">What we build</h2>
+          <div className="section-head section-head--split">
+            <div>
+              <span className="section-label">Services</span>
+              <h2 className="section-title">What we build</h2>
+            </div>
+            <p className="section-intro">
+              Whole-home remodels, kitchens, baths, basements, additions, custom homes, ADUs, decks, and the architectural design behind all of it, for homeowners across Northern Colorado and the mountain towns.
+            </p>
           </div>
-          <ServicePanel
-            group="residential"
-            sub="Whole-home remodels, kitchens, baths, basements, additions, custom homes, ADUs, decks, roofing coordination, and architectural design for Northern Colorado homeowners."
-          />
+          <ServiceCards services={SERVICES.residential} />
+          <a href={GROUPS.residential.path} className="services__all">See all services</a>
         </div>
       </section>
+      <ProcessBand />
       <section className="company">
         <div className="container">
           <Tabs
@@ -329,10 +357,10 @@ export function ServicePage({ page }) {
           <aside className="side">
             <SideCta />
             <SideLinks
-              title={`Related ${group.label.toLowerCase()} services`}
+              title="Related services"
               links={[
                 ...related.map((r) => ({ href: r.path, label: r.short })),
-                { href: group.path, label: `All ${group.label.toLowerCase()} services` },
+                { href: group.path, label: 'All services' },
               ]}
             />
             <SideLinks title="Areas we serve" links={areaLinks} />

@@ -7,62 +7,64 @@ import React from 'react';
 const line = (delay) => ({ pathLength: 1, style: { '--d': `${delay}s` } });
 
 export function HeroDrawing() {
+  // A residential front elevation: main gable with a glass wall, a lower wing, and a covered deck.
   return (
-    <svg className="draw" viewBox="0 0 560 500" aria-hidden="true" focusable="false">
-      {/* Grid bubbles and centerlines */}
+    <svg className="draw" viewBox="0 0 600 470" aria-hidden="true" focusable="false">
+      {/* Level lines */}
       <g className="draw__faint">
-        {[70, 170, 270].map((x, i) => (
-          <g key={x}>
-            <path className="draw__dash" d={`M${x} 92 V 440`} />
-            <circle cx={x} cy="74" r="17" {...line(0.1 + i * 0.08)} className="draw__line" />
-            <text x={x} y="80" textAnchor="middle" className="draw__bubble">{'ABC'[i]}</text>
-          </g>
-        ))}
+        <path className="draw__dash" d="M60 130 H 575 M60 256 H 575" />
+        <path className="draw__tick" d="M566 124 l6 6 l6 -6 z M566 250 l6 6 l6 -6 z M566 384 l6 6 l6 -6 z" />
       </g>
 
       {/* Grade */}
-      <path className="draw__line draw__line--heavy" d="M14 420 H 546" {...line(0)} />
+      <path className="draw__line draw__line--heavy" d="M14 390 H 590" {...line(0)} />
       <g className="draw__faint">
-        {Array.from({ length: 27 }).map((_, i) => (
-          <path key={i} d={`M${24 + i * 20} 420 l -10 12`} className="draw__tick" />
+        {Array.from({ length: 29 }).map((_, i) => (
+          <path key={i} d={`M${24 + i * 20} 390 l -10 12`} className="draw__tick" />
         ))}
       </g>
 
-      {/* Commercial bay: steel frame */}
-      <path className="draw__line" d="M56 420 h28 M156 420 h28 M256 420 h28" {...line(0.25)} />
-      <path className="draw__line draw__line--heavy" d="M70 420 V 150" {...line(0.35)} />
-      <path className="draw__line draw__line--heavy" d="M170 420 V 150" {...line(0.45)} />
-      <path className="draw__line draw__line--heavy" d="M270 420 V 150" {...line(0.55)} />
-      <path className="draw__line draw__line--heavy" d="M58 290 H 282" {...line(0.75)} />
-      <path className="draw__line draw__line--heavy" d="M58 150 H 282" {...line(0.9)} />
-      <path className="draw__line" d="M58 172 H 282" {...line(1.0)} />
-      <path
-        className="draw__line"
-        d="M70 172 L 95 150 L 120 172 L 145 150 L 170 172 L 195 150 L 220 172 L 245 150 L 270 172"
-        {...line(1.1)}
-      />
-      <path className="draw__line" d="M70 420 L 170 290 M170 420 L 70 290" {...line(1.3)} />
-      <path className="draw__line" d="M50 150 V 132 H 290 V 150" {...line(1.45)} />
+      {/* Trees */}
+      <path className="draw__line" d="M22 390 L 44 296 L 66 390 M44 330 V 390" {...line(0.2)} />
+      <path className="draw__line" d="M552 390 L 572 300 L 592 390 M572 332 V 390" {...line(0.3)} />
 
-      {/* Residential: gable framing */}
-      <path className="draw__line draw__line--heavy" d="M340 420 V 292 M500 420 V 292" {...line(0.6)} />
-      <path className="draw__line draw__line--heavy" d="M322 300 L 420 204 L 518 300" {...line(1.0)} />
-      <path className="draw__line" d="M340 292 H 500" {...line(1.2)} />
-      <path className="draw__line" d="M420 204 V 292 M380 243 V 292 M460 243 V 292" {...line(1.35)} />
-      <path className="draw__line" d="M404 420 V 348 H 436 V 420" {...line(1.5)} />
-      <path className="draw__line" d="M356 338 h30 v34 h-30 z M454 338 h30 v34 h-30 z" {...line(1.6)} />
-      <path className="draw__line" d="M371 338 v34 M469 338 v34" {...line(1.7)} />
+      {/* Main volume and gable */}
+      <path className="draw__line draw__line--heavy" d="M232 390 V 256 M448 390 V 256" {...line(0.35)} />
+      <path className="draw__line draw__line--heavy" d="M214 268 L 340 130 L 466 268" {...line(0.6)} />
+      <path className="draw__line" d="M232 256 H 448" {...line(0.8)} />
+      <path className="draw__line" d="M290 238 L 340 182 L 390 238 Z" {...line(0.95)} />
+      <path className="draw__line" d="M266 278 H 414 V 390 M266 390 V 278" {...line(1.05)} />
+      <path className="draw__line" d="M315 278 V 390 M365 278 V 390 M266 306 H 414" {...line(1.2)} />
 
-      {/* Dimensions and elevation marks */}
+      {/* Chimney */}
+      <path className="draw__line" d="M396 186 V 146 H 420 V 212" {...line(1.0)} />
+
+      {/* Wing */}
+      <path className="draw__line draw__line--heavy" d="M92 390 V 294" {...line(0.45)} />
+      <path className="draw__line draw__line--heavy" d="M76 305 L 160 240 L 232 296" {...line(0.75)} />
+      <path className="draw__line" d="M110 318 h40 v44 h-40 z M172 318 h40 v44 h-40 z" {...line(1.3)} />
+      <path className="draw__line" d="M130 318 v44 M192 318 v44" {...line(1.4)} />
+
+      {/* Covered deck */}
+      <path className="draw__line" d="M448 300 L 548 318" {...line(1.1)} />
+      <path className="draw__line" d="M472 304 V 390 M536 316 V 390" {...line(1.25)} />
+      <path className="draw__line" d="M448 352 H 548 M448 362 H 548" {...line(1.45)} />
+      <g className="draw__faint">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <path key={i} d={`M${456 + i * 11} 362 V 390`} className="draw__tick" />
+        ))}
+      </g>
+
+      {/* Dimensions and notes */}
       <g className="draw__note">
-        <path d="M70 458 H 270 M70 450 v16 M170 450 v16 M270 450 v16 M340 458 H 500 M340 450 v16 M500 450 v16" className="draw__dim" />
-        <text x="120" y="480" textAnchor="middle">20'-0"</text>
-        <text x="220" y="480" textAnchor="middle">20'-0"</text>
-        <text x="420" y="480" textAnchor="middle">32'-0"</text>
-        <path d="M22 150 H 46 M22 290 H 46 M22 420 H 46" className="draw__dim" />
-        <text x="46" y="144" textAnchor="end">T.O. steel</text>
-        <text x="46" y="284" textAnchor="end">Level 2</text>
-        <text x="46" y="414" textAnchor="end">Fin. floor</text>
+        <path d="M92 424 H 548 M92 416 v16 M232 416 v16 M448 416 v16 M548 416 v16" className="draw__dim" />
+        <text x="162" y="446" textAnchor="middle">{"24'-0\""}</text>
+        <text x="340" y="446" textAnchor="middle">{"36'-0\""}</text>
+        <text x="498" y="446" textAnchor="middle">{"16'-0\""}</text>
+        <text x="560" y="122" textAnchor="end">Ridge</text>
+        <text x="560" y="248" textAnchor="end">Plate</text>
+        <text x="20" y="40" className="draw__title">Front elevation</text>
+        <text x="20" y="60">{'Scale 1/8" = 1\'-0"'}</text>
       </g>
     </svg>
   );

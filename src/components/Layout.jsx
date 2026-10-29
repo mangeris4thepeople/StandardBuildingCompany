@@ -29,6 +29,44 @@ const SOCIAL_ICONS = {
   ),
 };
 
+// The stacked wordmark: STANDARD, a brass rule, BUILDING, on forest green.
+export function Wordmark({ className = '' }) {
+  return (
+    <span className={`wordmark ${className}`.trim()} aria-hidden="true">
+      <span className="wordmark__top">STANDARD</span>
+      <span className="wordmark__rule" />
+      <span className="wordmark__bottom">BUILDING</span>
+    </span>
+  );
+}
+
+// Line icons for the service cards, keyed by the service slug.
+const ICON_PATHS = {
+  'whole-home-remodels': 'M3 11 12 4l9 7v9H3z M9 20v-6h6v6',
+  'kitchen-remodeling': 'M3 10h18v10H3z M3 14h18 M7 6.5h3 M14 6.5h3 M8 17h2 M14 17h2',
+  'bathroom-remodeling': 'M3 12h18v2.5a4.5 4.5 0 0 1-4.5 4.5h-9A4.5 4.5 0 0 1 3 14.5z M6 12V6.5a2.5 2.5 0 0 1 5 0 M7 19l-1 2 M17 19l1 2',
+  'basement-finishing': 'M3 20h5v-4h4v-4h4V8h5 M3 4h18',
+  'home-additions': 'M3 11l7-6 7 6v9H3z M19 2v6 M16 5h6 M8 20v-5h4v5',
+  'custom-homes': 'M2 20l6-9 4 5 3-4 7 8z M15 7a2 2 0 1 0 0-.01',
+  'garages-adus': 'M3 10l9-6 9 6v10H3z M7 20v-7h10v7 M7 16h10',
+  'decks-outdoor-living': 'M3 8h18 M3 12h18 M3 16h18 M5 8v12 M19 8v12 M12 8v8',
+  'architectural-design-permitting': 'M3 4h18v16H3z M3 9h18 M8 9v11 M12 13h5 M12 16h3',
+  exteriors: 'M5 3h14v18H5z M12 3v18 M5 12h14',
+  flooring: 'M3 3h18v18H3z M3 9h18 M3 15h18 M9 3v6 M15 9v6 M7 15v6',
+  'painting-drywall-trim': 'M4 3h13v6H4z M17 6h3v5h-8v3 M11 14h2v7h-2z',
+  concrete: 'M3 13h8v7H3z M13 13h8v7h-8z M8 6h8v7H8z',
+  'handyman-punch-list': 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z',
+};
+
+export function ServiceIcon({ slug }) {
+  const d = ICON_PATHS[slug] || ICON_PATHS['whole-home-remodels'];
+  return (
+    <svg className="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+      <path d={d} />
+    </svg>
+  );
+}
+
 export function SocialLinks({ className = '' }) {
   return (
     <ul className={`social ${className}`.trim()} aria-label="Standard Building Company on social media">
@@ -70,9 +108,8 @@ export function Nav({ solid = false, current = '' }) {
   return (
     <nav className={`nav${scrolled || solid ? ' nav--scrolled' : ''}`} aria-label="Main">
       <a href="/" className="nav__logo" aria-label="Standard Building Company home">
-        <span className="nav__logo-main">STANDARD</span>
-        <span className="nav__logo-rule" />
-        <span className="nav__logo-sub">BUILDING COMPANY</span>
+        <Wordmark />
+        <span className="nav__logo-sub">Residential design-build<br />Loveland, Colorado</span>
       </a>
       <button
         className="nav__hamburger"
@@ -98,8 +135,11 @@ export function Nav({ solid = false, current = '' }) {
           <SocialLinks className="social--nav" />
         </li>
         <li>
-          <a href={SITE.phoneHref} className="nav__cta">
-            {SITE.phoneDisplay}
+          <a href={SITE.phoneHref} className="nav__phone">{SITE.phoneDisplay}</a>
+        </li>
+        <li>
+          <a href="#contact" className="nav__cta" onClick={() => setMenuOpen(false)}>
+            Get a quote
           </a>
         </li>
       </ul>
@@ -260,8 +300,10 @@ export function ServiceCards({ services, variant = 'dark', headingLevel = 3 }) {
     <div className={`services__grid${variant === 'light' ? ' services__grid--light' : ''}`}>
       {services.map((s) => (
         <a className="service-card" key={s.path} href={s.path}>
+          <span className="service-card__icon"><ServiceIcon slug={s.slug} /></span>
           <H className="service-card__title">{s.short}</H>
           <p className="service-card__desc">{s.card}</p>
+          <span className="service-card__more" aria-hidden="true">Learn more</span>
         </a>
       ))}
     </div>
@@ -441,6 +483,12 @@ function FooterCol({ title, href, links }) {
   );
 }
 
+const FAMILY = [
+  { kind: 'Commercial', name: 'Standard Development Company', note: 'Commercial construction and development', url: 'https://standarddevelopmentcompany.com/' },
+  { kind: 'Roofing', name: 'Standard Roofing Company', note: 'Roof replacement and specialty roofing', url: 'https://standardroofingcompany.net/' },
+  { kind: 'Web and data', name: 'Standard Data Company', note: 'Websites and data tools', url: 'https://standarddatacompany.net/' },
+];
+
 export function Footer() {
   return (
     <footer className="footer">
@@ -448,8 +496,8 @@ export function Footer() {
         <div className="footer__cols">
           <div className="footer__brand">
             <div className="footer__logo">
-              <span className="footer__logo-main">STANDARD BUILDING</span>
-              <span className="footer__logo-sub">COMPANY · LOVELAND, CO · EST. {SITE.founded}</span>
+              <Wordmark className="wordmark--footer" />
+              <span className="footer__logo-sub">Residential design-build<br />Loveland, Colorado · Est. {SITE.founded}</span>
             </div>
             <p className="footer__address">{SITE.name}<br />{SITE.addressDisplay}</p>
             <a href={SITE.phoneHref} className="footer__phone">{SITE.phoneDisplay}</a>
@@ -484,9 +532,27 @@ export function Footer() {
             links={AREA_REGIONS[1].areas.map((a) => ({ href: a.path, label: `${a.name}, CO` }))}
           />
         </div>
-        <p className="footer__sister">
-          <strong>Full service, residential to commercial.</strong> Homes are designed and built by us, Standard Building Company. Commercial projects are developed and built by <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>. And the roof on top of it all comes from <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a>. And the websites and data tools behind it all are built by <a href="https://standarddatacompany.net/" rel="noopener">Standard Data Company</a>.
-        </p>
+        <div className="family">
+          <p className="family__lead">
+            <strong>Full service, residential to commercial.</strong> Homes are designed and built by us, Standard Building Company. Commercial projects are developed and built by <a href="https://standarddevelopmentcompany.com/" rel="noopener">Standard Development Company</a>. And the roof on top of it all comes from <a href="https://standardroofingcompany.net/" rel="noopener">Standard Roofing Company</a>. And the websites and data tools behind it all are built by <a href="https://standarddatacompany.net/" rel="noopener">Standard Data Company</a>.
+          </p>
+          <ul className="family__list">
+            <li className="family__card family__card--here">
+              <span className="family__kind">Homes</span>
+              <span className="family__name">Standard Building Company</span>
+              <span className="family__note">You are here</span>
+            </li>
+            {FAMILY.map((f) => (
+              <li key={f.url}>
+                <a className="family__card" href={f.url} rel="noopener" onClick={() => track('sister_click', { link_url: f.url })}>
+                  <span className="family__kind">{f.kind}</span>
+                  <span className="family__name">{f.name}</span>
+                  <span className="family__note">{f.note}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <p className="footer__copy">© {new Date().getFullYear()} Standard Building Company. All rights reserved.</p>
       </div>
     </footer>
