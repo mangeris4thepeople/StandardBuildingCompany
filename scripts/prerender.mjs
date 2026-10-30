@@ -72,6 +72,7 @@ const dates = {
   areas: gitDate(`${CONTENT}/cities.js`),
   area: gitDate(`${CONTENT}/cities.js`),
   'local-basement': gitDate(`${CONTENT}/cities.js`, 'src/components/Pages.jsx'),
+  'local-service': gitDate(`${CONTENT}/local-services.js`, 'src/components/Pages.jsx'),
   insights: gitDate(`${CONTENT}/posts.js`),
   contact: gitDate(`${CONTENT}/site.js`, 'src/components/Pages.jsx'),
 };

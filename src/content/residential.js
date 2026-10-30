@@ -5,7 +5,7 @@ export const RESIDENTIAL = [
     name: 'Kitchen Remodeling',
     short: 'Kitchen Remodeling',
     card: 'Cabinets, countertops, tile, lighting, and layout changes, managed by one contractor.',
-    title: 'Kitchen Remodeling in Loveland, CO | Standard Building Company',
+    title: 'Kitchen Remodeling in Northern Colorado | Standard Building',
     description:
       'Kitchen remodeling in Loveland, Fort Collins, and Northern Colorado. Cabinets, countertops, backsplashes, flooring, lighting, and layout changes by one contractor.',
     h1: 'Kitchen Remodeling in Loveland and Northern Colorado',
@@ -60,7 +60,7 @@ export const RESIDENTIAL = [
     name: 'Bathroom Remodeling',
     short: 'Bathroom Remodeling',
     card: 'Custom tile showers, tub conversions, vanities, and aging-in-place upgrades.',
-    title: 'Bathroom Remodeling in Loveland, CO | Standard Building Company',
+    title: 'Bathroom Remodeling in Northern Colorado | Standard Building',
     description:
       'Bathroom remodeling in Loveland, Fort Collins, and Northern Colorado. Custom tile showers, tub-to-shower conversions, vanities, flooring, and accessible upgrades.',
     h1: 'Bathroom Remodeling in Loveland and Northern Colorado',
@@ -414,7 +414,7 @@ export const RESIDENTIAL = [
     name: 'Residential Concrete',
     short: 'Concrete',
     card: 'Driveways, patios, sidewalks, garage slabs, and retaining walls.',
-    title: 'Concrete Contractor in Loveland, CO | Standard Building Company',
+    title: 'Concrete Contractor in Northern Colorado | Standard Building',
     description:
       'Concrete contractor in Loveland and Northern Colorado. Driveways, patios, sidewalks, garage and shop slabs, foundations, and retaining walls built for freeze-thaw.',
     h1: 'Concrete Driveways, Patios, and Flatwork',

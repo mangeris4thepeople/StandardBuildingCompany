@@ -6,6 +6,7 @@ import { DESIGN_BUILD } from './design-build-services.js';
 import { CITIES } from './cities.js';
 import { STATIC_PAGES } from './static-pages.js';
 import { POSTS } from './posts.js';
+import { LOCAL_SERVICES } from './local-services.js';
 
 // Core design-build services lead the list; trade and small-job services follow.
 const SERVICE_ORDER = [
@@ -115,6 +116,20 @@ const localBasements = AREAS.map((a) => ({
   priority: '0.6',
 }));
 
+// Town-specific service pages: /<service>/<area>/. Content lives in local-services.js.
+export const LOCAL_SERVICE_PAGES = LOCAL_SERVICES.map((l) => ({
+  type: 'local-service',
+  slug: `${l.service}/${l.area}`,
+  service: l.service,
+  area: l.area,
+  path: `/${l.service}/${l.area}/`,
+  title: l.title,
+  description: l.description,
+  h1: l.h1,
+  lede: l.lede,
+  priority: '0.7',
+}));
+
 const areasHub = {
   type: 'areas',
   path: '/service-areas/',
@@ -188,6 +203,7 @@ export const PAGES = [
   areasHub,
   ...areaPages,
   ...localBasements,
+  ...LOCAL_SERVICE_PAGES,
   insightsHub,
   ...postPages,
   contact,

@@ -3,6 +3,7 @@ import { SITE, GROUPS, OTHER_AREAS, SOCIAL } from './site.js';
 import { ALL_SERVICES, AREAS, findService, absoluteUrl } from './pages.js';
 import { POSTS, AUTHOR } from './posts.js';
 import { STATIC_PAGES } from './static-pages.js';
+import { LOCAL_SERVICES } from './local-services.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -86,6 +87,11 @@ export function trailFor(page) {
     const a = AREAS.find((c) => c.slug === page.slug);
     return [homeCrumb, { name: 'Basement Finishing', path: '/services/basement-finishing/' }, { name: a.name, path: page.path }];
   }
+  if (page.type === 'local-service') {
+    const s = findService('residential', page.service);
+    const a = AREAS.find((c) => c.slug === page.area);
+    return [homeCrumb, { name: GROUPS.residential.label, path: GROUPS.residential.path }, { name: s.short, path: s.path }, { name: a.name, path: page.path }];
+  }
   if (page.type === 'contact') return [homeCrumb, { name: 'Contact', path: page.path }];
   if (page.type === 'static') {
     const sp = STATIC_PAGES.find((x) => x.slug === page.slug);
@@ -142,6 +148,30 @@ function graphFor(page) {
         name: f.q,
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
+    });
+  }
+
+  if (page.type === 'local-service') {
+    const l = LOCAL_SERVICES.find((x) => x.service === page.service && x.area === page.area);
+    const s = findService('residential', page.service);
+    const a = AREAS.find((c) => c.slug === page.area);
+    graph.push({
+      '@type': 'Service',
+      '@id': `${absoluteUrl(page.path)}#service`,
+      name: page.h1,
+      serviceType: s.name,
+      description: page.description,
+      url: absoluteUrl(page.path),
+      provider: { '@id': BUSINESS_ID },
+      areaServed: {
+        '@type': 'City',
+        name: `${a.name}, CO`,
+        containedInPlace: { '@type': 'AdministrativeArea', name: `${a.county}, CO` },
+      },
+    });
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: l.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
     });
   }
 

@@ -4,6 +4,7 @@ import { SERVICES, CORE_SERVICES, AREAS, AREA_REGIONS, findService } from '../co
 import { POSTS } from '../content/posts.js';
 import { STATIC_PAGES } from '../content/static-pages.js';
 import { trailFor } from '../content/head.js';
+import { LOCAL_SERVICES } from '../content/local-services.js';
 import { PageHero, ServiceCards, ProcessSteps, SideCta, SideLinks, Contact, Tabs, Faq } from './Layout.jsx';
 
 // Lowercase a service name for use mid-sentence, keeping acronyms like ADUs.
@@ -346,6 +347,16 @@ export function ServicePage({ page }) {
             />
             {page.slug === 'basement-finishing' && <p><a href="/pricing/">How basement finishing estimates work</a>, or browse the local basement finishing pages below.</p>}
             <h2>Where we provide {lc(s.short)}</h2>
+            {LOCAL_SERVICES.some((l) => l.service === page.slug) && (
+              <>
+                <h2>{findService(page.group, page.slug).short} by town</h2>
+                <ul className="link-list">
+                  {LOCAL_SERVICES.filter((l) => l.service === page.slug).map((l) => (
+                    <li key={l.area}><a href={`/${l.service}/${l.area}/`}>{l.h1}</a><span>{l.description}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
             {page.slug === 'basement-finishing' && <ul className="link-list">{AREAS.map(a => <li key={a.slug}><a href={`/basement-finishing/${a.slug}/`}>Basement Finishing in {a.name}, CO</a></li>)}</ul>}
             <p>
               Standard Building Company is based in Loveland and provides {lc(s.short)} across Northern Colorado, including {linkList(AREA_REGIONS[0].areas)}.
@@ -468,6 +479,16 @@ export function AreaPage({ page }) {
             <PriceSchedule location={a.name} slug={a.slug} />
             <h2>Basement finishing in {a.name}</h2>
             <p>Planning a bedroom, family room, home office, or bathroom downstairs? Read our <a href={`/basement-finishing/${a.slug}/`}>{a.name} basement finishing guide</a> for permitting considerations, planning steps, and pricing factors.</p>
+            {LOCAL_SERVICES.some((l) => l.area === a.slug) && (
+              <>
+                <h2>{a.name} project guides</h2>
+                <ul className="link-list">
+                  {LOCAL_SERVICES.filter((l) => l.area === a.slug).map((l) => (
+                    <li key={l.service}><a href={`/${l.service}/${l.area}/`}>{l.h1}</a><span>{l.description}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
             <h2>Services in {a.name}</h2>
             <p>These are the services homeowners in {a.name} ask for most. Every one of them is run design-build: one firm draws the plan, prices it, pulls the permit, and builds it.</p>
             <ul className="link-list">
@@ -629,6 +650,51 @@ export function LocalBasementPage({ page }) {
         </div>
       </section>
       <Contact heading={`Discuss your ${area.name} basement project`} />
+    </>
+  );
+}
+
+
+// A town-specific service page: local housing stock, utilities, and permits for one service in one town.
+export function LocalServicePage({ page }) {
+  const l = LOCAL_SERVICES.find((x) => x.service === page.service && x.area === page.area);
+  const area = AREAS.find((a) => a.slug === page.area);
+  const service = findService('residential', page.service);
+  if (!l || !area || !service) return <NotFoundPage />;
+  const others = LOCAL_SERVICES.filter((x) => x !== l && (x.area === l.area || x.service === l.service));
+  return (
+    <>
+      <PageHero eyebrow={`${service.short} · ${area.county}`} title={page.h1} lede={page.lede} trail={trailFor(page)} />
+      <section className="page-body">
+        <div className="container page-body__inner">
+          <article className="prose">
+            {l.sections.map((sec) => (
+              <React.Fragment key={sec.heading}>
+                <h2>{sec.heading}</h2>
+                {sec.body.map((para, i) => <p key={i}>{para}</p>)}
+              </React.Fragment>
+            ))}
+            <h2>What we handle</h2>
+            <ul className="check-list">
+              {service.scope.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+            {page.service !== 'concrete' && <PriceSchedule location={area.name} slug={area.slug} />}
+            <h2>Questions from {area.name} homeowners</h2>
+            <Faq items={l.faqs} />
+            <h2>Keep reading</h2>
+            <p>See our full <a href={service.path}>{service.name.toLowerCase()} service page</a>, our <a href={area.path}>{area.name} remodeling and permitting guide</a>, and <a href="/process/">how a project runs</a>.</p>
+            {others.length > 0 && (
+              <ul className="link-list">
+                {others.map((o) => (
+                  <li key={o.service + o.area}><a href={`/${o.service}/${o.area}/`}>{o.h1}</a><span>{o.description}</span></li>
+                ))}
+              </ul>
+            )}
+          </article>
+          <aside className="side"><SideCta /><SideLinks title="Other service areas" links={areaLinks} /></aside>
+        </div>
+      </section>
+      <Contact heading={`Talk to us about your ${area.name} project`} projectType={FORM_TYPE[page.service] || ''} />
     </>
   );
 }
