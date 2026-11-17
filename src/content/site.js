@@ -34,6 +34,7 @@ export const COMMERCIAL_REFERRAL = { name: 'Standard Development Company', url: 
 export const SOCIAL = [
   { name: 'LinkedIn', key: 'linkedin', url: 'https://www.linkedin.com/company/standardbuildingcompany/' },
   { name: 'Facebook', key: 'facebook', url: 'https://www.facebook.com/profile.php?id=61595003715696' },
+  { name: 'X', key: 'x', url: 'https://x.com/StandardBldgCo' },
 ];
 
 export const GROUPS = {
