@@ -140,7 +140,7 @@ function AboutBody() {
         Your home. <em>Built right.</em>
       </h2>
       <p className="about__body">
-        Standard Building Company is a residential <a href="/design-build/">design-build</a> general contractor founded in {SITE.founded} and based in Loveland, Colorado. We design and build for homeowners: <a href="/services/whole-home-remodels/">whole-home remodels</a>, <a href="/services/kitchen-remodeling/">kitchens</a>, <a href="/services/bathroom-remodeling/">bathrooms</a>, <a href="/services/basement-finishing/">basements</a>, <a href="/services/home-additions/">additions</a>, <a href="/services/custom-homes/">custom homes</a>, <a href="/services/garages-adus/">ADUs</a>, decks, and the <a href="/services/architectural-design-permitting/">architectural design and permitting</a> behind all of it. We work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
+        Standard Building Company is a residential <a href="/design-build/">design-build</a> general contractor founded in {SITE.founded} and based in Loveland, Colorado. We design and build for homeowners: <a href="/services/whole-home-remodels/">whole-home remodels</a>, <a href="/services/kitchen-remodeling/">kitchens</a>, <a href="/services/bathroom-remodeling/">bathrooms</a>, <a href="/services/basement-finishing/">basements</a>, <a href="/services/home-additions/">additions</a>, <a href="/services/custom-homes/">custom homes</a>, <a href="/services/garages-adus/">ADUs</a>, decks, and the <a href="/services/architectural-design-permitting/">architectural design and permitting</a> behind all of it. Loveland is where most of our work happens; see what we handle as a <a href="/service-areas/loveland-co/">general contractor in Loveland</a>. We also work across Northern Colorado, including <a href="/service-areas/fort-collins-co/">Fort Collins</a>, <a href="/service-areas/greeley-co/">Greeley</a>, <a href="/service-areas/longmont-co/">Longmont</a>, and the surrounding Front Range, and in the mountain towns of <a href="/service-areas/vail-co/">Vail</a>, <a href="/service-areas/avon-co/">Avon</a>, <a href="/service-areas/aspen-co/">Aspen</a>, <a href="/service-areas/winter-park-co/">Winter Park</a>, <a href="/service-areas/copper-mountain-co/">Copper Mountain</a>, and <a href="/service-areas/steamboat-springs-co/">Steamboat Springs</a>.
       </p>
       <p className="about__body">
         Our leadership comes from the field. Behind SBC is a builder who has run projects from the first schedule through the subcontractors, safety, inspections, and turnover to the owner. That background is held to ICC National Standard General Building Contractor (A) certification and OSHA and MSHA 40-hour safety training, and every home we work on is run with the same discipline.
@@ -172,7 +172,7 @@ function AreasBody({ heading = 'Where we work' }) {
       <div className="areas__text">
         <h2 className="areas__headline">{heading}</h2>
         <p className="areas__body">
-          Based in Loveland, we work across Larimer County, Weld County, and the northern Front Range, and in the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.
+          We are a <a href="/service-areas/loveland-co/">Loveland general contractor</a>, and we work across Larimer County, Weld County, and the northern Front Range, and in the mountain towns of Eagle, Pitkin, Grand, Summit, and Routt counties.
         </p>
         {AREA_REGIONS.map((r) => (
           <React.Fragment key={r.key}>
@@ -397,7 +397,7 @@ export function AreasPage({ page }) {
         <div className="container">
           <div className="prose prose--wide">
             <p>
-              Standard Building Company is based in Loveland and works throughout Northern Colorado and in the mountain towns along I-70, US 40, and the Roaring Fork Valley. Building departments, soils, wind, and snow loads change from one town to the next, so each page below covers what is specific to building there.
+              Standard Building Company is a <a href="/service-areas/loveland-co/">residential general contractor based in Loveland</a> and works throughout Northern Colorado and in the mountain towns along I-70, US 40, and the Roaring Fork Valley. Building departments, soils, wind, and snow loads change from one town to the next, so each page below covers what is specific to building there.
             </p>
           </div>
           {AREA_REGIONS.map((r) => (
@@ -439,6 +439,9 @@ export function AreaPage({ page }) {
   const services = a.focus.residential.map((slug) => findService('residential', slug)).filter(Boolean);
   const nearby = (a.nearby || []).map((slug) => AREAS.find((c) => c.slug === slug)).filter(Boolean);
   const others = AREA_REGIONS.flatMap((r) => r.areas).filter((c) => c.slug !== a.slug).map((c) => ({ href: c.path, label: `${c.name}, CO` }));
+  // General contractor sections, for the home-base town page only.
+  const gc = a.contractor;
+  const home = AREAS.find((c) => c.contractor);
   return (
     <>
       <PageHero
@@ -450,8 +453,15 @@ export function AreaPage({ page }) {
       <section className="page-body">
         <div className="container page-body__inner">
           <article className="prose">
-            <h2>Building in {a.name}</h2>
-            {a.local.map((p) => <p key={p}>{p}</p>)}
+            {gc && (
+              <>
+                <h2>{gc.heading}</h2>
+                {gc.body.map((p) => <p key={p}>{p}</p>)}
+                <ul className="check-list check-list--single">
+                  {gc.handles.map((item) => <li key={item}>{inline(item)}</li>)}
+                </ul>
+              </>
+            )}
 
             {a.projects && (
               <>
@@ -463,6 +473,27 @@ export function AreaPage({ page }) {
                 </ul>
               </>
             )}
+
+            {gc && (
+              <>
+                <h2>{gc.stepsHeading}</h2>
+                <ol className="steps">
+                  {gc.steps.map((step, i) => (
+                    <li className="steps__item" key={step.title}>
+                      <span className="steps__num">{String(i + 1).padStart(2, '0')}</span>
+                      <div>
+                        <h3 className="steps__title">{step.title}</h3>
+                        <p>{step.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <p>Each stage is covered in more detail on our <a href="/process/">remodeling process page</a>, and <a href="/design-build/">how design-build works</a> explains why design and construction sit under one contract.</p>
+              </>
+            )}
+
+            <h2>Building in {a.name}</h2>
+            {a.local.map((p) => <p key={p}>{p}</p>)}
 
             {a.conditions && (
               <>
@@ -503,6 +534,15 @@ export function AreaPage({ page }) {
             <p>{linkList(SERVICES.residential.map((s) => ({ path: s.path, name: s.short })))}. <a href={GROUPS.residential.path}>See all services</a> or <a href="/design-build/">how design-build works</a>.</p>
             <CommercialNote />
 
+            {gc && (
+              <>
+                <h2>How to start a project in {a.name}</h2>
+                <p>
+                  Call <a href={SITE.phoneHref}>{SITE.phoneDisplay}</a>, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, or use the form at the bottom of this page. Our office is at {SITE.addressDisplay}, open Monday through Friday. {gc.start}
+                </p>
+              </>
+            )}
+
             {a.faqs && (
               <>
                 <h2>{a.name} remodeling questions</h2>
@@ -512,6 +552,9 @@ export function AreaPage({ page }) {
 
             {nearby.length > 0 && (
               <p className="prose__note">Also nearby: {linkList(nearby)}.</p>
+            )}
+            {!gc && home && (
+              <p className="prose__note">{a.name} projects are run from our office in Loveland, where we work as a <a href={home.path}>residential general contractor</a>.</p>
             )}
           </article>
           <aside className="side">
@@ -638,7 +681,7 @@ export function LocalBasementPage({ page }) {
             <h2>What affects basement finishing cost in {area.name}?</h2>
             <p>Size, bathroom rough-ins, egress modifications, moisture remediation, soundproofing, cabinetry, and finish selections all affect cost. See our <a href="/pricing/">pricing and estimating guide</a> for how we develop a written scope and estimate.</p>
             <h2>Related {area.name} resources</h2>
-            <p>Read our <a href={area.path}>{area.name} remodeling and permitting guide</a>, our <a href="/services/basement-finishing/">full basement finishing service page</a>, and our <a href="/insights/basement-finish-permits-loveland-fort-collins/">guide to basement finish permits in Loveland and Fort Collins</a>.</p>
+            <p>Read our <a href={area.path}>{area.linkLabel || `${area.name} remodeling and permitting guide`}</a>, our <a href="/services/basement-finishing/">full basement finishing service page</a>, and our <a href="/insights/basement-finish-permits-loveland-fort-collins/">guide to basement finish permits in Loveland and Fort Collins</a>.</p>
             <h2>Questions before starting</h2>
             <Faq items={[
               {q:`Do I need a permit to finish a basement in ${area.name}?`,a:'Finishing habitable space typically involves permits and inspections. The applicable jurisdiction depends on the property address and scope; we verify it before work begins.'},
@@ -682,7 +725,7 @@ export function LocalServicePage({ page }) {
             <h2>Questions from {area.name} homeowners</h2>
             <Faq items={l.faqs} />
             <h2>Keep reading</h2>
-            <p>See our full <a href={service.path}>{service.name.toLowerCase()} service page</a>, our <a href={area.path}>{area.name} remodeling and permitting guide</a>, and <a href="/process/">how a project runs</a>.</p>
+            <p>See our full <a href={service.path}>{service.name.toLowerCase()} service page</a>, our <a href={area.path}>{area.linkLabel || `${area.name} remodeling and permitting guide`}</a>, and <a href="/process/">how a project runs</a>.</p>
             {others.length > 0 && (
               <ul className="link-list">
                 {others.map((o) => (
@@ -762,7 +805,7 @@ export function StaticPage({ page }) {
               <>
                 <h2>Where we work</h2>
                 <p>
-                  Northern Colorado: {linkList(AREA_REGIONS[0].areas)}. Mountain towns: {linkList(AREA_REGIONS[1].areas)}. See all <a href="/service-areas/">service areas</a>.
+                  Our home market is Loveland, and our <a href="/service-areas/loveland-co/">Loveland general contractor page</a> covers how we design, permit, and build there. Northern Colorado: {linkList(AREA_REGIONS[0].areas)}. Mountain towns: {linkList(AREA_REGIONS[1].areas)}. See all <a href="/service-areas/">service areas</a>.
                 </p>
               </>
             )}

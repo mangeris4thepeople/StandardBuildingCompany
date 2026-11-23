@@ -8,16 +8,53 @@ export const CITIES = [
     slug: 'loveland-co',
     name: 'Loveland',
     county: 'Larimer County',
+    // This page owns the "general contractor Loveland CO" searches. The home page targets the wider region.
     title: 'General Contractor in Loveland, CO | Standard Building Co.',
     description:
-      'Loveland-based general contractor for homes: kitchen and bath remodels, basement finishing, additions, decks, and concrete across Loveland, CO.',
-    lede: 'Loveland is home. Standard Building Company is based here, and it is where most of our remodeling work starts.',
+      'Residential general contractor in Loveland, CO. One design-build firm for remodels, additions, and custom homes: design, permits, trades, and inspections.',
+    h1: 'Residential General Contractor in Loveland, CO',
+    lede: 'Loveland is home. Standard Building Company is based on East 3rd Street and designs, permits, and builds remodels, additions, and custom homes for Loveland homeowners, with one contract and one point of contact from the first call to the final walkthrough.',
+    // Anchor text other pages use when they link here.
+    linkLabel: 'Loveland general contractor page',
+    // Service schema for this page.
+    schemaService: { name: 'Residential general contracting in Loveland, CO', serviceType: 'Residential general contractor' },
+    // General contractor sections, rendered by AreaPage ahead of the local notes. Every statement here
+    // restates what the design-build, process, about, and contact pages already say.
+    contractor: {
+      heading: 'What a general contractor in Loveland handles for you',
+      body: [
+        'A general contractor is the one firm that answers for the whole job: the plan, the price, the permit, the trades, the inspections, and the finished work. Standard Building Company does that for homeowners in Loveland and the unincorporated parts of Larimer County around it.',
+        'We are a design-build firm, so the design is part of the same contract. The people who draw your project are the people who price it and build it. The drawings are buildable because a builder reviewed them, the budget is real because the plan was priced as it was drawn, and when something changes there is one phone number.',
+      ],
+      handles: [
+        '**Design.** As-built drawings of your existing home, concept floor plans, elevations and 3D views, and the full permit set, with structural engineering brought in where beams or foundations change.',
+        '**Pricing.** A cost range at concept, a budget with every allowance called out during design, and a fixed written price and written scope with the permit set, before anything is demolished.',
+        '**Permits and inspections.** We prepare the submittal, file it with the City of Loveland or Larimer County, respond to plan review comments, pull the permit under our own name, and schedule every inspection through final.',
+        '**Scheduling and subcontractors.** One project lead runs the job and schedules every trade in sequence, so nobody is waiting on anybody else. Long-lead items like windows, cabinets, and trusses are ordered during permitting so they do not hold up the work.',
+        '**Communication and changes.** A weekly update with what was done, what is next, and anything that needs a decision. Changes are documented in writing with a price and schedule impact before the work is done.',
+        '**Closeout.** A room-by-room final walkthrough with you, the punch list finished, the final inspection closed, and the house left clean.',
+      ],
+      stepsHeading: 'How a Loveland project runs, from first call to completion',
+      steps: [
+        { title: 'First call', body: 'Call or send the form. We ask what you want to do, where the house is, and roughly when you want it done. If the project is a fit, we schedule a walkthrough. If it is not, we say so and point you somewhere useful.' },
+        { title: 'Walkthrough at your home', body: 'The walkthrough is free. We measure, look at the panel, the mechanicals, the foundation, and the attic, and flag anything that affects cost or schedule before design starts.' },
+        { title: 'Concept and cost range', body: 'Kitchens, baths, and basements often go straight to a written scope and price. Additions, whole-home remodels, ADUs, and custom homes get concept floor plans, each with a cost range.' },
+        { title: 'Design and budget', body: 'Elevations, finishes, fixtures, cabinet layouts, and the structural approach, with a budget that calls out every allowance so you see what a selection change does to the total.' },
+        { title: 'Permit set and fixed price', body: 'The complete drawing package with stamped engineering, plus a fixed written price and a written scope of work. That contract is what we build from.' },
+        { title: 'Permitting', body: 'We file with the City of Loveland or Larimer County, answer plan review comments, and pull the permit.' },
+        { title: 'Construction', body: 'One project lead, a protected site, trades scheduled in sequence, a weekly update, and inspections passed before the next phase starts.' },
+        { title: 'Final walkthrough', body: 'We walk the finished work with you, finish the punch list, and close out the final inspection before we call it done.' },
+      ],
+      start: 'Have the address, roughly what you want to do, and when you want it done. Photos help, and a budget range helps more than anything, because design-build only works when the price travels with the design. If you have drawings, an inspection report, or an HOA letter, mention it and we will ask for it.',
+    },
     local: [
       'Loveland sits between Fort Collins and Longmont on US 287, with US 34 running east to I-25 and Greeley and west into the Big Thompson Canyon. The city mixes a historic downtown along 4th Street, established neighborhoods around Lake Loveland and Boyd Lake, and newer neighborhoods on the east side near I-25.',
       'That mix means the work varies: updates to older homes near downtown, kitchen and bath remodels in mid-century homes near the lake, and basement finishes and outdoor projects in newer subdivisions.',
       'Being based here matters for the small things as much as the big ones. Site visits, inspections, and punch list trips happen on short notice, and we already know the local building department, utilities, and inspectors.',
     ],
     projects: [
+      { title: 'Whole-home remodels and additions', body: 'Whole-home remodels, room additions, and primary suites, including the structural engineering, permits, and tie-in to the existing house.' },
+      { title: 'Custom homes and ADUs', body: 'Custom homes on your lot, accessory dwelling units, garage apartments, and detached garages, designed, permitted, and built under one contract.' },
       { title: 'Updates to older homes', body: 'Kitchens, baths, and opened-up floor plans in mid-century and older homes around Lake Loveland and the downtown neighborhoods, usually with electrical and plumbing upgrades along the way.' },
       { title: 'Basements and outdoor living', body: 'Basement finishes, decks, covered patios, and fences in the newer subdivisions on the east and west edges of town.' },
       { title: 'Concrete and garages', body: 'Driveways, patios, shop slabs, and detached garages, including on acreage properties outside city limits.' },
@@ -30,6 +67,11 @@ export const CITIES = [
     permits:
       'Projects inside city limits are permitted through the City of Loveland building department. Properties in unincorporated areas around the city go through Larimer County. We confirm which applies to your address and handle the submittal.',
     faqs: [
+      { q: 'What does a general contractor do on a Loveland home project?', a: 'A general contractor takes responsibility for the whole job: the plan, the written price, the permit, scheduling every trade, the inspections, and the final walkthrough. As a design-build firm we also draw the plans, so design and construction sit under one contract with one point of contact.' },
+      { q: 'Do you design the project, or do I need an architect?', a: 'We offer residential architectural design as part of the service, from as-built drawings and concept floor plans to the full permit set, with structural engineering coordinated where the code requires a stamp. If you already have plans, we review them for buildability, price them, and build them.' },
+      { q: 'Who pulls the permit and schedules inspections in Loveland?', a: 'We do. We prepare the submittal, file it with the City of Loveland or Larimer County depending on the address, respond to plan review comments, pull the permit under our own name, and schedule every inspection through final.' },
+      { q: 'Are you licensed and insured?', a: 'We provide proof of insurance and license information for your jurisdiction before any contract is signed, and we pull permits under our own name on every project that requires one. Ask and we will send the certificate.' },
+      { q: 'Is the first walkthrough free?', a: 'Yes. The walkthrough at your home and the initial cost range are free. Design fees apply once drawings start, are quoted up front, and are credited toward construction on design-build projects.' },
       { q: 'Is Standard Building Company based in Loveland?', a: 'Yes. Our office is at 1180 E. 3rd St. in Loveland, and Loveland is where most of our work happens.' },
       { q: 'Do you work outside Loveland city limits?', a: 'Yes. We work in unincorporated Larimer County around Loveland, including acreage properties, as well as in Berthoud, Fort Collins, Windsor, Johnstown, and the rest of Northern Colorado.' },
       { q: 'Does a basement finish in Loveland need a permit?', a: 'Yes. Finishing a basement adds habitable space, wiring, and usually plumbing, so the City of Loveland or Larimer County requires a permit and inspections. We prepare the drawings and the submittal.' },

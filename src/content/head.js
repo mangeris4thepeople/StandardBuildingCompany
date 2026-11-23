@@ -180,8 +180,8 @@ function graphFor(page) {
     graph.push({
       '@type': 'Service',
       '@id': `${absoluteUrl(page.path)}#service`,
-      name: `Home remodeling in ${a.name}, CO`,
-      serviceType: 'Home Remodeling',
+      name: a.schemaService ? a.schemaService.name : `Home remodeling in ${a.name}, CO`,
+      serviceType: a.schemaService ? a.schemaService.serviceType : 'Home Remodeling',
       url: absoluteUrl(page.path),
       description: a.description,
       provider: { '@id': BUSINESS_ID },

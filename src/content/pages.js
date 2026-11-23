@@ -69,9 +69,11 @@ export function findService(group, slug) {
 const home = {
   type: 'home',
   path: '/',
-  title: 'General Contractor in Loveland, CO | Design-Build Remodeling',
+  // "General contractor Loveland" searches are owned by /service-areas/loveland-co/, so the home page
+  // title targets design-build across the region instead of competing with it.
+  title: 'Design-Build Remodeling Contractor | Loveland & Northern CO',
   description:
-    'Residential general contractor in Loveland, CO. Design-build kitchen and bath remodels, basements, additions, custom homes, and ADUs across Northern Colorado.',
+    'Residential design-build contractor based in Loveland, CO. Kitchen and bath remodels, basements, additions, custom homes, and ADUs across Northern Colorado.',
   priority: '1.0',
 };
 
