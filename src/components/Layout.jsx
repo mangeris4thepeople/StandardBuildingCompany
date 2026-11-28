@@ -530,7 +530,9 @@ export function Footer() {
               { href: '/about/', label: 'About' },
               { href: '/pricing/', label: 'Pricing' },
               { href: '/insights/', label: 'Insights' },
+              { href: '/faq/', label: 'FAQ' },
               { href: '/contact/', label: 'Contact' },
+              { href: '/privacy/', label: 'Privacy' },
             ]}
           />
           <FooterCol

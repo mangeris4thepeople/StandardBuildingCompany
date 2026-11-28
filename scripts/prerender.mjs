@@ -108,9 +108,37 @@ Sitemap: ${SITE.url}/sitemap.xml
 `
 );
 
+// llms.txt: a plain index of every page for AI assistants, built from the same titles and
+// descriptions the prerendered pages carry, grouped by page type.
+{
+  const GROUP = {
+    home: 'Company', static: 'Company', contact: 'Company', pricing: 'Company',
+    hub: 'Services', service: 'Services',
+    areas: 'Service areas', area: 'Service areas', 'local-basement': 'Services in specific towns', 'local-service': 'Services in specific towns',
+    insights: 'Guides', post: 'Guides',
+  };
+  const order = ['Company', 'Services', 'Services in specific towns', 'Service areas', 'Guides'];
+  const clean = (t) => String(t || '').replace(/\s*\|\s*(Standard Building Co\.|Standard Building|SBC)\s*$/, '');
+  const line = (p) => `- [${clean(p.title || p.h1)}](${SITE.url}${p.path})${p.description ? `: ${p.description}` : ''}`;
+  const body = order
+    .map((g) => [g, PAGES.filter((p) => (GROUP[p.type] || 'Company') === g)])
+    .filter(([, list]) => list.length)
+    .map(([g, list]) => `## ${g}\n\n${list.map(line).join('\n')}`)
+    .join('\n\n');
+  await writeFile(
+    join(dist, 'llms.txt'),
+    `# ${SITE.name}
+
+> Residential design-build general contractor in Loveland, Colorado, founded in 2020. Designs, permits, and builds whole-home remodels, kitchens, bathrooms, basements, additions, custom homes, garages and ADUs, and decks across Northern Colorado and the mountain towns. Homes only; commercial work is handled by Standard Development Company. ${SITE.addressDisplay}. Phone ${SITE.phoneDisplay}. Email ${SITE.email}.
+
+${body}
+`
+  );
+}
+
 await rm(join(root, 'dist-ssr'), { recursive: true, force: true });
 
-console.log(`Prerendered ${PAGES.length} pages, 404.html, sitemap.xml, and robots.txt`);
+console.log(`Prerendered ${PAGES.length} pages, 404.html, sitemap.xml, robots.txt, and llms.txt`);
 
 // The SEO gate fails the build on missing or duplicate titles, descriptions, canonicals, H1s, JSON-LD,
 // thin pages, or em dashes. SEO_SKIP_CHECK=1 bypasses it for local experiments only.

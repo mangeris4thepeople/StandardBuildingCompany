@@ -254,4 +254,91 @@ export const ABOUT_PAGE = {
   ],
 };
 
-export const STATIC_PAGES = [DESIGN_BUILD_PAGE, PROCESS_PAGE, ABOUT_PAGE];
+// Gathers every answer already published on the service, area, and town pages (see the 'faq'
+// branch in StaticPage). Those pages keep their FAQPage markup, so this page is a plain WebPage.
+export const FAQ_PAGE = {
+  type: 'static',
+  slug: 'faq',
+  path: '/faq/',
+  title: 'Home Remodeling and Building FAQ | Standard Building Co.',
+  description:
+    'Answers on kitchen, bath, and basement remodels, additions, custom homes, permits, pricing, and building in each Northern Colorado and mountain town we serve.',
+  h1: 'Frequently asked questions',
+  lede: 'Every answer from our service and area pages in one place, with a link to the page each one came from.',
+  eyebrow: 'FAQ',
+  priority: '0.6',
+  sections: [
+    {
+      heading: 'How to use this page',
+      body: [
+        'Questions are grouped by service and by town. Open any question to read the answer, or follow the heading link to the full page for the scope, process, and pricing details behind it. If your question is not here, call (970) 430-5884 or send the contact form and we will answer it directly.',
+      ],
+    },
+  ],
+};
+
+// Built from tools/privacy_text.py, which lists what this site actually runs. Effective November 27, 2026.
+export const PRIVACY_PAGE = {
+  type: 'static',
+  slug: 'privacy',
+  path: '/privacy/',
+  title: 'Privacy Policy | Standard Building Company',
+  description:
+    'What Standard Building Company collects on this website, how contact form messages and analytics are handled, and how to ask us to delete your data.',
+  h1: 'Privacy policy',
+  lede: 'What this website collects, why, and what you can do about it. Effective November 27, 2026.',
+  eyebrow: 'Privacy',
+  priority: '0.3',
+  sections: [
+    {
+      heading: "Who we are",
+      body: [
+        "This policy explains what Standard Building Company collects when you use this website, why, and what you can do about it. It took effect on November 27, 2026. Questions about this policy can go to info@standardbuildingcompany.net."
+      ],
+    },
+    {
+      heading: "Information you send us",
+      body: [
+        "When you send a message through the contact form, we receive the details you type into it, such as your name, email address, phone number, and message, along with the page you sent it from, your browser's user agent, and a one-way hash of your IP address. The hash and user agent are used only to block spam and repeat abuse; the hash cannot be turned back into your IP address.",
+        "The message is saved in our leads database, which is hosted by Neon, and emailed to our inbox so we can answer you. We use it only to respond to your inquiry and to quote or carry out the work you ask about.",
+        "We do not sell your information, and we do not share it with advertisers."
+      ],
+    },
+    {
+      heading: "Analytics",
+      body: [
+        "We use Google Analytics to understand how many people visit, which pages they read, and how they found the site. Google Analytics sets first party cookies on this site (named _ga and _ga followed by an ID) so it can tell a returning visitor from a new one. Google processes this data as our analytics provider. We do not send Google your name, email, phone number, or anything you type into a form.",
+        "We also use Vercel Web Analytics, a cookieless tool provided by our host. It sets no cookies and stores nothing in your browser. Visitors are counted with a hash that resets every day, so a visit cannot be tied to a person or followed over time.",
+        "You can block or delete cookies in your browser settings, or install Google's opt out add-on at tools.google.com/dlpage/gaoptout. The site works the same either way."
+      ],
+    },
+    {
+      heading: "Hosting and outside services",
+      body: [
+        "The site is hosted on Vercel, and every page is served over HTTPS. Like any web host, Vercel receives your IP address and browser details when your browser requests a page.",
+        "Links to our social media pages and other websites take you to sites with their own privacy practices."
+      ],
+    },
+    {
+      heading: "Your choices",
+      body: [
+        "You can ask us to tell you what we hold about you, correct it, or delete it. To make a request, email info@standardbuildingcompany.net.",
+        "We keep form submissions only as long as we need them to respond and to keep business records, and we delete them on request unless the law requires us to keep them."
+      ],
+    },
+    {
+      heading: "Children",
+      body: [
+        "This site is not directed to children under 13, and we do not knowingly collect their information."
+      ],
+    },
+    {
+      heading: "Changes",
+      body: [
+        "If we change what this site collects, we will update this page and its effective date."
+      ],
+    },
+  ],
+};
+
+export const STATIC_PAGES = [DESIGN_BUILD_PAGE, PROCESS_PAGE, ABOUT_PAGE, FAQ_PAGE, PRIVACY_PAGE];

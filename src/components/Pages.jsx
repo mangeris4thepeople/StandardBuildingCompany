@@ -771,6 +771,15 @@ function RichBody({ body }) {
 
 const coreServiceLinks = CORE_SERVICES.map((s) => ({ href: s.path, label: s.short }));
 
+// FAQ hub groups: every published answer, linked back to the page it lives on.
+const withFaqs = (list) => list.filter((it) => it.faqs && it.faqs.length);
+const FAQ_GROUPS = [
+  { title: 'Design-build and remodeling services', items: withFaqs(SERVICES.residential.map((s) => ({ href: s.path, label: s.short, faqs: s.faqs }))) },
+  { title: 'Services in specific towns', items: withFaqs(LOCAL_SERVICES.map((l) => ({ href: `/${l.service}/${l.area}/`, label: l.h1, faqs: l.faqs }))) },
+  { title: 'Service areas', items: withFaqs(AREAS.map((a) => ({ href: a.path, label: `${a.name}, CO`, faqs: a.faqs }))) },
+  { title: 'About the company', items: withFaqs(STATIC_PAGES.filter((p) => p.slug === 'about').map((p) => ({ href: p.path, label: 'About Standard Building Company', faqs: p.faqs }))) },
+].filter((g) => g.items.length);
+
 export function StaticPage({ page }) {
   const sp = STATIC_PAGES.find((x) => x.slug === page.slug);
   return (
@@ -809,13 +818,24 @@ export function StaticPage({ page }) {
                 </p>
               </>
             )}
+            {page.slug === 'faq' && FAQ_GROUPS.map((g) => (
+              <React.Fragment key={g.title}>
+                <h2>{g.title}</h2>
+                {g.items.map((it) => (
+                  <React.Fragment key={it.href}>
+                    <h3><a href={it.href}>{it.label}</a></h3>
+                    <Faq items={it.faqs} />
+                  </React.Fragment>
+                ))}
+              </React.Fragment>
+            ))}
             {sp.faqs && (
               <>
                 <h2>Common questions</h2>
                 <Faq items={sp.faqs} />
               </>
             )}
-            <CommercialNote />
+            {page.slug !== 'privacy' && <CommercialNote />}
           </article>
           <aside className="side">
             <SideCta />
